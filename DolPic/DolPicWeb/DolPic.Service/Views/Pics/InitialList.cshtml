@@ -1,0 +1,45 @@
+﻿@{
+    Layout = null;
+    
+    var list = ViewBag.DataList;
+}
+
+<!-- 하단 리스트 -->
+<div class="dolpic_warp">
+	<div class="go_top" onClick="location.href='#top'"></div>
+	<div class="wrapper">
+        @{
+            var sPrevInitial = "";
+            var sCurInitial = "";
+            var nLoopCnt = 1;
+            var nCurInitialCnt = 0;
+        }
+        @foreach (var item in list)
+        {
+            sCurInitial = item.Initial;
+            nCurInitialCnt = item.InitialCnt;
+            
+            var bEqual = sCurInitial.Equals(sPrevInitial);
+            if (!sCurInitial.Equals(sPrevInitial))
+            {
+                <text><div class="dolpic_box"></text>
+			    <span class="on">@sCurInitial</span>
+                
+            }
+			    <span>@item.HashTag <a href="#">+</a></span>
+            if (nCurInitialCnt == nLoopCnt)
+            {
+                @Html.Raw("<div class=\"clear\"></div></div>")
+                nLoopCnt = 1;
+            }
+            else
+            {
+                nLoopCnt++;
+            }
+
+            sPrevInitial = sCurInitial;
+        }
+		<div class="clear"></div>
+	</div>
+    <div class="sponsor">Icons made by <a href="http://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>
+</div>

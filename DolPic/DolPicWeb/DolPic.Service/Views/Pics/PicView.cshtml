@@ -1,0 +1,96 @@
+﻿@model DolPic.Data.Pos.DolPicPo
+@{
+}
+
+<!-- 갤러리 -->
+<div class="wrapper">
+	<div class="gbox_gallery">
+		<div class="vbox">
+			<div class="like_box" style="display:none"></div>
+			<img src="@Model.ImageSrc:large">
+		</div>
+		<div class="clear"></div>
+		<!-- 갤러리 네비게이션 -->
+		<ul class="gbox_list">
+			<li seq="@Model.PrevSeq" class="@(Model.PrevSeq > 0 ? "on" : "")">&lt; 이전 페이지</li>
+			<li seq="@Model.NextSeq" class="@(Model.NextSeq == 0 ? "" : "on")">다음 페이지 &gt;</li>
+		</ul>
+		<div class="btn_good">좋아요</div>
+		<div class="clear"></div>
+		<!-- 구글 광고 -->
+		@Html.Partial("_GoogleAd1")
+	</div>
+	<div class="gbox_side">
+        @Html.Action("HotDolPicList", "Pics")
+		<!-- 구글 광고 -->
+		@Html.Partial("_GoogleAd2")
+		<!-- 공지사항 -->
+		@Html.Partial("_Notice")
+	</div>
+	<div class="clear"></div>
+</div>
+@Html.Action("InitialList", "Pics")
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            $('.vbox').dblclick(function () {
+                $('.like_box').fadeIn('swing').delay(200).fadeOut('fast');
+            });
+            var bExcec = false;
+            $('.gbox').hover(
+                function () { $('.gbox_thumb', this).fadeIn(300); },
+                function () { $('.gbox_thumb', this).fadeOut(100); }
+            );
+
+            $('.gbox_list li').live('click', function () {
+                var seq = $(this).attr("seq");
+                if (seq == 0) return;
+
+                //location.href = '/Pics/PicView/' + seq;
+
+                if (bExcec) {
+                    alert("요청을 처리중입니다.잠시만 기다려주세요.");
+                    return;
+                }
+
+                bExcec = true;
+
+                $.ajax({
+                    url: "/Pics/ImageView",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        "Seq": seq
+                    }
+                })
+                .done(function (data) {
+                    var retData = $.parseJSON(data);
+                    $('.gbox_list li').removeClass("on");
+                    $('.gbox_list li').eq(0).attr("seq", "0");
+                    $('.gbox_list li').eq(1).attr("seq", "0");
+
+                    if (retData.PrevSeq > 0) {
+                        $('.gbox_list li').eq(0).addClass("on");
+                        $('.gbox_list li').eq(0).attr("seq", retData.PrevSeq);
+                    }
+                    if (retData.NextSeq > 0) {
+                        $('.gbox_list li').eq(1).addClass("on");
+                        $('.gbox_list li').eq(1).attr("seq", retData.NextSeq);
+                    }
+
+                    $('.vbox img').fadeOut(10);
+                    $('.vbox img').fadeIn(300);
+                    $('.vbox img').attr("src",retData.ImageSrc);
+                })
+                .fail(function () {
+                    alert("실행중 에러가 발생했습니다.");
+                })
+                .always(function () {
+                    bExcec = false;
+                });
+            });
+        });
+    </script>
+}

@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<sqlMap namespace=" "
+		xmlns="http://ibatis.apache.org/mapping"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <alias>
+    <typeAlias alias="dolpic" type="DolPic.Data.Vos.DolPicVo, DolPic.Data"/>
+  </alias>
+
+  <!--statements 정의-->
+  <statements>
+    <!-- 메인 이미지 리스트 -->
+    <procedure id="UP_MainImage_List" parameterMap="p_main_image_list" resultClass="dolpic" description="메인 이미지 리스트">
+      UP_MainImage_List
+    </procedure>
+
+    <!-- 해당 이미지 조회 -->
+    <procedure id="UP_Image_Select" parameterMap="p_image_select" description="해당 이미지 조회">
+      UP_Image_Select
+    </procedure>
+
+    <!-- 초성 리스트 -->
+    <procedure id="UP_Initial_List" resultClass="dolpic" description="초성 리스트">
+      UP_Initial_List
+    </procedure>
+
+    <!-- 핫돌 리스트 -->
+    <procedure id="UP_HotDolPic_List" resultClass="dolpic" description="핫돌 리스트">
+      UP_HotDolPic_List
+    </procedure>
+  </statements>
+
+  <!--ParameterMap 을 정의합니다.-->
+  <parameterMaps>
+    <parameterMap id="p_main_image_list" class="dolpic">
+      <parameter property="HashTag" column="HashTag" />
+      <parameter property="TopCnt" column="TopCnt" />
+      <parameter property="CurPage" column="CurPage" />
+      <parameter property="TotalCnt" column="TotalCnt" direction="Output" />
+    </parameterMap>
+
+    <parameterMap id="p_image_select" class="dolpic">
+      <parameter property="Seq" column="Seq" />
+      <parameter property="ImageSrc" column="ImageSrc" direction="Output" />
+      <parameter property="PrevSeq" column="PrevSeq" direction="Output" />
+      <parameter property="NextSeq" column="NextSeq" direction="Output" />
+    </parameterMap>
+  </parameterMaps>
+
+  <!--ResultMap을 정의합니다.-->
+  <resultMaps>
+
+  </resultMaps>
+
+</sqlMap>
