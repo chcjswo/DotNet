@@ -47,6 +47,14 @@ namespace DolPicCrawler
             InitializeComponent();
             FormInit();
             btnImageLoad.Enabled = false;
+
+            //this.WindowState = FormWindowState.Minimized;
+            //this.ShowInTaskbar = false;
+            //this.Visible = false;
+
+            this.notifyIcon1.Visible = true;
+            notifyIcon1.ContextMenuStrip = contextMenuStrip1;
+
         }
 
         #region Init

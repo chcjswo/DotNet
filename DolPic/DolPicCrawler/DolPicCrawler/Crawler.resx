@@ -138,6 +138,33 @@
   <metadata name="notifyIcon1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>191, 17</value>
   </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="notifyIcon1.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAABAAEAEBIAAAEAIADwBAAAFgAAACgAAAAQAAAAJAAAAAEAIAAAAAAAyAQAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAACRkZH/kZGR/66vr//Jycn/ycnJ/8PDw/+9u7v/tbW1/62rq/+jo6P/nJuc/5WV
+        lf+RkZH/AAAAAAAAAAAAAAAAkZGR/7Ozs//X19n/+Pj4//f39//x8fH/6ujo/+Dg4P/W1NT/ysrK/8HB
+        v/+3t7j/kZGR/wAAAAAAAAAAAAAAALGxscCRkZH/19fX//f49//19/f/8vHx/+rq6v/g4OD/1tTU/8rK
+        yv/Bv8H/lJWV/7GxscAAAAAAAAAAAAAAAAAAAAAAjHpz/6qZkv+qmZL/qpmS/6qZkv+qmZL/qpmS/6qZ
+        kv+qmZL/qpmR/4x5c/8AAAAAAAAAAAAAAAAAAAAAAAAAAJiGf//Es6z/x7St/8m5sv/Nvbf/zr65/829
+        t//JuLH/x7St/8Szrf+XhX7/AAAAAAAAAAAAAAAAAAAAAAAAAACZh4D/yLWu/8y7tf/Sw77/2c3I/9zR
+        zP/Zzcj/0sK9/8u6tP/Jt7H/mIZ//wAAAAAAAAAAAAAAAAAAAAAAAAAAmYeA/8q3sP/Swbv/28/K/+Xc
+        2P/o4N3/5NzY/9rOyf/Pv7n/zLy2/5iGf/8AAAAAAAAAAAAAAAAAAAAAAAAAAJqIgf/LuLH/08O9/97T
+        z//p4d7/7OXj/+jg3f/e0s3/0sK8/869t/+Yhn//AAAAAAAAAAAAAAAAAAAAAAAAAACbiIH/y7ix/9PC
+        vf/c0cz/5t3a/+ni3v/l3Nn/28/K/9HBu//Nvbb/mIZ//wAAAAAAAAAAAAAAAAAAAAAAAAAAnIqD98m2
+        sP/RwLr/18nC/93Rzf/f1M//3NHM/9XHwf/Pvbf/yLew/5qIgfcAAAAAAAAAAAAAAAAAAAAAAAAAAKKP
+        iM28qqT/zr22/9LBuv/Wxb//1cfA/9PEvv/Qvrn/zLqz/7qpov+fjYbNAAAAAAAAAAAAAAAAAAAAAAAA
+        AACql5BFpJKL/827tP/Ou7T/zry1/867tP/Nu7T/zLmz/8u4sf+ij4j/ppSNRQAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAKeUjYGkkov/uqih/8q4sf/Nu7T/ybaw/7imn/+jkYr/pZKLgQAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAqpeQRaORi8CdioT3m4mC/5yKg/ejkInAqZeQRQAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAD//wAA//8AAIADAACAAwAAgAMAAMAHAADABwAAwAcAAMAHAADABwAAwAcAAMAH
+        AADABwAAwAcAAOAPAADwHwAA//8AAP//AAA=
+</value>
+  </data>
   <metadata name="contextMenuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>305, 17</value>
   </metadata>
