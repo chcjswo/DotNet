@@ -162,6 +162,7 @@
     <Content Include="Images\sns_Instagram.png" />
     <Content Include="Images\sns_twitter.png" />
     <Content Include="Js\CommonAdmin.js" />
+    <Content Include="Js\jquery.placeholder.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -242,6 +243,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\User\LogIn.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\User\LogInProc.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\User\SignUp.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

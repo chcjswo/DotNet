@@ -44,6 +44,16 @@ namespace DolPic.Data.Vos
         /// </summary>
         public int TagUrlType { get; set; }
 
+        /// <summary>
+        /// 회원 아이디
+        /// </summary>
+        public string UserId { get; set; }
+
+        /// <summary>
+        /// 회원 비번
+        /// </summary>
+        public string UserPwd { get; set; }
+
         public int PrevSeq { get; set; }
         public int NextSeq { get; set; }
         public int TotalCnt { get; set; }

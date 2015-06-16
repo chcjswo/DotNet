@@ -41,5 +41,23 @@ namespace DolPic.Data.Daos
         {
             return DolPicServiceDataMapper.Instance().QueryForList<DolPicVo>("UP_HotDolPic_List", entity);
         }
+
+        /// <summary>
+        /// 회원 가입
+        /// </summary>
+        /// <returns></returns>
+        public void DolPicUserSignUp(DolPicVo entity)
+        {
+            DolPicServiceDataMapper.Instance().QueryForObject<DolPicVo>("UP_DolPicUser_Insert", entity);
+        }
+
+        /// <summary>
+        /// 로그인
+        /// </summary>
+        /// <returns></returns>
+        public void DolPicUserLogIn(DolPicVo entity)
+        {
+            DolPicServiceDataMapper.Instance().QueryForObject<DolPicVo>("UP_DolPicUser_Login", entity);
+        }
     }
 }

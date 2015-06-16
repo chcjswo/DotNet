@@ -4,9 +4,8 @@ namespace DolPic.Data.Pos
 {
     public class DolPicPo
     {
-        public string UserId { get; set; }
-        public string UserPwd { get; set; }
         public string ImageSrc { get; set; }
+        public string HashTag { get; set; }
         public int PrevSeq { get; set; }
         public int NextSeq { get; set; }
         public int RetCode { get; set; }

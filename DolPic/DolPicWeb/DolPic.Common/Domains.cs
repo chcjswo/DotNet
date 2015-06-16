@@ -7,27 +7,20 @@ namespace DolPic.Common
 
         public static string WebDomain { get; set; }
         public static string MobileDomain { get; set; }
-        public static string StaticDomain { get; set; }
 
         public Domains()
         {
             switch (UserStates.DeployType)
             {
                 case DeployType.Local:
-                    WebDomain = "http://localhost:7208";
-                    MobileDomain = "http://localhost:12085";
-                    StaticDomain = "http://static.event.mobile.actoz.com";
-                    break;
                 case DeployType.Dev:
                 case DeployType.Qa:
-                    WebDomain = "http://qa-event.mobile.actoz.com";
-                    MobileDomain = "http://qa-m.event.mobile.actoz.com";
-                    StaticDomain = "http://static.event.mobile.actoz.com";
+                    WebDomain = "http://localhost:3281";
+                    MobileDomain = "http://localhost:3281";
                     break;
                 case DeployType.Live:
-                    WebDomain = "http://event.mobile.actoz.com";
-                    MobileDomain = "http://m.event.mobile.actoz.com";
-                    StaticDomain = "http://static.event.mobile.actoz.com";
+                    WebDomain = "http://www.dolpic.com";
+                    MobileDomain = "http://www.dolpic.com";
                     break;
             }
         }

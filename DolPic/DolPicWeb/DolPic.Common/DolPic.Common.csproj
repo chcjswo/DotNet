@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommonUtil.cs" />
     <Compile Include="DeployType.cs" />
     <Compile Include="Domains.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

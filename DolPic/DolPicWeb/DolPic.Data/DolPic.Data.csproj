@@ -51,6 +51,7 @@
     <Compile Include="DataMappers\DolPicServiceDataMapper.cs" />
     <Compile Include="Pos\AdminPo.cs" />
     <Compile Include="Pos\DolPicPo.cs" />
+    <Compile Include="Pos\UserPo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlMaps\SqlMaps.cs">
       <AutoGen>True</AutoGen>

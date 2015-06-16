@@ -47,6 +47,7 @@ namespace DolPic.Service.Web.Controllers
 
             DolPicPo po = new DolPicPo();
             po.ImageSrc = entity.ImageSrc;
+            po.HashTag = entity.HashTag;
             po.PrevSeq = entity.PrevSeq;
             po.NextSeq = entity.NextSeq;
 
@@ -68,6 +69,7 @@ namespace DolPic.Service.Web.Controllers
 
             DolPicPo po = new DolPicPo();
             po.ImageSrc = entity.ImageSrc;
+            po.HashTag = entity.HashTag;
             po.PrevSeq = entity.PrevSeq;
             po.NextSeq = entity.NextSeq;
 
