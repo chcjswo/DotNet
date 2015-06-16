@@ -1,0 +1,35 @@
+﻿@model DolPic.Data.Pos.DolPicPo
+@{
+}
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "form1" }))
+{
+   @Html.ValidationSummary() 
+    <!-- 회원가입/로그인 -->
+    <div class="login_box">
+	    <p>아이돌, 유명 연예인 SNS 이미지를 한 번에 모아보세요.</p>
+        @Html.TextBoxFor(m => m.UserId, new { @maxlength=12, @Value = "아이디", onfocus="if(this.value == '아이디') { this.value = ''; }" })
+        @Html.PasswordFor(m => m.UserPwd, new { @maxlength=20, @Value = "password", onfocus="if(this.value == 'password') { this.value = ''; }" })
+        <div class="clear"></div>
+        <div class="btn_signup">회원가입</div>
+        <div class="btn_login">로그인</div>
+    </div>
+}
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            $('.btn_signup').live('click', function () { fnSignUp(); });
+            $('.btn_login').live('click', function () { fnLogIn(); });
+        });
+
+        function fnSignUp() {
+            $('#form1').attr('action', '/User/SignUp');
+            $("#form1").submit();
+        }
+        function fnLogIn() {
+            $('#form1').attr('action', '/User/LogInProc');
+            $("#form1").submit();
+        }
+    </script>
+}

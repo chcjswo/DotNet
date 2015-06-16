@@ -35,7 +35,6 @@
   <parameterMaps>
     <parameterMap id="p_main_image_list" class="dolpic">
       <parameter property="HashTag" column="HashTag" />
-      <parameter property="TopCnt" column="TopCnt" />
       <parameter property="CurPage" column="CurPage" />
       <parameter property="TotalCnt" column="TotalCnt" direction="Output" />
     </parameterMap>

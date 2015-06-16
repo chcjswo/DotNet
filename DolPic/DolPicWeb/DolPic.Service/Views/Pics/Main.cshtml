@@ -20,7 +20,7 @@
 		    <div seq="@item.Seq" class="gbox" style="background:url(@item.ImageSrc) center center no-repeat;background-size:cover">
                 <div class="gbox_thumb g_t_twitter">
                     <div class="gbox_t_title">#@item.HashTag</div>
-                    <div class="gbox_t_text">@string.Format("{0:N0}", item.LikeCnt)</div>
+                    <div class="gbox_t_text"><img src="../../images/icon_like.png" height="9">@string.Format("{0:N0}", item.LikeCnt)</div>
                 </div>
 		    </div>
         }
@@ -51,14 +51,17 @@
 </div>
 @Html.Action("InitialList", "Pics")
 
-<script>
-    $(function () {
-        $('.gbox').hover(
-		    function () { $('.gbox_thumb', this).fadeIn(300); $('.gbox_thumb', this).parent("div").addClass('transition'); },
-		    function () { $('.gbox_thumb', this).fadeOut(100); $('.gbox_thumb', this).parent("div").removeClass('transition'); }
-        );
-        $('.gbox').live('click', function () {
-            location.href = '/Pics/PicView/' + $(this).attr("seq");
+@section scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            $('.gbox').hover(
+		        function () { $('.gbox_thumb', this).fadeIn(300); $('.gbox_thumb', this).parent("div").addClass('transition'); },
+		        function () { $('.gbox_thumb', this).fadeOut(100); $('.gbox_thumb', this).parent("div").removeClass('transition'); }
+            );
+            $('.gbox').live('click', function () {
+                location.href = '/Pics/PicView/' + $(this).attr("seq");
+            });
         });
-    });
-</script>
+    </script>
+}

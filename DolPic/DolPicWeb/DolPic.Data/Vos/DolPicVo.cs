@@ -44,10 +44,9 @@ namespace DolPic.Data.Vos
         /// </summary>
         public int TagUrlType { get; set; }
 
-        public int TotalCnt { get; set; }
         public int PrevSeq { get; set; }
         public int NextSeq { get; set; }
-        public int TopCnt { get; set; }
+        public int TotalCnt { get; set; }
         public int CurPage { get; set; }
         public int RetCode { get; set; }
         public string RetMsg { get; set; }

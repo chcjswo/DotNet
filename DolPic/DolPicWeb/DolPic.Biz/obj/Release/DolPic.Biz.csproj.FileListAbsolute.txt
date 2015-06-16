@@ -1,0 +1,5 @@
+D:\GitHub\DotNet\DolPic\DolPicWeb\DolPic.Biz\bin\Release\DolPic.Biz.dll
+D:\GitHub\DotNet\DolPic\DolPicWeb\DolPic.Biz\bin\Release\DolPic.Biz.pdb
+D:\GitHub\DotNet\DolPic\DolPicWeb\DolPic.Biz\obj\Release\DolPic.Biz.csprojResolveAssemblyReference.cache
+D:\GitHub\DotNet\DolPic\DolPicWeb\DolPic.Biz\obj\Release\DolPic.Biz.dll
+D:\GitHub\DotNet\DolPic\DolPicWeb\DolPic.Biz\obj\Release\DolPic.Biz.pdb

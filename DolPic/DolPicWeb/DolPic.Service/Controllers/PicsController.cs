@@ -25,7 +25,6 @@ namespace DolPic.Service.Web.Controllers
         {
             DolPicVo entity = new DolPicVo();
             entity.HashTag = id ?? "";
-            entity.TopCnt = 50;
             entity.CurPage = 1;
 
             DolPicDao dao = new DolPicDao();
@@ -100,15 +99,6 @@ namespace DolPic.Service.Web.Controllers
             DolPicDao dao = new DolPicDao();
             ViewBag.DataList = dao.HotDolPicList(entity);
 
-            return View();
-        }
-
-        /// <summary>
-        /// 로그인
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult LogIn()
-        {
             return View();
         }
 
