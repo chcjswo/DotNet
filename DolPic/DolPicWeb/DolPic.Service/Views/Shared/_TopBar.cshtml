@@ -4,7 +4,10 @@
 	<div class="wrapper">
 		<h1><a href="/"><img src="/Images/logo.png" width="20" height="20"> DolPic</a></h1>
 		<h5>돌픽 | 아이돌, 유명 연예인 SNS 이미지 모음</h5>
-		<div class="btn_login" title="로그인" onclick="location.href='/User/LogIn';"></div>
+        @if (string.IsNullOrEmpty(ViewBag.User))
+        {
+		    @:<div class="btn_login" title="로그인" onclick="location.href='/User/LogIn';"></div>
+        }
 	</div>
 </div>
 
@@ -16,6 +19,7 @@
 		<span>EXO <a href="#">X</a></span>
 		<span>소녀시대 <a href="#">X</a></span>
 		<span>에이핑크 <a href="#">X</a></span>
+		<span>+++@ViewBag.User <a href="#">X</a></span>
 		<div class="clear"></div>
 	</div>
 </div>

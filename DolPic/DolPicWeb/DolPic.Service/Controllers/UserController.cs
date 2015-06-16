@@ -4,6 +4,7 @@ using DolPic.Data.Pos;
 using DolPic.Data.Vos;
 using DolPic.Service.Web.Common;
 using Newtonsoft.Json;
+using System.Web;
 using System.Web.Mvc;
 
 namespace DolPic.Service.Web.Controllers
@@ -78,6 +79,11 @@ namespace DolPic.Service.Web.Controllers
                 switch (entity.RetCode)
                 {
                     case (int)e_RetCode.success:
+
+                        var userCookie = new HttpCookie("user", model.UserId);
+                        HttpContext.Response.SetCookie(userCookie);
+                        HttpContext.Response.Cookies.Add(userCookie);
+
                         model.RetMsg = "로그인 하셨습니다.";
                         break;
 

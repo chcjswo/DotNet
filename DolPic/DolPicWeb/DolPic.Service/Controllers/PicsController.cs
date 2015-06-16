@@ -11,7 +11,6 @@ namespace DolPic.Service.Web.Controllers
     {
         //
         // GET: /Piscs/
-
         public ActionResult Index()
         {
             return RedirectToAction("Main");
@@ -21,14 +20,41 @@ namespace DolPic.Service.Web.Controllers
         /// 돌픽 메인
         /// </summary>
         /// <returns></returns>
+        //[Authorize(Roles = "Administrator")] 
         public ActionResult Main(string id)
         {
+            var userInCookie = Request.Cookies["user"];
+            if (userInCookie != null)
+                ViewBag.User = Request.Cookies["user"].Value ?? "";
+
+            log.DebugFormat("ViewBag.User == {0}", ViewBag.User);
+
+
             DolPicVo entity = new DolPicVo();
             entity.HashTag = id ?? "";
             entity.CurPage = 1;
 
             DolPicDao dao = new DolPicDao();
             ViewBag.DataList = dao.MainImageList(entity);
+            ViewBag.HashTag = id;
+
+            return View();
+        }
+
+        /// <summary>
+        /// 돌픽 메인
+        /// </summary>
+        /// <returns></returns>
+        //[Authorize(Roles = "Administrator")]
+        [HttpPost]
+        public ActionResult ImageList(int CurPage, string HashTag)
+        {
+            DolPicVo entity = new DolPicVo();
+            entity.HashTag = HashTag ?? "";
+            entity.CurPage = CurPage;
+
+            DolPicDao dao = new DolPicDao();
+            var list = dao.MainImageList(entity);
 
             return View();
         }

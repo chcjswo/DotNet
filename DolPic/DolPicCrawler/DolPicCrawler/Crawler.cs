@@ -31,7 +31,7 @@ namespace DolPicCrawler
 
         private List<int> _arrNo;
         private List<string> _arrTag;
-        private Dictionary<int, List<string>> dImage;
+        private Dictionary<int, List<string>> _dImage;
 
 
         private const string MATCH_TAG = "data-resolved-url-small=\"(?<url>.*?)\".*?";
@@ -80,7 +80,7 @@ namespace DolPicCrawler
             _sbErr = new StringBuilder();
             _arrTxt = new List<string[]>();
             errfrm = new ErrFrm();
-            dImage = new Dictionary<int, List<string>>();
+            _dImage = new Dictionary<int, List<string>>();
             comSite.SelectedIndex = 0;
 
             //btnImageLoad.Enabled = false;
@@ -191,6 +191,9 @@ namespace DolPicCrawler
                 }
             }
 
+            // 이미지 저장
+            ImageSend();
+
             sw.Stop();
             lblWatch.Text = (sw.ElapsedMilliseconds / 1000.0F).ToString() + " 초 로딩";
         }
@@ -215,13 +218,15 @@ namespace DolPicCrawler
             }
 
             // Dictionary 저장
-            dImage.Add(a_nTagNo, ltImg);
+            _dImage.Add(a_nTagNo, ltImg);
+
+            txtLog.Text += string.Format("태그 no == {0} / count == {1}", a_nTagNo, ltImg.Count) + Environment.NewLine;
 
             // 그리드 그리기
             SetGridInfo(ltImg);
 
             // 이미지 저장
-            ImageSend();
+            //ImageSend();
         }
 
         private bool IsPidCheck()
@@ -351,7 +356,7 @@ namespace DolPicCrawler
 
             try
             {
-                foreach (KeyValuePair<int, List<string>> kvp in dImage)
+                foreach (KeyValuePair<int, List<string>> kvp in _dImage)
                 {
                     Console.WriteLine("Key: " + kvp.Key);
                     Console.WriteLine("Value: " + kvp.Value);

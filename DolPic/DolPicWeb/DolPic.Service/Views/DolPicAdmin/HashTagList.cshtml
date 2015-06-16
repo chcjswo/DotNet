@@ -50,7 +50,7 @@
 @section scripts
 {
     <script type="text/javascript">
-        var bExcec = false;
+        var bExec = false;
         $(function () {
             $('.make').click(function () {
                 window.open("HashTagMakeForm", "popupWindow", "width=400,height=150,scrollbars=no");
@@ -62,12 +62,12 @@
         });
 
         function fnXmlMake() {
-            if (bExcec) {
+            if (bExec) {
                 alert("요청을 처리중입니다.잠시만 기다려주세요.");
                 return;
             }
 
-            bExcec = true;
+            bExec = true;
 
             $.ajax({
                 url: "/DolPicAdmin/HashTagXmlMake",
@@ -84,7 +84,7 @@
                 alert("실행중 에러가 발생했습니다.");
             })
             .always(function () {
-                bExcec = false;
+                bExec = false;
             });
         }
 

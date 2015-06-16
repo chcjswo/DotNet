@@ -12,14 +12,14 @@
 @section scripts
 {
     <script type="text/javascript">
-        var bExcec = false;
+        var bExec = false;
         $(function () {
             $('.make').click(function () { fnHashTagInsert(); });
             $('.tag').focus();
         });
 
         function fnHashTagInsert() {
-            if (bExcec) {
+            if (bExec) {
                 alert("요청을 처리중입니다.잠시만 기다려주세요.");
                 return;
             }
@@ -34,7 +34,7 @@
                 return;
             }
 
-            bExcec = true;
+            bExec = true;
 
             $.ajax({
                 url: "/DolPicAdmin/HashTagInsert",
@@ -57,7 +57,7 @@
                 alert("실행중 에러가 발생했습니다.");
             })
             .always(function () {
-                bExcec = false;
+                bExec = false;
             });
         }
     </script>

@@ -62,6 +62,45 @@
             $('.gbox').live('click', function () {
                 location.href = '/Pics/PicView/' + $(this).attr("seq");
             });
+            var bExec = false;
+            $('.gbox_list li').live('click', function () {
+                alert($(this).index());
+
+                if (bExec) {
+                    alert("요청을 처리중입니다.잠시만 기다려주세요.");
+                    return;
+                }
+
+                bExec = true;
+
+                $("#loading").show();
+
+                $.ajax({
+                    url: "/Pics/ImageList",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        "CurPage": $(this).index() + 1,
+                        "HashTag": "@ViewBag.HashTag"
+                    }
+                })
+                .done(function (data) {
+                    var retData = $.parseJSON(data);
+                    //var chartData = [];
+
+                    //for (var i = 0; i < retData.length; i++) {
+                    //    chartData[i] = [retData[i].state_reg_date, retData[i].reg_cnt];
+                    //}
+                })
+                .fail(function () {
+                    alert("실행중 에러가 발생했습니다.");
+                })
+                .always(function () {
+                    bExec = false;
+                    $("#loading").hide();
+                });
+            });
         });
+
     </script>
 }
