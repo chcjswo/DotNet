@@ -12,8 +12,8 @@
 		<div class="clear"></div>
 		<!-- 갤러리 네비게이션 -->
 		<ul class="gbox_list">
-			<li seq="@Model.PrevSeq" class="@(Model.PrevSeq > 0 ? "on" : "")">&lt; 이전 페이지</li>
-			<li seq="@Model.NextSeq" class="@(Model.NextSeq == 0 ? "" : "on")">다음 페이지 &gt;</li>
+			<li seq="@Model.PrevSeq">&lt; 이전 페이지</li>
+			<li seq="@Model.NextSeq">다음 페이지 &gt;</li>
 		</ul>
 		<div class="btn_good">좋아요</div>
 		<div class="clear"></div>
@@ -48,8 +48,6 @@
                 var seq = $(this).attr("seq");
                 if (seq == 0) return;
 
-                //location.href = '/Pics/PicView/' + seq;
-
                 if (bExcec) {
                     alert("요청을 처리중입니다.잠시만 기다려주세요.");
                     return;
@@ -67,16 +65,13 @@
                 })
                 .done(function (data) {
                     var retData = $.parseJSON(data);
-                    $('.gbox_list li').removeClass("on");
                     $('.gbox_list li').eq(0).attr("seq", "0");
                     $('.gbox_list li').eq(1).attr("seq", "0");
 
                     if (retData.PrevSeq > 0) {
-                        $('.gbox_list li').eq(0).addClass("on");
                         $('.gbox_list li').eq(0).attr("seq", retData.PrevSeq);
                     }
                     if (retData.NextSeq > 0) {
-                        $('.gbox_list li').eq(1).addClass("on");
                         $('.gbox_list li').eq(1).attr("seq", retData.NextSeq);
                     }
 
