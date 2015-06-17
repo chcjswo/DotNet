@@ -364,28 +364,51 @@ namespace DolPicCrawler
 
             try
             {
-                foreach (KeyValuePair<int, List<string>> kvp in _dImage)
+                foreach (DataGridViewRow row in dataGridView1.Rows)
                 {
-                    Console.WriteLine("Key: " + kvp.Key);
-                    Console.WriteLine("Value: " + kvp.Value);
+                    if (row.Cells[1].Value == null)
+                        continue;
 
-                    foreach (var item in kvp.Value)
-                    {
-                        var sBase64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(item));
+                    var sBase64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(row.Cells[1].Value.ToString()));
 
-                        //URI로부터 요청을 생성한다
-                        request = WebRequest.Create(string.Format(IMAGE_SEND_URL, kvp.Key, sBase64, TagUrlType));
+                    //URI로부터 요청을 생성한다
+                    request = WebRequest.Create(string.Format(IMAGE_SEND_URL, row.Cells[0].Value, sBase64, TagUrlType));
 
-                        Console.WriteLine("url == " + string.Format(IMAGE_SEND_URL, kvp.Key, sBase64, TagUrlType));
+                    Console.WriteLine("url == " + string.Format(IMAGE_SEND_URL, row.Cells[0].Value, sBase64, TagUrlType));
 
-                        //요청을 보내고 응답을 받는다
-                        response = request.GetResponse();
+                    //요청을 보내고 응답을 받는다
+                    response = request.GetResponse();
 
-                        Console.WriteLine("TagNo == " + kvp.Key);
-                        Console.WriteLine("ImageSrc == " + sBase64);
-                        
-                    }
+                    txtLog.Text += row.Cells[0].Value + Environment.NewLine;
+                    txtLog.Text += row.Cells[1].Value + Environment.NewLine;
+                    txtLog.Text += row.Cells[2].Value + Environment.NewLine;
+
+                    Console.WriteLine("TagNo == " + row.Cells[0].Value);
+                    Console.WriteLine("ImageSrc =={0} / {1}", row.Cells[1].Value, sBase64);
                 }
+
+                //foreach (KeyValuePair<int, List<string>> kvp in _dImage)
+                //{
+                //    Console.WriteLine("Key: " + kvp.Key);
+                //    Console.WriteLine("Value: " + kvp.Value);
+
+                //    foreach (var item in kvp.Value)
+                //    {
+                //        var sBase64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(item));
+
+                //        //URI로부터 요청을 생성한다
+                //        request = WebRequest.Create(string.Format(IMAGE_SEND_URL, kvp.Key, sBase64, TagUrlType));
+
+                //        Console.WriteLine("url == " + string.Format(IMAGE_SEND_URL, kvp.Key, sBase64, TagUrlType));
+
+                //        //요청을 보내고 응답을 받는다
+                //        response = request.GetResponse();
+
+                //        Console.WriteLine("TagNo == " + kvp.Key);
+                //        Console.WriteLine("ImageSrc == " + sBase64);
+
+                //    }
+                //}
             }
             catch (Exception ex)
             {

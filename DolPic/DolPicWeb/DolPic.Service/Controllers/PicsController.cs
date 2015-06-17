@@ -1,14 +1,18 @@
-﻿using DolPic.Data.Daos;
+﻿using DolPic.Common;
+using DolPic.Data.Daos;
 using DolPic.Data.Pos;
 using DolPic.Data.Vos;
 using DolPic.Service.Web.Common;
 using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Text;
 using System.Web.Mvc;
 
 namespace DolPic.Service.Web.Controllers
 {
     public class PicsController : CustomController
     {
+        private const string COOKIE_NAME = "user";
         //
         // GET: /Piscs/
         public ActionResult Index()
@@ -23,12 +27,7 @@ namespace DolPic.Service.Web.Controllers
         //[Authorize(Roles = "Administrator")] 
         public ActionResult Main(string id)
         {
-            var userInCookie = Request.Cookies["user"];
-            if (userInCookie != null)
-                ViewBag.User = Request.Cookies["user"].Value ?? "";
-
-            log.DebugFormat("ViewBag.User == {0}", ViewBag.User);
-
+            ViewBag.User = DolPicCookie.CookieRead(this.HttpContext, COOKIE_NAME);
 
             DolPicVo entity = new DolPicVo();
             entity.HashTag = id ?? "";
@@ -37,15 +36,15 @@ namespace DolPic.Service.Web.Controllers
             DolPicDao dao = new DolPicDao();
             ViewBag.DataList = dao.MainImageList(entity);
             ViewBag.HashTag = id;
+            ViewBag.PageGotoList = GetGotoPageList(1, entity.TotalCnt, 50, 10);
 
             return View();
         }
 
         /// <summary>
-        /// 돌픽 메인
+        /// 메인 이미지 리스트 Ajax
         /// </summary>
         /// <returns></returns>
-        //[Authorize(Roles = "Administrator")]
         [HttpPost]
         public ActionResult ImageList(int CurPage, string HashTag)
         {
@@ -56,7 +55,11 @@ namespace DolPic.Service.Web.Controllers
             DolPicDao dao = new DolPicDao();
             var list = dao.MainImageList(entity);
 
-            return View();
+            ReturnResult result = new ReturnResult();
+            result.ImageList = dao.MainImageList(entity);
+            result.PageGotoList = GetGotoPageList(CurPage, entity.TotalCnt, 50, 10);
+
+            return Json(JsonConvert.SerializeObject(result));
         }
 
         /// <summary>
@@ -76,6 +79,8 @@ namespace DolPic.Service.Web.Controllers
             po.HashTag = entity.HashTag;
             po.PrevSeq = entity.PrevSeq;
             po.NextSeq = entity.NextSeq;
+
+            ViewBag.User = DolPicCookie.CookieRead(this.HttpContext, COOKIE_NAME);
 
             return View(po);
         }
@@ -152,5 +157,58 @@ namespace DolPic.Service.Web.Controllers
             dao.DolPicImageInsert(entity);
         } 
         #endregion
+
+        /// <summary>
+        /// 바로가기 페이지 목록 만들기
+        /// </summary>
+        /// <param name="a_nCurPage">현재 페이지</param>
+        /// <param name="a_nRecCnt">레코드 수</param>
+        /// <param name="a_nPageSize">한페이지에 보여줄 페이지 수</param>
+        /// <param name="a_nViewPageCnt">바로가기에 보여줄 페이지 수</param>
+        /// <returns>바로가기목록</returns>
+        private string GetGotoPageList(int a_nCurPage, int a_nRecCnt, int a_nPageSize, int a_nViewPageCnt)
+        {
+            StringBuilder sbPage = new StringBuilder();
+
+            //바로가기 첫페이지 계산
+            int nStartPage = ((a_nCurPage - 1) / a_nViewPageCnt) * a_nViewPageCnt + 1;
+            // 전체 페이지수 계산
+            int nPageCnt = (a_nRecCnt - 1) / a_nPageSize + 1;
+            // 블럭페이지 계산
+            int nBlockPage = ((a_nCurPage - 1) / a_nViewPageCnt) * a_nViewPageCnt + 1;
+
+            log.DebugFormat("nPageCnt == {0}", nPageCnt);
+            log.DebugFormat("nBlockPage == {0}", nBlockPage);
+
+            int nCnt = 1;
+            while (nStartPage <= nPageCnt && nCnt <= a_nViewPageCnt)
+            {
+                if (nStartPage == a_nCurPage)
+                    sbPage.AppendFormat("<li page='{0}' class='on'>{0}</li>&nbsp;", nStartPage);
+                else
+                    sbPage.AppendFormat("<li page='{0}'>{0}</li>&nbsp;", nStartPage);
+
+                nStartPage++;
+                nCnt++;
+                nBlockPage++;
+            }
+
+            if (nBlockPage < nPageCnt)
+                sbPage.AppendFormat("<li page='{0}'>></li>", nBlockPage);
+            //else
+            //    sbPage.AppendFormat(" <img src='{0}' border=0' title='다음 페이지' align='absmiddle' onfocus='this.blur();' />", "asdfasd");
+
+            //sbPage.Append(" <img src='/Images/btn_end.gif' style='cursor:pointer;' border=0' align='absmiddle' ");
+            //sbPage.AppendFormat("onclick=\"{0}('{1}');\" ", a_sScriptName, nPageCnt);
+            //sbPage.Append(" title='마지막 페이지' />");
+
+            return sbPage.ToString();
+        }
+    }
+
+    public class ReturnResult
+    {
+        public IList<DolPicVo> ImageList;
+        public string PageGotoList;
     }
 }

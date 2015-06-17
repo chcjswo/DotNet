@@ -11,6 +11,7 @@ namespace DolPic.Service.Web.Controllers
 {
     public class UserController : CustomController
     {
+        private const string COOKIE_NAME = "user";
 
         /// <summary>
         /// 로그인폼
@@ -18,9 +19,25 @@ namespace DolPic.Service.Web.Controllers
         /// <returns></returns>
         public ActionResult LogIn(UserPo model)
         {
-            model.ReferUrl = Request.UrlReferrer.ToString();
+            if (Request.UrlReferrer == null)
+                model.ReferUrl = "/";
+            else
+                model.ReferUrl = Request.UrlReferrer.ToString();
 
             return View(model);
+        }
+
+        /// <summary>
+        /// 로그아웃
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult LogOut()
+        {
+            Session.Clear();
+            // 쿠키 삭제
+            DolPicCookie.CookieDelete(this.HttpContext, COOKIE_NAME);
+
+            return Redirect("/");
         }
 
         /// <summary>
@@ -79,10 +96,10 @@ namespace DolPic.Service.Web.Controllers
                 switch (entity.RetCode)
                 {
                     case (int)e_RetCode.success:
+                        DolPicCookie.CookieWrite(this.HttpContext, COOKIE_NAME, model.UserId);
 
-                        var userCookie = new HttpCookie("user", model.UserId);
-                        HttpContext.Response.SetCookie(userCookie);
-                        HttpContext.Response.Cookies.Add(userCookie);
+                        if ("/User/SignUp".Equals(model.ReferUrl))
+                            model.ReferUrl = "'/";
 
                         model.RetMsg = "로그인 하셨습니다.";
                         break;
