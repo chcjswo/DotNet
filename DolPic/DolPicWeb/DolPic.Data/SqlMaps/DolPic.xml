@@ -39,6 +39,11 @@
     <procedure id="UP_DolPicUser_Login" parameterMap="p_user" description="로그인">
       UP_DolPicUser_Login
     </procedure>
+
+    <!-- 이미지 좋아요 -->
+    <procedure id="UP_DolPicImage_Like" parameterMap="p_image_like" description="이미지 좋아요">
+      UP_DolPicImage_Like
+    </procedure>
   </statements>
 
   <!--ParameterMap 을 정의합니다.-->
@@ -46,6 +51,7 @@
     <parameterMap id="p_main_image_list" class="dolpic">
       <parameter property="HashTag" column="HashTag" />
       <parameter property="CurPage" column="CurPage" />
+      <parameter property="PageListSize" column="PageListSize" />
       <parameter property="TotalCnt" column="TotalCnt" direction="Output" />
     </parameterMap>
 
@@ -60,6 +66,12 @@
     <parameterMap id="p_user" class="dolpic">
       <parameter property="UserId" column="UserId" />
       <parameter property="UserPwd" column="UserPwd" />
+      <parameter property="RetCode" column="RetCode" direction="Output" />
+    </parameterMap>
+    
+    <parameterMap id="p_image_like" class="dolpic">
+      <parameter property="Seq" column="Seq" />
+      <parameter property="UserId" column="UserId" />
       <parameter property="RetCode" column="RetCode" direction="Output" />
     </parameterMap>
   </parameterMaps>

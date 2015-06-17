@@ -11,7 +11,7 @@
         top: 300px; 
     } 
 </style>
-<div id="loading" style="display:none"><img src="/Images/loader.gif" /><br /><br />로딩하는 중입니다...</div>
+<div id="loading" style="display:none"><img src="/Images/loader.gif" /><br /><br />로딩하는 중입니다...</div><div id="target"></div>
 <!-- 갤러리 -->
 <div class="wrapper">
 	<div class="gbox_gallery">
@@ -45,10 +45,11 @@
 	<div class="clear"></div>
 </div>
 @Html.Action("InitialList", "Pics")
-
+<a href="#target" class="scroll">Scroll to target</a>
 @section scripts
 {
     <script type="text/javascript">
+        var bExec = false;
         $(function () {
             $('.gbox').hover(
 		        function () { $('.gbox_thumb', this).fadeIn(300); $('.gbox_thumb', this).parent("div").addClass('transition'); },
@@ -57,8 +58,7 @@
             $('.gbox').live('click', function () {
                 location.href = '/Pics/PicView/' + $(this).attr("seq");
             });
-            var bExec = false;
-            $('.gbox_list li').live('click', function () {
+            $('.gbox_list li').live('click', function (event) {
                 if (bExec) {
                     alert("요청을 처리중입니다.잠시만 기다려주세요.");
                     return;
@@ -94,7 +94,9 @@
                         div += "</div>";
                         $(".img_list").append(div);
                     }                    div = "<div class='goto_list'>" + retData.PageGotoList + "</div>";
-                    $(".gbox_list").append(div);                })
+                    $(".gbox_list").append(div);
+
+                    $('html,body').animate({ scrollTop: 0 }, 500);                })
                 .fail(function () {
                     alert("실행중 에러가 발생했습니다.");
                 })

@@ -18,7 +18,10 @@
 <!-- 즐겨찾기 -->
 <div class="fbar">
 	<div class="fbar_wrap">
-		<span class="on">로그인 후 사용가능</span>
+        @if (string.IsNullOrEmpty(ViewBag.User))
+        {
+		    @:<span class="on">로그인 후 사용가능</span>
+        }
 		<span>최신 업로드 이미지</span>
 		<span>EXO <a href="#">X</a></span>
 		<span>소녀시대 <a href="#">X</a></span>

@@ -59,5 +59,14 @@ namespace DolPic.Data.Daos
         {
             DolPicServiceDataMapper.Instance().QueryForObject<DolPicVo>("UP_DolPicUser_Login", entity);
         }
+
+        /// <summary>
+        /// 이미지 좋아요
+        /// </summary>
+        /// <returns></returns>
+        public void DolPicImageLike(DolPicVo entity)
+        {
+            DolPicServiceDataMapper.Instance().QueryForObject<DolPicVo>("UP_DolPicImage_Like", entity);
+        }
     }
 }

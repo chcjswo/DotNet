@@ -54,6 +54,7 @@ namespace DolPic.Data.Vos
         /// </summary>
         public string UserPwd { get; set; }
 
+        public int PageListSize { get; set; }
         public int PrevSeq { get; set; }
         public int NextSeq { get; set; }
         public int TotalCnt { get; set; }

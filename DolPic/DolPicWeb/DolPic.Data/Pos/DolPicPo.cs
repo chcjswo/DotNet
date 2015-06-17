@@ -6,6 +6,7 @@ namespace DolPic.Data.Pos
     {
         public string ImageSrc { get; set; }
         public string HashTag { get; set; }
+        public int CurSeq { get; set; }
         public int PrevSeq { get; set; }
         public int NextSeq { get; set; }
         public int RetCode { get; set; }

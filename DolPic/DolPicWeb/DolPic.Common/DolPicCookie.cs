@@ -35,6 +35,7 @@ namespace DolPic.Common
 
             cookie.Values[key] = (value);
             cookie.Path = "/";
+            //a_context.Response.SetCookie(cookie);
             a_context.Response.Cookies.Add(cookie);
         }
 
@@ -48,7 +49,7 @@ namespace DolPic.Common
             HttpCookie cookie = a_context.Request.Cookies[COOKIES_KEY];
             cookie.Values[key] = null;
             cookie.Values.Remove(key);
-            cookie.Expires = DateTime.Now.AddDays(1);
+            cookie.Expires = DateTime.Now.AddDays(-1);
             cookie.Path = "/";
             a_context.Response.Cookies.Add(cookie);
         }

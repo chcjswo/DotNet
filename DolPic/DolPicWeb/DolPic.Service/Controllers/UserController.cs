@@ -6,6 +6,7 @@ using DolPic.Service.Web.Common;
 using Newtonsoft.Json;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace DolPic.Service.Web.Controllers
 {
@@ -97,6 +98,8 @@ namespace DolPic.Service.Web.Controllers
                 {
                     case (int)e_RetCode.success:
                         DolPicCookie.CookieWrite(this.HttpContext, COOKIE_NAME, model.UserId);
+                        //FormsAuthentication.SetAuthCookie(model.UserId, false);
+                        
 
                         if ("/User/SignUp".Equals(model.ReferUrl))
                             model.ReferUrl = "'/";
