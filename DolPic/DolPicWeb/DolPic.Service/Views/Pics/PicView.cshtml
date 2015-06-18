@@ -14,7 +14,7 @@
 			<li class="on"><span id="hashtag">#@Model.HashTag</span></li>
 			<li seq="@Model.NextSeq">다음 페이지 &gt;</li>
 		</ul>
-		<div class="btn_good">좋아요</div>
+		<div id="like" class="@(Model.IsLike == 0 ? "btn_good" : "btn_good on")">좋아요</div>
 		<div class="clear"></div>
 		<!-- 구글 광고 -->
 		@Html.Partial("_GoogleAd1")
@@ -47,7 +47,7 @@
 
             $('.gbox_list li').live('click', function () {
                 var seq = $(this).attr("seq");
-                if (seq == 0) return;
+                if (seq == 0) { alert("더이상 사진이 없습니다."); return; }
 
                 if (bExec) {
                     alert("요청을 처리중입니다.잠시만 기다려주세요.");
@@ -61,7 +61,8 @@
                     type: "POST",
                     dataType: "json",
                     data: {
-                        "Seq": seq
+                        "TagNo": seq,
+                        "HashTag": "@ViewBag.HashTag"
                     }
                 })
                 .done(function (data) {
@@ -70,17 +71,26 @@
                     $('.gbox_list li').eq(2).attr("seq", "0");
                     $("#hashtag").html("#" + retData.HashTag);
                     $("#CurSeq").val(retData.CurSeq);
+                    $('.gbox_list li').eq(0).addClass("on");
+                    $('.gbox_list li').eq(2).addClass("on");
 
                     if (retData.PrevSeq > 0) {
                         $('.gbox_list li').eq(0).attr("seq", retData.PrevSeq);
+                        $('.gbox_list li').eq(0).removeClass("on");
                     }
                     if (retData.NextSeq > 0) {
                         $('.gbox_list li').eq(2).attr("seq", retData.NextSeq);
+                        $('.gbox_list li').eq(2).removeClass("on");
                     }
+
+                    $('#like').removeClass('btn_good').removeClass('btn_good on');
+                    retData.IsLike == 0 ? $('#like').addClass('btn_good') : $('#like').addClass('btn_good on');
 
                     $('.vbox img').fadeOut(10);
                     $('.vbox img').fadeIn(300);
                     $('.vbox img').attr("src", retData.ImageSrc);
+
+                    $('html,body').animate({ scrollTop: 0 }, 100);
                 })
                 .fail(function () {
                     alert("실행중 에러가 발생했습니다.");
@@ -116,6 +126,7 @@
                 var retData = $.parseJSON(data);
                 if (retData.RetCode == 0) {
                     $('.like_box').fadeIn('swing').delay(200).fadeOut('fast');
+                    $('#like').addClass('btn_good on');
                 } else {
                     alert(retData.RetMsg);
                 }

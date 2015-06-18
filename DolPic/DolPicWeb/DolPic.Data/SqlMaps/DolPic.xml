@@ -41,8 +41,13 @@
     </procedure>
 
     <!-- 이미지 좋아요 -->
-    <procedure id="UP_DolPicImage_Like" parameterMap="p_image_like" description="이미지 좋아요">
-      UP_DolPicImage_Like
+    <procedure id="UP_DolPicImageLike_Insert" parameterMap="p_image_like_insert" description="이미지 좋아요">
+      UP_DolPicImageLike_Insert
+    </procedure>
+
+    <!-- 해쉬태그 즐겨찾기 입력 -->
+    <procedure id="UP_HashTagFavorite_Insert" parameterMap="p_image_like_insert" description="해쉬태그 즐겨찾기 입력">
+      UP_HashTagFavorite_Insert
     </procedure>
   </statements>
 
@@ -57,10 +62,13 @@
 
     <parameterMap id="p_image_select" class="dolpic">
       <parameter property="Seq" column="Seq" />
+      <parameter property="UserId" column="UserId" />
+      <parameter property="SearchHashTag" column="SearchHashTag" />
       <parameter property="HashTag" column="HashTag" direction="Output" />
       <parameter property="ImageSrc" column="ImageSrc" direction="Output" />
       <parameter property="PrevSeq" column="PrevSeq" direction="Output" />
       <parameter property="NextSeq" column="NextSeq" direction="Output" />
+      <parameter property="IsLike" column="IsLike" direction="Output" />
     </parameterMap>
     
     <parameterMap id="p_user" class="dolpic">
@@ -69,7 +77,7 @@
       <parameter property="RetCode" column="RetCode" direction="Output" />
     </parameterMap>
     
-    <parameterMap id="p_image_like" class="dolpic">
+    <parameterMap id="p_image_like_insert" class="dolpic">
       <parameter property="Seq" column="Seq" />
       <parameter property="UserId" column="UserId" />
       <parameter property="RetCode" column="RetCode" direction="Output" />

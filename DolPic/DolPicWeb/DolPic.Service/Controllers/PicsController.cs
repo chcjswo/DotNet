@@ -1,4 +1,5 @@
-﻿using DolPic.Common;
+﻿using DolPic.Biz;
+using DolPic.Common;
 using DolPic.Data.Daos;
 using DolPic.Data.Pos;
 using DolPic.Data.Vos;
@@ -14,14 +15,20 @@ namespace DolPic.Service.Web.Controllers
     {
         private const string COOKIE_NAME = "user";
         // 이미지 리스트 사이즈
-        private readonly int _nImageListSize;
+        private readonly short _nImageListSize;
         // 바로가기 리스트 사이즈
         private readonly int _nGotoListSize;
+        // DAO
+        private readonly IDolPicService dao;
 
+        /// <summary>
+        /// 생성자
+        /// </summary>
         public PicsController()
         {
             _nImageListSize = 50;
             _nGotoListSize = 10;
+            dao = new DolPicService();
         }
 
         //
@@ -45,8 +52,7 @@ namespace DolPic.Service.Web.Controllers
             entity.CurPage = 1;
             entity.PageListSize = _nImageListSize;
 
-            DolPicDao dao = new DolPicDao();
-            ViewBag.DataList = dao.MainImageList(entity);
+            ViewBag.DataList = dao.GetMainImageList(entity);
             ViewBag.HashTag = id;
             ViewBag.PageGotoList = GetGotoPageList(1, entity.TotalCnt, _nImageListSize, _nGotoListSize);
 
@@ -65,11 +71,8 @@ namespace DolPic.Service.Web.Controllers
             entity.CurPage = CurPage;
             entity.PageListSize = _nImageListSize;
 
-            DolPicDao dao = new DolPicDao();
-            var list = dao.MainImageList(entity);
-
             ReturnResult result = new ReturnResult();
-            result.ImageList = dao.MainImageList(entity);
+            result.ImageList = dao.GetMainImageList(entity);
             result.PageGotoList = GetGotoPageList(CurPage, entity.TotalCnt, _nImageListSize, _nGotoListSize);
 
             return Json(JsonConvert.SerializeObject(result));
@@ -78,23 +81,17 @@ namespace DolPic.Service.Web.Controllers
         /// <summary>
         /// 이미지 보기
         /// </summary>
+        /// <param name="TagNo">고유번호</param>
+        /// <param name="HahTag">해쉬 태그</param>
         /// <returns></returns>
-        public ActionResult PicView(int id)
+        public ActionResult PicView(int TagNo, string HashTag)
         {
-            DolPicVo entity = new DolPicVo();
-            entity.Seq = id;
+            var UserId = DolPicCookie.CookieRead(this.HttpContext, COOKIE_NAME);
+            ViewBag.User = UserId;
+            ViewBag.HashTag = HashTag;
 
-            DolPicDao dao = new DolPicDao();
-            dao.DolPicImageSelect(entity);
-
-            DolPicPo po = new DolPicPo();
-            po.ImageSrc = entity.ImageSrc;
-            po.HashTag = entity.HashTag;
-            po.PrevSeq = entity.PrevSeq;
-            po.NextSeq = entity.NextSeq;
-            po.CurSeq = id;
-
-            ViewBag.User = DolPicCookie.CookieRead(this.HttpContext, COOKIE_NAME);
+            // 이미지 조회
+            DolPicPo po = dao.GetPicView(TagNo, UserId, HashTag);
 
             return View(po);
         }
@@ -102,22 +99,16 @@ namespace DolPic.Service.Web.Controllers
         /// <summary>
         /// 이미지 보기 Ajax
         /// </summary>
+        /// <param name="TagNo">고유번호</param>
+        /// <param name="HahTag">해쉬 태그</param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult ImageView(int Seq)
+        public ActionResult ImageView(int TagNo, string HashTag)
         {
-            DolPicVo entity = new DolPicVo();
-            entity.Seq = Seq;
+            ViewBag.HashTag = HashTag;
 
-            DolPicDao dao = new DolPicDao();
-            dao.DolPicImageSelect(entity);
-
-            DolPicPo po = new DolPicPo();
-            po.ImageSrc = entity.ImageSrc;
-            po.HashTag = entity.HashTag;
-            po.PrevSeq = entity.PrevSeq;
-            po.NextSeq = entity.NextSeq;
-            po.CurSeq = Seq;
+            // 이미지 조회
+            DolPicPo po = dao.GetPicView(TagNo, DolPicCookie.CookieRead(this.HttpContext, COOKIE_NAME), HashTag);
 
             return Json(JsonConvert.SerializeObject(po));
         }
@@ -125,6 +116,7 @@ namespace DolPic.Service.Web.Controllers
         /// <summary>
         /// 이미지 좋아요 Ajax
         /// </summary>
+        /// <param name="Seq">고유번호</param>
         /// <returns></returns>
         [HttpPost]
         public ActionResult PicLike(int Seq)
@@ -141,20 +133,53 @@ namespace DolPic.Service.Web.Controllers
                 return Json(JsonConvert.SerializeObject(po));
             }
 
-            DolPicVo entity = new DolPicVo();
-            entity.Seq = Seq;
-            entity.UserId = UserId;
+            // 이미지 좋아요
+            po.RetCode = dao.PicLike(Seq, UserId);
 
-            DolPicDao dao = new DolPicDao();
-            dao.DolPicImageLike(entity);
-
-            po.RetCode = entity.RetCode;
-
-            switch (entity.RetCode)
+            switch (po.RetCode)
             {
                 // 이미 등록된 경우
                 case (int)e_RetCode.has:
                     po.RetMsg = "이미 좋아요를 하셨습니다.";
+                    break;
+
+                // DB에러
+                case (int)e_RetCode.db_error:
+                    po.RetMsg = "에러가 발생했습니다. 다시 한번 시도해주세요.";
+                    break;
+            }
+
+            return Json(JsonConvert.SerializeObject(po));
+        }
+
+        /// <summary>
+        /// 즐겨찾기 Ajax
+        /// </summary>
+        /// <param name="TagNo">고유번호</param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult HashTagFavoriteInsert(int TagNo)
+        {
+            var UserId = DolPicCookie.CookieRead(this.HttpContext, COOKIE_NAME);
+            DolPicPo po = new DolPicPo();
+
+            // 로그인 체크
+            if (string.IsNullOrEmpty(UserId))
+            {
+                po.RetCode = (int)e_RetCode.discord;
+                po.RetMsg = "로그인후 사용 가능합니다.";
+
+                return Json(JsonConvert.SerializeObject(po));
+            }
+
+            // 이미지 좋아요
+            po.RetCode = dao.HashTagFavoriteInsert(TagNo, UserId);
+
+            switch (po.RetCode)
+            {
+                // 이미 등록된 경우
+                case (int)e_RetCode.has:
+                    po.RetMsg = "이미 즐겨찾기를 하셨습니다.";
                     break;
 
                 // DB에러
@@ -172,10 +197,10 @@ namespace DolPic.Service.Web.Controllers
         /// <returns></returns>
         public ActionResult InitialList()
         {
-            DolPicVo entity = new DolPicVo();
+            ViewBag.User = DolPicCookie.CookieRead(this.HttpContext, COOKIE_NAME);
 
-            DolPicDao dao = new DolPicDao();
-            ViewBag.DataList = dao.InitialList(entity);
+            // 초성 리스트 조회
+            ViewBag.DataList = dao.GetInitialList("");
 
             return View();
         }
@@ -186,10 +211,8 @@ namespace DolPic.Service.Web.Controllers
         /// <returns></returns>
         public ActionResult HotDolPicList()
         {
-            DolPicVo entity = new DolPicVo();
-
-            DolPicDao dao = new DolPicDao();
-            ViewBag.DataList = dao.HotDolPicList(entity);
+            // 핫돌픽 리스트 조회
+            ViewBag.DataList = dao.GetHotDolPicList();
 
             return View();
         }
@@ -237,6 +260,9 @@ namespace DolPic.Service.Web.Controllers
             // 블럭페이지 계산
             int nBlockPage = ((a_nCurPage - 1) / a_nViewPageCnt) * a_nViewPageCnt + 1;
 
+            if (nBlockPage != 1)
+                sbPage.AppendFormat("<li page='{0}'><</li>&nbsp", nBlockPage - a_nViewPageCnt);
+
             int nCnt = 1;
             while (nStartPage <= nPageCnt && nCnt <= a_nViewPageCnt)
             {
@@ -252,21 +278,20 @@ namespace DolPic.Service.Web.Controllers
 
             if (nBlockPage < nPageCnt)
                 sbPage.AppendFormat("<li page='{0}'>></li>", nBlockPage);
-            //else
-            //    sbPage.AppendFormat(" <img src='{0}' border=0' title='다음 페이지' align='absmiddle' onfocus='this.blur();' />", "asdfasd");
-
-            //sbPage.Append(" <img src='/Images/btn_end.gif' style='cursor:pointer;' border=0' align='absmiddle' ");
-            //sbPage.AppendFormat("onclick=\"{0}('{1}');\" ", a_sScriptName, nPageCnt);
-            //sbPage.Append(" title='마지막 페이지' />");
 
             return sbPage.ToString();
         } 
         #endregion
     }
 
+    #region 이미지 리스트 결과값 클래스
+    /// <summary>
+    /// 이미지 리스트 결과값 클래스
+    /// </summary>
     public class ReturnResult
     {
         public IList<DolPicVo> ImageList;
         public string PageGotoList;
-    }
+    } 
+    #endregion
 }

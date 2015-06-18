@@ -11,8 +11,7 @@
         top: 300px; 
     } 
 </style>
-<div id="loading" style="display:none"><img src="/Images/loader.gif" /><br /><br />로딩하는 중입니다...</div><div id="target"></div>
-<!-- 갤러리 -->
+<div id="loading" style="display:none"><img src="/Images/loader.gif" /><br /><br />로딩하는 중입니다...</div><!-- 갤러리 -->
 <div class="wrapper">
 	<div class="gbox_gallery">
         <div class="img_list">
@@ -27,6 +26,7 @@
 		    </div>
         }
         </div>
+        <div class="clear"></div>
 		<ul class="gbox_list">
             <div class="goto_list">
 			@Html.Raw(ViewBag.PageGotoList)
@@ -45,18 +45,18 @@
 	<div class="clear"></div>
 </div>
 @Html.Action("InitialList", "Pics")
-<a href="#target" class="scroll">Scroll to target</a>
+
 @section scripts
 {
     <script type="text/javascript">
         var bExec = false;
         $(function () {
-            $('.gbox').hover(
-		        function () { $('.gbox_thumb', this).fadeIn(300); $('.gbox_thumb', this).parent("div").addClass('transition'); },
-		        function () { $('.gbox_thumb', this).fadeOut(100); $('.gbox_thumb', this).parent("div").removeClass('transition'); }
-            );
+            $('.gbox').live({
+                mouseenter: function () { $('.gbox_thumb', this).fadeIn(300); $('.gbox_thumb', this).parent("div").addClass('transition'); },
+                mouseleave: function () { $('.gbox_thumb', this).fadeOut(100); $('.gbox_thumb', this).parent("div").removeClass('transition'); }
+            });
             $('.gbox').live('click', function () {
-                location.href = '/Pics/PicView/' + $(this).attr("seq");
+                location.href = '/Pics/PicView?TagNo=' + $(this).attr("seq") + "&HashTag=@ViewBag.HashTag";
             });
             $('.gbox_list li').live('click', function (event) {
                 if (bExec) {

@@ -26,7 +26,7 @@
 			    @:<span class="on">@sCurInitial</span>
                 
             }
-			    <span>@item.HashTag <a href="#">+</a></span>
+			    <span>@item.HashTag <a href="javascript:void(0);" id="@string.Format("in{0}", item.Seq)" onclick="fnDolPicFavoriteInsert('@item.Seq', '@item.HashTag');">+</a></span>
             if (nCurInitialCnt == nLoopCnt)
             {
                 @:<div class="clear"></div></div>
@@ -43,3 +43,51 @@
 	</div>
     <div class="sponsor">Icons made by <a href="http://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>
 </div>
+
+<script type="text/javascript">
+    var bExec = false;
+
+    function fnDolPicFavoriteInsert(seq, tag) {
+        if ("@ViewBag.User" == "") {
+            alert("로그인후 사용 가능합니다.");
+            return;
+        }
+
+        if (bExec) {
+            alert("요청을 처리중입니다.잠시만 기다려주세요.");
+            return;
+        }
+
+        bExec = true;
+
+        $.ajax({
+            url: "/Pics/HashTagFavoriteInsert",
+            type: "POST",
+            dataType: "json",
+            data: {
+                "TagNo": seq
+            }
+        })
+        .done(function (data) {
+            var retData = $.parseJSON(data);
+            if (retData.RetCode == 0) {
+                $("#in" + seq).text('');
+                $("#in" + seq).text('♡');
+
+                var div;
+
+                div = "<span class='fbar" + seq + "'>" + tag + " <a href='/Pics/Main/" + tag + "' onclick='fnDolPicFavoriteDelete('" + seq + "');'>X</a></span>";
+                alert(div);
+                $('.flist').append(div);
+            } else {
+                alert(retData.RetMsg);
+            }
+        })
+        .fail(function () {
+            alert("실행중 에러가 발생했습니다.");
+        })
+        .always(function () {
+            bExec = false;
+        });
+    }
+</script>

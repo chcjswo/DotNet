@@ -50,7 +50,7 @@ body{background:url(../images/bg.png) #EDEFF4;color:#282828}
 .gbox_list li:hover{border:2px solid #3B5998}
 .gbox_list li.on{background-color:#3B5998;border:2px solid #3B5998;color:#EDEFF4}
 .vbox{position:relative;width:688px;padding:20px;background-color:#C1C3C8;text-align:center;margin-bottom:8px}
-.vbox img{max-width:688px;height:auto;display:block}
+.vbox img{max-width:688px;height:auto;display:inline-block;*display:inline;zoom:1}
 .like_box{position:absolute;width:100%;height:100%;left:0;top:0;background:url(../images/icon_like_w.png) no-repeat center center}
 .btn_good{float:right;display:inline-block;*display:inline;zoom:1;padding:4px 8px 4px 34px;margin-right:20px;background:url(../images/icon_like_b.png) no-repeat 4px center #FFFFFF;background-size:auto 18px;font-size:12px;border:2px solid #FFFFFF;box-shadow:0 0 4px rgba(0,0,0,.2);color:#3B5998;cursor:pointer}
 .btn_good:hover{border:2px solid #3B5998}

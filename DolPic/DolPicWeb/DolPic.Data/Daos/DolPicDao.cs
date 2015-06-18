@@ -64,9 +64,18 @@ namespace DolPic.Data.Daos
         /// 이미지 좋아요
         /// </summary>
         /// <returns></returns>
-        public void DolPicImageLike(DolPicVo entity)
+        public void DolPicImageLikeInsert(DolPicVo entity)
         {
-            DolPicServiceDataMapper.Instance().QueryForObject<DolPicVo>("UP_DolPicImage_Like", entity);
+            DolPicServiceDataMapper.Instance().QueryForObject<DolPicVo>("UP_DolPicImageLike_Insert", entity);
+        }
+
+        /// <summary>
+        /// 해쉬태그 즐겨찾기
+        /// </summary>
+        /// <returns></returns>
+        public void HashTagFavoriteInsert(DolPicVo entity)
+        {
+            DolPicServiceDataMapper.Instance().QueryForObject<DolPicVo>("UP_HashTagFavorite_Insert", entity);
         }
     }
 }
