@@ -118,19 +118,50 @@ namespace DolPic.Biz
         }
 
         /// <summary>
-        /// 해쉬태그 즐겨찾기 입력
+        /// 즐겨찾기 입력
         /// </summary>
         /// <param name="a_nTagNo">고유번호</param>
         /// <param name="a_sUserId">유저 아이디</param>
         /// <returns></returns>
-        public int HashTagFavoriteInsert(int a_nTagNo, string a_sUserId)
+        public int FavoriteInsert(int a_nTagNo, string a_sUserId)
         {
             DolPicVo entity = new DolPicVo();
             entity.Seq = a_nTagNo;
             entity.UserId = a_sUserId;
 
             DolPicDao dao = new DolPicDao();
-            dao.HashTagFavoriteInsert(entity);
+            dao.FavoriteInsert(entity);
+
+            return entity.RetCode;
+        }
+
+        /// <summary>
+        /// 즐겨찾기 리스트 조회
+        /// </summary>
+        /// <param name="a_sUserId">유저 아이디</param>
+        /// <returns></returns>
+        public IList<DolPicVo> GetFavoriteList(string a_sUserId)
+        {
+            DolPicVo entity = new DolPicVo();
+            entity.UserId = a_sUserId;
+
+            return dao.FavoriteList(entity);
+        }
+
+        /// <summary>
+        /// 즐겨찾기 삭제
+        /// </summary>
+        /// <param name="a_nTagNo">고유번호</param>
+        /// <param name="a_sUserId">유저 아이디</param>
+        /// <returns></returns>
+        public int FavoriteDelete(int a_nTagNo, string a_sUserId)
+        {
+            DolPicVo entity = new DolPicVo();
+            entity.Seq = a_nTagNo;
+            entity.UserId = a_sUserId;
+
+            DolPicDao dao = new DolPicDao();
+            dao.FavoriteDelete(entity);
 
             return entity.RetCode;
         }

@@ -1,5 +1,6 @@
 ﻿@model DolPic.Data.Pos.DolPicPo
 
+@Html.Action("FavoriteBar", "Pics")
 <!-- 갤러리 -->
 <div class="wrapper">
 	<div class="gbox_gallery">
@@ -31,81 +32,21 @@
 @Html.HiddenFor(m => m.CurSeq, new { @Value= Model.CurSeq})
 @Html.Action("InitialList", "Pics")
 
-@section scripts
-{
-    <script type="text/javascript">
-        var bExec = false;
-        $(function () {
-            $('.vbox').dblclick(function () {
-                fnPicLike();
-            });
-            $('.btn_good').live('click', function () { fnPicLike(); });
-            $('.gbox').hover(
-                function () { $('.gbox_thumb', this).fadeIn(300); },
-                function () { $('.gbox_thumb', this).fadeOut(100); }
-            );
-
-            $('.gbox_list li').live('click', function () {
-                var seq = $(this).attr("seq");
-                if (seq == 0) { alert("더이상 사진이 없습니다."); return; }
-
-                if (bExec) {
-                    alert("요청을 처리중입니다.잠시만 기다려주세요.");
-                    return;
-                }
-
-                bExec = true;
-
-                $.ajax({
-                    url: "/Pics/ImageView",
-                    type: "POST",
-                    dataType: "json",
-                    data: {
-                        "TagNo": seq,
-                        "HashTag": "@ViewBag.HashTag"
-                    }
-                })
-                .done(function (data) {
-                    var retData = $.parseJSON(data);
-                    $('.gbox_list li').eq(0).attr("seq", "0");
-                    $('.gbox_list li').eq(2).attr("seq", "0");
-                    $("#hashtag").html("#" + retData.HashTag);
-                    $("#CurSeq").val(retData.CurSeq);
-                    $('.gbox_list li').eq(0).addClass("on");
-                    $('.gbox_list li').eq(2).addClass("on");
-
-                    if (retData.PrevSeq > 0) {
-                        $('.gbox_list li').eq(0).attr("seq", retData.PrevSeq);
-                        $('.gbox_list li').eq(0).removeClass("on");
-                    }
-                    if (retData.NextSeq > 0) {
-                        $('.gbox_list li').eq(2).attr("seq", retData.NextSeq);
-                        $('.gbox_list li').eq(2).removeClass("on");
-                    }
-
-                    $('#like').removeClass('btn_good').removeClass('btn_good on');
-                    retData.IsLike == 0 ? $('#like').addClass('btn_good') : $('#like').addClass('btn_good on');
-
-                    $('.vbox img').fadeOut(10);
-                    $('.vbox img').fadeIn(300);
-                    $('.vbox img').attr("src", retData.ImageSrc);
-
-                    $('html,body').animate({ scrollTop: 0 }, 100);
-                })
-                .fail(function () {
-                    alert("실행중 에러가 발생했습니다.");
-                })
-                .always(function () {
-                    bExec = false;
-                });
-            });
+<script type="text/javascript">
+    var bExec = false;
+    $(function () {
+        $('.vbox').dblclick(function () {
+            fnPicLike();
         });
+        $('.btn_good').live('click', function () { fnPicLike(); });
+        $('.gbox').hover(
+            function () { $('.gbox_thumb', this).fadeIn(300); },
+            function () { $('.gbox_thumb', this).fadeOut(100); }
+        );
 
-        function fnPicLike() {
-            if ("@ViewBag.User" == "") {
-                alert("로그인후 사용 가능합니다.");
-                return;
-            }
+        $('.gbox_list li').live('click', function () {
+            var seq = $(this).attr("seq");
+            if (seq == 0) { alert("더이상 사진이 없습니다."); return; }
 
             if (bExec) {
                 alert("요청을 처리중입니다.잠시만 기다려주세요.");
@@ -115,28 +56,84 @@
             bExec = true;
 
             $.ajax({
-                url: "/Pics/PicLike",
+                url: "/Pics/ImageView",
                 type: "POST",
                 dataType: "json",
                 data: {
-                    "Seq": $("#CurSeq").val()
+                    "TagNo": seq,
+                    "HashTag": "@ViewBag.HashTag"
                 }
             })
             .done(function (data) {
                 var retData = $.parseJSON(data);
-                if (retData.RetCode == 0) {
-                    $('.like_box').fadeIn('swing').delay(200).fadeOut('fast');
-                    $('#like').addClass('btn_good on');
-                } else {
-                    alert(retData.RetMsg);
+                $('.gbox_list li').eq(0).attr("seq", "0");
+                $('.gbox_list li').eq(2).attr("seq", "0");
+                $("#hashtag").html("#" + retData.HashTag);
+                $("#CurSeq").val(retData.CurSeq);
+                $('.gbox_list li').eq(0).addClass("on");
+                $('.gbox_list li').eq(2).addClass("on");
+
+                if (retData.PrevSeq > 0) {
+                    $('.gbox_list li').eq(0).attr("seq", retData.PrevSeq);
+                    $('.gbox_list li').eq(0).removeClass("on");
                 }
+                if (retData.NextSeq > 0) {
+                    $('.gbox_list li').eq(2).attr("seq", retData.NextSeq);
+                    $('.gbox_list li').eq(2).removeClass("on");
+                }
+
+                $('#like').removeClass('btn_good').removeClass('btn_good on');
+                retData.IsLike == 0 ? $('#like').addClass('btn_good') : $('#like').addClass('btn_good on');
+
+                $('.vbox img').fadeOut(10);
+                $('.vbox img').fadeIn(300);
+                $('.vbox img').attr("src", retData.ImageSrc);
+
+                $('html,body').animate({ scrollTop: 0 }, 100);
+                bExec = false;
             })
             .fail(function () {
                 alert("실행중 에러가 발생했습니다.");
-            })
-            .always(function () {
                 bExec = false;
             });
+        });
+    });
+
+    function fnPicLike() {
+        if ("@ViewBag.User" == "") {
+            alert("로그인후 사용 가능합니다.");
+            return;
         }
-    </script>
-}
+
+        if (bExec) {
+            alert("요청을 처리중입니다.잠시만 기다려주세요.");
+            return;
+        }
+
+        bExec = true;
+
+        $.ajax({
+            url: "/Pics/PicLike",
+            type: "POST",
+            dataType: "json",
+            data: {
+                "Seq": $("#CurSeq").val()
+            }
+        })
+        .done(function (data) {
+            var retData = $.parseJSON(data);
+            if (retData.RetCode == 0) {
+                $('.like_box').fadeIn('swing').delay(200).fadeOut('fast');
+                $('#like').addClass('btn_good on');
+            } else {
+                alert(retData.RetMsg);
+            }
+        })
+        .fail(function () {
+            alert("실행중 에러가 발생했습니다.");
+        })
+        .always(function () {
+            bExec = false;
+        });
+    }
+</script>

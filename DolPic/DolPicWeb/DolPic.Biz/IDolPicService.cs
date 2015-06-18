@@ -53,11 +53,26 @@ namespace DolPic.Biz
         void PicLike(int a_nTagNo, string a_sImageSrc, int a_nTagUrlType);
 
         /// <summary>
-        /// 해쉬태그 즐겨찾기 입력
+        /// 즐겨찾기 입력
         /// </summary>
         /// <param name="a_nTagNo">고유번호</param>
         /// <param name="a_sUserId">유저 아이디</param>
         /// <returns></returns>
-        int HashTagFavoriteInsert(int a_nTagNo, string a_sUserId);
+        int FavoriteInsert(int a_nTagNo, string a_sUserId);
+
+        /// <summary>
+        /// 즐겨찾기 리스트 조회
+        /// </summary>
+        /// <param name="a_sUserId">유저 아이디</param>
+        /// <returns></returns>
+        IList<DolPicVo> GetFavoriteList(string a_sUserId);
+
+        /// <summary>
+        /// 즐겨찾기 삭제
+        /// </summary>
+        /// <param name="a_nTagNo">고유번호</param>
+        /// <param name="a_sUserId">유저 아이디</param>
+        /// <returns></returns>
+        int FavoriteDelete(int a_nTagNo, string a_sUserId);
     }
 }

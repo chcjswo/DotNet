@@ -1,0 +1,65 @@
+﻿@{
+    Layout = null;
+    
+    var list = ViewBag.DataList;
+}
+
+<!-- 즐겨찾기 -->
+<div class="fbar">
+    <div class="fbar_wrap">
+        @if (string.IsNullOrEmpty(ViewBag.User))
+        {
+		    @:<span class="on">로그인 후 사용가능</span>
+        }
+	    <span><a href="/">최신 업로드 이미지</a></span>
+        <div class="flist">
+        @foreach (var item in list)
+        {
+            @:<span class="@string.Format("fbar{0}", item.Seq)">@Html.Raw(string.Format("<a href=\"/Pics/Main/{0}\">{0}</a>", item.HashTag)) <a href="javascript:void(0);" onclick="fnFavoriteDelete('@item.Seq');">X</a></span>
+        }
+        </div>
+	    <div class="clear"></div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    var bExec = false;
+
+    function fnFavoriteDelete(seq) {
+        if ("@ViewBag.User" == "") {
+            alert("로그인후 사용 가능합니다.");
+            return;
+        }
+
+        if (bExec) {
+            alert("요청을 처리중입니다.잠시만 기다려주세요.");
+            return;
+        }
+
+        bExec = true;
+
+        $.ajax({
+            url: "/Pics/FavoriteDelete",
+            type: "POST",
+            dataType: "json",
+            data: {
+                "TagNo": seq
+            }
+        })
+        .done(function (data) {
+            var retData = $.parseJSON(data);
+            if (retData.RetCode == 0) {
+                $(".fbar" + seq).remove();
+                $(".in" + seq).text('+');
+            } else {
+                alert(retData.RetMsg);
+            }
+            bExec = false;
+        })
+        .fail(function () {
+            alert("실행중 에러가 발생했습니다.");
+            bExec = false;
+        });
+    }
+</script>
