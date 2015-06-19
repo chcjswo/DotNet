@@ -26,7 +26,7 @@
 			    @:<span class="on">@sCurInitial</span>
                 
             }
-			    <span>@item.HashTag <a href="javascript:void(0);" id="@string.Format("in{0}", item.Seq)" onclick="fnDolPicFavoriteInsert('@item.Seq', '@item.HashTag');">+</a></span>
+			    <span>@item.HashTag <a href="javascript:void(0);" class="@string.Format("in{0}", item.Seq)" onclick="fnFavoriteInsert('@item.Seq', '@item.HashTag');">+</a></span>
             if (nCurInitialCnt == nLoopCnt)
             {
                 @:<div class="clear"></div></div>
@@ -47,7 +47,7 @@
 <script type="text/javascript">
     var bExec = false;
 
-    function fnDolPicFavoriteInsert(seq, tag) {
+    function fnFavoriteInsert(seq, tag) {
         if ("@ViewBag.User" == "") {
             alert("로그인후 사용 가능합니다.");
             return;
@@ -61,7 +61,7 @@
         bExec = true;
 
         $.ajax({
-            url: "/Pics/HashTagFavoriteInsert",
+            url: "/Pics/FavoriteInsert",
             type: "POST",
             dataType: "json",
             data: {
@@ -71,22 +71,21 @@
         .done(function (data) {
             var retData = $.parseJSON(data);
             if (retData.RetCode == 0) {
-                $("#in" + seq).text('');
-                $("#in" + seq).text('♡');
+                $(".in" + seq).text('♡');
 
                 var div;
+                div = "<span class='fbar" + seq + "'>";
+                div += "<a href='/Pics/Main/" + tag + "'>" + tag + "</a> ";
+                div += "<a href='javascript:void(0);' onclick=\"fnFavoriteDelete('" + seq + "');\">X</a></span>";
 
-                div = "<span class='fbar" + seq + "'>" + tag + " <a href='/Pics/Main/" + tag + "' onclick='fnDolPicFavoriteDelete('" + seq + "');'>X</a></span>";
-                alert(div);
                 $('.flist').append(div);
             } else {
                 alert(retData.RetMsg);
             }
+            bExec = false;
         })
         .fail(function () {
             alert("실행중 에러가 발생했습니다.");
-        })
-        .always(function () {
             bExec = false;
         });
     }

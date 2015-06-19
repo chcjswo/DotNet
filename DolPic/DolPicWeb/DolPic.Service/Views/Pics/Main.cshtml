@@ -11,6 +11,7 @@
         top: 300px; 
     } 
 </style>
+@Html.Action("FavoriteBar", "Pics")
 <div id="loading" style="display:none"><img src="/Images/loader.gif" /><br /><br />로딩하는 중입니다...</div><!-- 갤러리 -->
 <div class="wrapper">
 	<div class="gbox_gallery">
@@ -46,66 +47,63 @@
 </div>
 @Html.Action("InitialList", "Pics")
 
-@section scripts
-{
-    <script type="text/javascript">
-        var bExec = false;
-        $(function () {
-            $('.gbox').live({
-                mouseenter: function () { $('.gbox_thumb', this).fadeIn(300); $('.gbox_thumb', this).parent("div").addClass('transition'); },
-                mouseleave: function () { $('.gbox_thumb', this).fadeOut(100); $('.gbox_thumb', this).parent("div").removeClass('transition'); }
-            });
-            $('.gbox').live('click', function () {
-                location.href = '/Pics/PicView?TagNo=' + $(this).attr("seq") + "&HashTag=@ViewBag.HashTag";
-            });
-            $('.gbox_list li').live('click', function (event) {
-                if (bExec) {
-                    alert("요청을 처리중입니다.잠시만 기다려주세요.");
-                    return;
+<script type="text/javascript">
+    var bExec = false;
+    $(function () {
+        $('.gbox').live({
+            mouseenter: function () { $('.gbox_thumb', this).fadeIn(300); $('.gbox_thumb', this).parent("div").addClass('transition'); },
+            mouseleave: function () { $('.gbox_thumb', this).fadeOut(100); $('.gbox_thumb', this).parent("div").removeClass('transition'); }
+        });
+        $('.gbox').live('click', function () {
+            location.href = '/Pics/PicView?TagNo=' + $(this).attr("seq") + "&HashTag=@ViewBag.HashTag";
+        });
+        $('.gbox_list li').live('click', function (event) {
+            if (bExec) {
+                alert("요청을 처리중입니다.잠시만 기다려주세요.");
+                return;
+            }
+
+            bExec = true;
+
+            $("#loading").show();
+
+            $.ajax({
+                url: "/Pics/ImageList",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    "CurPage": $(this).attr("page"),
+                    "HashTag": "@ViewBag.HashTag"
                 }
+            })
+            .done(function (data) {
+                var retData = $.parseJSON(data);
+                var imgList = retData.ImageList;
 
-                bExec = true;
+                $(".gbox").remove();
+                $(".goto_list").remove();
+                var div = "";
 
-                $("#loading").show();
+                for (var i = 0; i < imgList.length; i++) {
+                    div = "<div seq='" + imgList[i].Seq + "' class='gbox' style='background:url(" + imgList[i].ImageSrc + ") center center no-repeat;background-size:cover'>";
+                    div += "<div class='gbox_thumb g_t_twitter'>";
+                    div += "<div class='gbox_t_title'>#" + imgList[i].HashTag + "</div>";
+                    div += "<div class='gbox_t_text'><img src='../../images/icon_like.png' height='9'>" + imgList[i].LikeCnt + "</div>";
+                    div += "</div>";
+                    div += "</div>";
+                    $(".img_list").append(div);
+                }                div = "<div class='goto_list'>" + retData.PageGotoList + "</div>";
+                $(".gbox_list").append(div);
 
-                $.ajax({
-                    url: "/Pics/ImageList",
-                    type: "POST",
-                    dataType: "json",
-                    data: {
-                        "CurPage": $(this).attr("page"),
-                        "HashTag": "@ViewBag.HashTag"
-                    }
-                })
-                .done(function (data) {
-                    var retData = $.parseJSON(data);
-                    var imgList = retData.ImageList;
-
-                    $(".gbox").remove();
-                    $(".goto_list").remove();
-                    var div = "";
-
-                    for (var i = 0; i < imgList.length; i++) {
-                        div = "<div seq='" + imgList[i].Seq + "' class='gbox' style='background:url(" + imgList[i].ImageSrc + ") center center no-repeat;background-size:cover'>";
-                        div += "<div class='gbox_thumb g_t_twitter'>";
-                        div += "<div class='gbox_t_title'>#" + imgList[i].HashTag + "</div>";
-                        div += "<div class='gbox_t_text'><img src='../../images/icon_like.png' height='9'>" + imgList[i].LikeCnt + "</div>";
-                        div += "</div>";
-                        div += "</div>";
-                        $(".img_list").append(div);
-                    }                    div = "<div class='goto_list'>" + retData.PageGotoList + "</div>";
-                    $(".gbox_list").append(div);
-
-                    $('html,body').animate({ scrollTop: 0 }, 500);                })
-                .fail(function () {
-                    alert("실행중 에러가 발생했습니다.");
-                })
-                .always(function () {
-                    bExec = false;
-                    $("#loading").hide();
-                });
+                $('html,body').animate({ scrollTop: 0 }, 500);            })
+            .fail(function () {
+                alert("실행중 에러가 발생했습니다.");
+            })
+            .always(function () {
+                bExec = false;
+                $("#loading").hide();
             });
         });
+    });
 
-    </script>
-}
+</script>

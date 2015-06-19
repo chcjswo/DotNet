@@ -70,12 +70,30 @@ namespace DolPic.Data.Daos
         }
 
         /// <summary>
-        /// 해쉬태그 즐겨찾기
+        /// 즐겨찾기 입력
         /// </summary>
         /// <returns></returns>
-        public void HashTagFavoriteInsert(DolPicVo entity)
+        public void FavoriteInsert(DolPicVo entity)
         {
-            DolPicServiceDataMapper.Instance().QueryForObject<DolPicVo>("UP_HashTagFavorite_Insert", entity);
+            DolPicServiceDataMapper.Instance().QueryForObject<DolPicVo>("UP_Favorite_Insert", entity);
+        }
+
+        /// <summary>
+        /// 즐겨찾기 리스트
+        /// </summary>
+        /// <returns></returns>
+        public IList<DolPicVo> FavoriteList(DolPicVo entity)
+        {
+            return DolPicServiceDataMapper.Instance().QueryForList<DolPicVo>("UP_Favorite_List", entity);
+        }
+
+        /// <summary>
+        /// 즐겨찾기 삭제
+        /// </summary>
+        /// <returns></returns>
+        public void FavoriteDelete(DolPicVo entity)
+        {
+            DolPicServiceDataMapper.Instance().QueryForObject<DolPicVo>("UP_Favorite_Delete", entity);
         }
     }
 }

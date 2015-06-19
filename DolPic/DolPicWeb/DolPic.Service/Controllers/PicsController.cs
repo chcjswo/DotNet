@@ -38,6 +38,7 @@ namespace DolPic.Service.Web.Controllers
             return RedirectToAction("Main");
         }
 
+        #region 화면 관련
         /// <summary>
         /// 돌픽 메인
         /// </summary>
@@ -60,22 +61,16 @@ namespace DolPic.Service.Web.Controllers
         }
 
         /// <summary>
-        /// 메인 이미지 리스트 Ajax
+        /// 즐겨찾기 리스트
         /// </summary>
         /// <returns></returns>
-        [HttpPost]
-        public ActionResult ImageList(int CurPage, string HashTag)
+        public ActionResult FavoriteBar()
         {
-            DolPicVo entity = new DolPicVo();
-            entity.HashTag = HashTag ?? "";
-            entity.CurPage = CurPage;
-            entity.PageListSize = _nImageListSize;
+            var UserId = DolPicCookie.CookieRead(this.HttpContext, COOKIE_NAME);
+            ViewBag.User = UserId;
+            ViewBag.DataList = dao.GetFavoriteList(UserId);
 
-            ReturnResult result = new ReturnResult();
-            result.ImageList = dao.GetMainImageList(entity);
-            result.PageGotoList = GetGotoPageList(CurPage, entity.TotalCnt, _nImageListSize, _nGotoListSize);
-
-            return Json(JsonConvert.SerializeObject(result));
+            return View();
         }
 
         /// <summary>
@@ -94,6 +89,54 @@ namespace DolPic.Service.Web.Controllers
             DolPicPo po = dao.GetPicView(TagNo, UserId, HashTag);
 
             return View(po);
+        }
+
+        /// <summary>
+        /// 초성 리스트
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult InitialList()
+        {
+            ViewBag.User = DolPicCookie.CookieRead(this.HttpContext, COOKIE_NAME);
+
+            // 초성 리스트 조회
+            ViewBag.DataList = dao.GetInitialList("");
+
+            return View();
+        }
+
+        /// <summary>
+        /// 핫돌픽 리스트
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult HotDolPicList()
+        {
+            // 핫돌픽 리스트 조회
+            ViewBag.DataList = dao.GetHotDolPicList();
+
+            return View();
+        } 
+        #endregion
+
+        #region Ajax 관련
+
+        /// <summary>
+        /// 메인 이미지 리스트 Ajax
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult ImageList(int CurPage, string HashTag)
+        {
+            DolPicVo entity = new DolPicVo();
+            entity.HashTag = HashTag ?? "";
+            entity.CurPage = CurPage;
+            entity.PageListSize = _nImageListSize;
+
+            ReturnResult result = new ReturnResult();
+            result.ImageList = dao.GetMainImageList(entity);
+            result.PageGotoList = GetGotoPageList(CurPage, entity.TotalCnt, _nImageListSize, _nGotoListSize);
+
+            return Json(JsonConvert.SerializeObject(result));
         }
 
         /// <summary>
@@ -133,7 +176,7 @@ namespace DolPic.Service.Web.Controllers
                 return Json(JsonConvert.SerializeObject(po));
             }
 
-            // 이미지 좋아요
+            // 이미지 좋아요 처리
             po.RetCode = dao.PicLike(Seq, UserId);
 
             switch (po.RetCode)
@@ -153,12 +196,12 @@ namespace DolPic.Service.Web.Controllers
         }
 
         /// <summary>
-        /// 즐겨찾기 Ajax
+        /// 즐겨찾기 추가 Ajax
         /// </summary>
         /// <param name="TagNo">고유번호</param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult HashTagFavoriteInsert(int TagNo)
+        public ActionResult FavoriteInsert(int TagNo)
         {
             var UserId = DolPicCookie.CookieRead(this.HttpContext, COOKIE_NAME);
             DolPicPo po = new DolPicPo();
@@ -172,8 +215,8 @@ namespace DolPic.Service.Web.Controllers
                 return Json(JsonConvert.SerializeObject(po));
             }
 
-            // 이미지 좋아요
-            po.RetCode = dao.HashTagFavoriteInsert(TagNo, UserId);
+            // 즐겨찾기 입력 처리
+            po.RetCode = dao.FavoriteInsert(TagNo, UserId);
 
             switch (po.RetCode)
             {
@@ -192,30 +235,45 @@ namespace DolPic.Service.Web.Controllers
         }
 
         /// <summary>
-        /// 초성 리스트
+        /// 즐겨찾기 삭제 Ajax
         /// </summary>
+        /// <param name="TagNo">고유번호</param>
         /// <returns></returns>
-        public ActionResult InitialList()
+        [HttpPost]
+        public ActionResult FavoriteDelete(int TagNo)
         {
-            ViewBag.User = DolPicCookie.CookieRead(this.HttpContext, COOKIE_NAME);
+            var UserId = DolPicCookie.CookieRead(this.HttpContext, COOKIE_NAME);
+            DolPicPo po = new DolPicPo();
 
-            // 초성 리스트 조회
-            ViewBag.DataList = dao.GetInitialList("");
+            // 로그인 체크
+            if (string.IsNullOrEmpty(UserId))
+            {
+                po.RetCode = (int)e_RetCode.discord;
+                po.RetMsg = "로그인후 사용 가능합니다.";
 
-            return View();
-        }
+                return Json(JsonConvert.SerializeObject(po));
+            }
 
-        /// <summary>
-        /// 핫돌픽 리스트
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult HotDolPicList()
-        {
-            // 핫돌픽 리스트 조회
-            ViewBag.DataList = dao.GetHotDolPicList();
+            // 즐겨찾기 삭제 처리
+            po.RetCode = dao.FavoriteDelete(TagNo, UserId);
 
-            return View();
-        }
+            switch (po.RetCode)
+            {
+                // 이미 등록된 경우
+                case (int)e_RetCode.has:
+                    po.RetMsg = "이미 즐겨찾기를 하셨습니다.";
+                    break;
+
+                // DB에러
+                case (int)e_RetCode.db_error:
+                    po.RetMsg = "에러가 발생했습니다. 다시 한번 시도해주세요.";
+                    break;
+            }
+
+            return Json(JsonConvert.SerializeObject(po));
+        } 
+
+        #endregion
 
         #region 외부 API
         /// <summary>
