@@ -3,7 +3,7 @@ using DolPic.Data.Pos;
 using DolPic.Data.Vos;
 using System.Collections.Generic;
 
-namespace DolPic.Biz
+namespace DolPic.Biz.DolPicService
 {
     public class DolPicService : IDolPicService
     {
@@ -63,7 +63,7 @@ namespace DolPic.Biz
             DolPicVo entity = new DolPicVo();
             entity.Seq = a_nSeq;
             entity.UserId = a_sUserId;
-            entity.HashTag = a_sHahTag ?? "";
+            entity.SearchHashTag = a_sHahTag ?? "";
 
             DolPicDao dao = new DolPicDao();
             dao.DolPicImageSelect(entity);
@@ -75,6 +75,7 @@ namespace DolPic.Biz
             po.NextSeq = entity.NextSeq;
             po.CurSeq = a_nSeq;
             po.IsLike = entity.IsLike;
+            po.LikeCnt = entity.LikeCnt;
 
             return po;
         }
@@ -85,7 +86,7 @@ namespace DolPic.Biz
         /// <param name="a_nSeq">고유번호</param>
         /// <param name="a_sUserId">유저 아이디</param>
         /// <returns></returns>
-        public int PicLike(int a_nSeq, string a_sUserId)
+        public DolPicPo PicLike(int a_nSeq, string a_sUserId)
         {
             DolPicVo entity = new DolPicVo();
             entity.Seq = a_nSeq;
@@ -94,7 +95,11 @@ namespace DolPic.Biz
             DolPicDao dao = new DolPicDao();
             dao.DolPicImageLikeInsert(entity);
 
-            return entity.RetCode;
+            DolPicPo po = new DolPicPo();
+            po.RetCode = entity.RetCode;
+            po.LikeCnt = entity.LikeCnt;
+
+            return po;
         }
 
         /// <summary>

@@ -55,7 +55,7 @@
             mouseleave: function () { $('.gbox_thumb', this).fadeOut(100); $('.gbox_thumb', this).parent("div").removeClass('transition'); }
         });
         $('.gbox').live('click', function () {
-            location.href = '/Pics/PicView?TagNo=' + $(this).attr("seq") + "&HashTag=@ViewBag.HashTag";
+            location.href = '/Pics/PicView?ImgNo=' + $(this).attr("seq") + "&HashTag=@ViewBag.HashTag";
         });
         $('.gbox_list li').live('click', function (event) {
             if (bExec) {

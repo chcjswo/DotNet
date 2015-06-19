@@ -35,7 +35,7 @@ namespace DolPic.Common
 
             cookie.Values[key] = (value);
             cookie.Path = "/";
-            //a_context.Response.SetCookie(cookie);
+            a_context.Response.SetCookie(cookie);
             a_context.Response.Cookies.Add(cookie);
         }
 

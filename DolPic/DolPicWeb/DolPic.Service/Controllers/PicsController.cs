@@ -1,4 +1,4 @@
-﻿using DolPic.Biz;
+﻿using DolPic.Biz.DolPicService;
 using DolPic.Common;
 using DolPic.Data.Daos;
 using DolPic.Data.Pos;
@@ -76,17 +76,17 @@ namespace DolPic.Service.Web.Controllers
         /// <summary>
         /// 이미지 보기
         /// </summary>
-        /// <param name="TagNo">고유번호</param>
+        /// <param name="ImgNo">고유번호</param>
         /// <param name="HahTag">해쉬 태그</param>
         /// <returns></returns>
-        public ActionResult PicView(int TagNo, string HashTag)
+        public ActionResult PicView(int ImgNo, string HashTag)
         {
             var UserId = DolPicCookie.CookieRead(this.HttpContext, COOKIE_NAME);
             ViewBag.User = UserId;
             ViewBag.HashTag = HashTag;
 
             // 이미지 조회
-            DolPicPo po = dao.GetPicView(TagNo, UserId, HashTag);
+            DolPicPo po = dao.GetPicView(ImgNo, UserId, HashTag);
 
             return View(po);
         }
@@ -97,10 +97,11 @@ namespace DolPic.Service.Web.Controllers
         /// <returns></returns>
         public ActionResult InitialList()
         {
-            ViewBag.User = DolPicCookie.CookieRead(this.HttpContext, COOKIE_NAME);
+            var UserId = DolPicCookie.CookieRead(this.HttpContext, COOKIE_NAME);
+            ViewBag.User = UserId;
 
             // 초성 리스트 조회
-            ViewBag.DataList = dao.GetInitialList("");
+            ViewBag.DataList = dao.GetInitialList(UserId);
 
             return View();
         }
@@ -142,16 +143,16 @@ namespace DolPic.Service.Web.Controllers
         /// <summary>
         /// 이미지 보기 Ajax
         /// </summary>
-        /// <param name="TagNo">고유번호</param>
+        /// <param name="ImgNo">고유번호</param>
         /// <param name="HahTag">해쉬 태그</param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult ImageView(int TagNo, string HashTag)
+        public ActionResult ImageView(int ImgNo, string HashTag)
         {
             ViewBag.HashTag = HashTag;
 
             // 이미지 조회
-            DolPicPo po = dao.GetPicView(TagNo, DolPicCookie.CookieRead(this.HttpContext, COOKIE_NAME), HashTag);
+            DolPicPo po = dao.GetPicView(ImgNo, DolPicCookie.CookieRead(this.HttpContext, COOKIE_NAME), HashTag);
 
             return Json(JsonConvert.SerializeObject(po));
         }
@@ -177,7 +178,7 @@ namespace DolPic.Service.Web.Controllers
             }
 
             // 이미지 좋아요 처리
-            po.RetCode = dao.PicLike(Seq, UserId);
+            po = dao.PicLike(Seq, UserId);
 
             switch (po.RetCode)
             {

@@ -2,7 +2,7 @@
 using DolPic.Data.Vos;
 using System.Collections.Generic;
 
-namespace DolPic.Biz
+namespace DolPic.Biz.DolPicService
 {
     public interface IDolPicService
     {
@@ -41,7 +41,7 @@ namespace DolPic.Biz
         /// <param name="a_nSeq">고유번호</param>
         /// <param name="a_sUserId">유저 아이디</param>
         /// <returns></returns>
-        int PicLike(int a_nSeq, string a_sUserId);
+        DolPicPo PicLike(int a_nSeq, string a_sUserId);
 
         /// <summary>
         /// 이미지 저장 API

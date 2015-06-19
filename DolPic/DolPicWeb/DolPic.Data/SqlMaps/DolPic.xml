@@ -21,7 +21,7 @@
     </procedure>
 
     <!-- 초성 리스트 -->
-    <procedure id="UP_Initial_List" resultClass="dolpic" description="초성 리스트">
+    <procedure id="UP_Initial_List" parameterMap="p_favorite_list" resultClass="dolpic" description="초성 리스트">
       UP_Initial_List
     </procedure>
 
@@ -41,7 +41,7 @@
     </procedure>
 
     <!-- 이미지 좋아요 -->
-    <procedure id="UP_DolPicImageLike_Insert" parameterMap="p_seq_userid" description="이미지 좋아요">
+    <procedure id="UP_DolPicImageLike_Insert" parameterMap="p_image_like_insert" description="이미지 좋아요">
       UP_DolPicImageLike_Insert
     </procedure>
 
@@ -79,6 +79,7 @@
       <parameter property="PrevSeq" column="PrevSeq" direction="Output" />
       <parameter property="NextSeq" column="NextSeq" direction="Output" />
       <parameter property="IsLike" column="IsLike" direction="Output" />
+      <parameter property="LikeCnt" column="LikeCnt" direction="Output" />
     </parameterMap>
     
     <parameterMap id="p_user" class="dolpic">
@@ -91,6 +92,13 @@
       <parameter property="Seq" column="Seq" />
       <parameter property="UserId" column="UserId" />
       <parameter property="RetCode" column="RetCode" direction="Output" />
+    </parameterMap>
+
+    <parameterMap id="p_image_like_insert" class="dolpic">
+      <parameter property="Seq" column="Seq" />
+      <parameter property="UserId" column="UserId" />
+      <parameter property="RetCode" column="RetCode" direction="Output" />
+      <parameter property="LikeCnt" column="LikeCnt" direction="Output" />
     </parameterMap>
 
     <parameterMap id="p_favorite_list" class="dolpic">

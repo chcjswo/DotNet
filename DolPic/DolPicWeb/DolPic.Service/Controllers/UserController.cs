@@ -1,18 +1,26 @@
-﻿using DolPic.Common;
+﻿using DolPic.Biz.DolPicUser;
+using DolPic.Common;
 using DolPic.Data.Daos;
 using DolPic.Data.Pos;
 using DolPic.Data.Vos;
 using DolPic.Service.Web.Common;
-using Newtonsoft.Json;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Security;
 
 namespace DolPic.Service.Web.Controllers
 {
     public class UserController : CustomController
     {
         private const string COOKIE_NAME = "user";
+        // DAO
+        private readonly IDolPicUser dao;
+
+        /// <summary>
+        /// 생성자
+        /// </summary>
+        public UserController()
+        {
+            //dao = new DolPicUser();
+        }
 
         /// <summary>
         /// 로그인폼
@@ -62,6 +70,9 @@ namespace DolPic.Service.Web.Controllers
                 switch (entity.RetCode)
                 {
                     case (int)e_RetCode.success:
+                        if ("/User/SignUp".Equals(model.ReferUrl) || "/User/LogInProc".Equals(model.ReferUrl))
+                            model.ReferUrl = "'/";
+                        DolPicCookie.CookieWrite(this.HttpContext, COOKIE_NAME, model.UserId);
                         model.RetMsg = "회원 가입을 하셨습니다.";
                         break;
 
@@ -98,10 +109,8 @@ namespace DolPic.Service.Web.Controllers
                 {
                     case (int)e_RetCode.success:
                         DolPicCookie.CookieWrite(this.HttpContext, COOKIE_NAME, model.UserId);
-                        //FormsAuthentication.SetAuthCookie(model.UserId, false);
-                        
 
-                        if ("/User/SignUp".Equals(model.ReferUrl))
+                        if ("/User/SignUp".Equals(model.ReferUrl) || "/User/LogInProc".Equals(model.ReferUrl))
                             model.ReferUrl = "'/";
 
                         model.RetMsg = "로그인 하셨습니다.";
@@ -122,7 +131,6 @@ namespace DolPic.Service.Web.Controllers
             }
 
             return RedirectToAction("LogIn");
-
         }
     }
 }

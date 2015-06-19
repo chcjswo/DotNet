@@ -43,7 +43,6 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.lblWatch = new System.Windows.Forms.Label();
-            this.txtMatch = new System.Windows.Forms.TextBox();
             this.btnXmlLoad = new System.Windows.Forms.Button();
             this.comSite = new System.Windows.Forms.ComboBox();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
@@ -72,17 +71,17 @@
             this.dataGridView1.Location = new System.Drawing.Point(13, 52);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(819, 162);
+            this.dataGridView1.Size = new System.Drawing.Size(819, 307);
             this.dataGridView1.TabIndex = 1;
             // 
             // txtLog
             // 
             this.txtLog.BackColor = System.Drawing.SystemColors.Control;
-            this.txtLog.Location = new System.Drawing.Point(13, 220);
+            this.txtLog.Location = new System.Drawing.Point(14, 365);
             this.txtLog.Multiline = true;
             this.txtLog.Name = "txtLog";
             this.txtLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtLog.Size = new System.Drawing.Size(819, 282);
+            this.txtLog.Size = new System.Drawing.Size(819, 303);
             this.txtLog.TabIndex = 2;
             // 
             // panel2
@@ -169,16 +168,6 @@
             this.lblWatch.Size = new System.Drawing.Size(0, 12);
             this.lblWatch.TabIndex = 7;
             // 
-            // txtMatch
-            // 
-            this.txtMatch.BackColor = System.Drawing.SystemColors.Control;
-            this.txtMatch.Location = new System.Drawing.Point(13, 508);
-            this.txtMatch.Multiline = true;
-            this.txtMatch.Name = "txtMatch";
-            this.txtMatch.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtMatch.Size = new System.Drawing.Size(818, 145);
-            this.txtMatch.TabIndex = 8;
-            // 
             // btnXmlLoad
             // 
             this.btnXmlLoad.Location = new System.Drawing.Point(571, 12);
@@ -241,12 +230,12 @@
             this.ClientSize = new System.Drawing.Size(841, 722);
             this.Controls.Add(this.comSite);
             this.Controls.Add(this.btnXmlLoad);
-            this.Controls.Add(this.txtMatch);
             this.Controls.Add(this.lblWatch);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.txtLog);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.btnImageLoad);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Crawler";
             this.Text = "돌픽 이미지 크롤러";
             this.Load += new System.EventHandler(this.Crawler_Load);
@@ -274,7 +263,6 @@
         private System.Windows.Forms.Timer timer2;
         private System.Windows.Forms.Label lblChkTime;
         private System.Windows.Forms.Label lblWatch;
-        private System.Windows.Forms.TextBox txtMatch;
         private System.Windows.Forms.Button btnXmlLoad;
         private System.Windows.Forms.ComboBox comSite;
         private System.Windows.Forms.NotifyIcon notifyIcon1;

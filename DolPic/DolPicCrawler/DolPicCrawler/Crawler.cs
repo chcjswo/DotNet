@@ -430,7 +430,6 @@ namespace DolPicCrawler
         private void btnImageLoad_Click(object sender, EventArgs e)
         {
             txtLog.Text = "";
-            txtMatch.Text = "";
             dataGridView1.Rows.Clear();
             btnImageLoad.Enabled = false;
 

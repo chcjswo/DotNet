@@ -54,6 +54,11 @@ namespace DolPic.Data.Vos
         /// </summary>
         public string UserPwd { get; set; }
 
+        /// <summary>
+        /// 즐겨찾기 고유번호
+        /// </summary>
+        public int FavoriteSeq { get; set; }
+
         public short PageListSize { get; set; }
         public int PrevSeq { get; set; }
         public int NextSeq { get; set; }

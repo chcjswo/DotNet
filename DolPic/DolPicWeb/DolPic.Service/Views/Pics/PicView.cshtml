@@ -11,11 +11,11 @@
 		<div class="clear"></div>
 		<!-- 갤러리 네비게이션 -->
 		<ul class="gbox_list">
-			<li seq="@Model.PrevSeq">&lt; 이전 페이지</li>
+			<li seq="@Model.PrevSeq" class="@(Model.PrevSeq == 0 ? "on" : "")">&lt; 이전 페이지</li>
 			<li class="on"><span id="hashtag">#@Model.HashTag</span></li>
-			<li seq="@Model.NextSeq">다음 페이지 &gt;</li>
+			<li seq="@Model.NextSeq" class="@(Model.NextSeq == 0 ? "on" : "")">다음 페이지 &gt;</li>
 		</ul>
-		<div id="like" class="@(Model.IsLike == 0 ? "btn_good" : "btn_good on")">좋아요</div>
+		<div id="like" class="@(Model.IsLike == 0 ? "btn_good" : "btn_good on")">좋아요 @string.Format("{0:N0}", Model.LikeCnt)</div>
 		<div class="clear"></div>
 		<!-- 구글 광고 -->
 		@Html.Partial("_GoogleAd1")
@@ -60,7 +60,7 @@
                 type: "POST",
                 dataType: "json",
                 data: {
-                    "TagNo": seq,
+                    "ImgNo": seq,
                     "HashTag": "@ViewBag.HashTag"
                 }
             })
@@ -84,6 +84,7 @@
 
                 $('#like').removeClass('btn_good').removeClass('btn_good on');
                 retData.IsLike == 0 ? $('#like').addClass('btn_good') : $('#like').addClass('btn_good on');
+                $('#like').html("좋아요 " + retData.LikeCnt);
 
                 $('.vbox img').fadeOut(10);
                 $('.vbox img').fadeIn(300);
@@ -125,6 +126,7 @@
             if (retData.RetCode == 0) {
                 $('.like_box').fadeIn('swing').delay(200).fadeOut('fast');
                 $('#like').addClass('btn_good on');
+                $('#like').html("좋아요 " + retData.LikeCnt);
             } else {
                 alert(retData.RetMsg);
             }

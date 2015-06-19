@@ -9,19 +9,18 @@
     <div class="fbar_wrap">
         @if (string.IsNullOrEmpty(ViewBag.User))
         {
-		    @:<span class="on">로그인 후 사용가능</span>
+		    @:<span class="tbox on">로그인 후 사용가능</span>
         }
-	    <span><a href="/">최신 업로드 이미지</a></span>
-        <div class="flist">
+	    <span class="tbox"><a href="/" class="tbox_a">최신 업로드 이미지</a></span>
+        <span class="flist">
         @foreach (var item in list)
         {
-            @:<span class="@string.Format("fbar{0}", item.Seq)">@Html.Raw(string.Format("<a href=\"/Pics/Main/{0}\">{0}</a>", item.HashTag)) <a href="javascript:void(0);" onclick="fnFavoriteDelete('@item.Seq');">X</a></span>
+            @:<span class="@string.Format("fbar{0} tbox", item.Seq)">@Html.Raw(string.Format("<a href=\"/Pics/Main/{0}\" class=\"tbox_a\">{0}</a>", item.HashTag)) <a href="javascript:void(0);" onclick="fnFavoriteDelete('@item.Seq');">X</a></span>
         }
-        </div>
+        </span>
 	    <div class="clear"></div>
     </div>
 </div>
-
 
 <script type="text/javascript">
     var bExec = false;

@@ -53,11 +53,6 @@
     <Compile Include="Pos\DolPicPo.cs" />
     <Compile Include="Pos\UserPo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SqlMaps\SqlMaps.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SqlMaps.tt</DependentUpon>
-    </Compile>
     <Compile Include="Vos\DolPicVo.cs" />
   </ItemGroup>
   <ItemGroup>

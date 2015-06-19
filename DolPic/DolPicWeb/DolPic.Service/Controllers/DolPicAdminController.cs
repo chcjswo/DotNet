@@ -3,42 +3,55 @@ using DolPic.Data.Vos;
 using DolPic.Service.Web.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using PagedList;
 using DolPic.Common;
 using Newtonsoft.Json;
 using System.Xml;
-using System.Web.Security;
 using DolPic.Service.Web.Filters;
+using DolPic.Biz.DolPicAdmin;
 
 namespace DolPic.Service.Web.Controllers
 {
+    //[AdminAuth]
     public class DolPicAdminController : CustomController
     {
         private const string XML_FILE_NAME = "twitter_image.xml";
-        //
-        // GET: /Admin/
+        // DAO
+        private readonly IDolPicAdmin dao;
+
+        /// <summary>
+        /// 생성자
+        /// </summary>
+        public DolPicAdminController()
+        {
+            dao = new DolPicAdmin();
+        }
 
         public ActionResult Index()
         {
-            FormsAuthentication.SetAuthCookie("Admin", false);
             return RedirectToAction("MenuList");
         }
 
-        [AdminAuth]
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public ActionResult MenuList()
         {
             return View();
         }
 
+        #region 어드민 화면
+        /// <summary>
+        /// 해쉬태그 리스트 화면
+        /// </summary>
+        /// <param name="page"></param>
+        /// <returns></returns>
         public ActionResult HashTagList(int? page)
         {
-            DolPicVo entity = new DolPicVo();
-
-            AdminDao dao = new AdminDao();
-            var list = dao.HashTagList(entity);
+            // 해쉬태그 리스트 조회
+            var list = dao.GetHashTagList();
 
             ViewBag.DataCount = list.Count;
             ViewBag.DataList = list.ToPagedList(page ?? 1, 20);
@@ -46,88 +59,108 @@ namespace DolPic.Service.Web.Controllers
             return View();
         }
 
+        /// <summary>
+        /// 해쉬태그 만들기 화면
+        /// </summary>
+        /// <returns></returns>
         public ActionResult HashTagMakeForm()
         {
             return View();
         }
 
-        [HttpPost]
-        public ActionResult HashTagInsert(string HashTag, string Initial)
-        {
-            DolPicVo entity = new DolPicVo();
-            entity.HashTag = HashTag;
-            entity.Initial = Initial;
-
-            AdminDao dao = new AdminDao();
-            dao.HashTagInsert(entity);
-
-            switch (entity.RetCode)
-            {
-                // 등록 성공
-                case (int)e_RetCode.success:
-                    entity.RetMsg = "정상적으로 등록되었습니다.";
-                    break;
-
-                // 이미 등록된 경우
-                case (int)e_RetCode.has:
-                    entity.RetMsg = "이미 등록된 태그 입니다.";
-                    break;
-
-                // DB에러
-                case (int)e_RetCode.db_error:
-                    entity.RetMsg = "에러가 발생했습니다. 다시 한번 시도해주세요.";
-                    break;
-            }
-
-            return Json(JsonConvert.SerializeObject(entity));
-        }
-
-        [HttpPost]
-        public ActionResult HashTagXmlMake()
-        {
-            DolPicVo entity = new DolPicVo();
-
-            AdminDao dao = new AdminDao();
-            var list = dao.HashTagList(entity);
-
-            try
-            {
-                MakeXml(list);
-                entity.RetMsg = "XML생성 완료";
-            }
-            catch (Exception ex)
-            {
-                entity.RetMsg = ex.ToString();
-            }
-
-            return Json(JsonConvert.SerializeObject(entity));
-        }
-
-        [HttpPost]
-        public ActionResult HashTagDelete(int Seq)
-        {
-            DolPicVo entity = new DolPicVo();
-            entity.Seq = Seq;
-
-            AdminDao dao = new AdminDao();
-            dao.HashTagDelete(entity);
-
-            return RedirectToAction("HashTagList");
-        }
-
+        /// <summary>
+        /// 이미지 리스트 화면
+        /// </summary>
+        /// <param name="Seq"></param>
+        /// <param name="page"></param>
+        /// <returns></returns>
         public ActionResult DolPicImageList(int Seq, int? page)
         {
-            DolPicVo entity = new DolPicVo();
-            entity.Seq = Seq;
-
-            AdminDao dao = new AdminDao();
-            var list = dao.DolPicImageList(entity);
+            var list = dao.GetDolPicImageList(Seq);
 
             ViewBag.DataCount = list.Count;
             ViewBag.DataList = list.ToPagedList(page ?? 1, 20);
             ViewBag.Seq = Seq;
 
             return View();
+        } 
+        #endregion
+
+        [HttpPost]
+        public ActionResult HashTagInsert(string HashTag, string Initial)
+        {
+            // 해쉬태그 입력
+            var nRetCode = dao.HashTagInsert(HashTag, Initial);
+            var result = new { RetCode = 99, RetMsg = "" };
+
+            switch (nRetCode)
+            {
+                // 등록 성공
+                case (int)e_RetCode.success:
+                    result = new
+                    {
+                        RetCode = nRetCode,
+                        RetMsg = "정상적으로 등록되었습니다."
+                    };
+                    break;
+
+                // 이미 등록된 경우
+                case (int)e_RetCode.has:
+                    result = new
+                    {
+                        RetCode = nRetCode,
+                        RetMsg = "이미 등록된 태그 입니다."
+                    };
+                    break;
+
+                // DB에러
+                case (int)e_RetCode.db_error:
+                    result = new
+                    {
+                        RetCode = nRetCode,
+                        RetMsg = "에러가 발생했습니다. 다시 한번 시도해주세요."
+                    };
+                    break;
+            }
+
+            return Json(JsonConvert.SerializeObject(result));
+        }
+
+        [HttpPost]
+        public ActionResult HashTagXmlMake()
+        {
+            // 해쉬태그 리스트 조회
+            var list = dao.GetHashTagList();
+            var result = new { RetCode = 0, RetMsg = "" };
+
+            try
+            {
+                MakeXml(list);
+                result = new
+                {
+                    RetCode = 0,
+                    RetMsg = "XML생성 완료"
+                };
+            }
+            catch (Exception ex)
+            {
+                result = new
+                {
+                    RetCode = 1,
+                    RetMsg = ex.ToString()
+                };
+            }
+
+            return Json(JsonConvert.SerializeObject(result));
+        }
+
+        [HttpPost]
+        public ActionResult HashTagDelete(int Seq)
+        {
+            // 해쉬태그 삭제 실행
+            dao.HashTagDelete(Seq);
+
+            return RedirectToAction("HashTagList");
         }
 
         private void MakeXml(IList<DolPicVo> list)
