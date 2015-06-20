@@ -1,29 +1,33 @@
 ﻿using System;
 using System.Web.Mvc;
-using log4net;
 using System.Web;
+using DolPic.Common;
 
 namespace DolPic.Service.Web.Filters
 {
     public class AdminAuthAttribute : AuthorizeAttribute
     {
+        public new UserRole Roles;
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
-            HttpContext.Current.Response.Write("AuthorizeCore");
+            if (httpContext == null)
+                throw new ArgumentNullException("httpContext");
 
-            return true;  // 권한 체크  True : False
-        }
+            if (null == httpContext.Session["UserRole"]
+                || "" == httpContext.Session["UserRole"].ToString())
+                return false;
 
-        public override void OnAuthorization(AuthorizationContext filterContext)
-        {
-            if (AuthorizeCore(filterContext.HttpContext))
-            {
-            }
-            else
-            {
-            }
+            UserRole role
+                = (UserRole)Convert.ToInt32(httpContext.Session["UserRole"]);
 
-            HttpContext.Current.Response.Write("OnAuthorization");
+            if (Roles != 0 && ((Roles & role) != role))
+                return false;
+
+            if ((int)UserRole.admin != Convert.ToInt32(httpContext.Session["UserRole"]))
+                return false;
+
+            return true;
         }
     }
+
 }

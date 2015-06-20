@@ -85,6 +85,7 @@
     <parameterMap id="p_user" class="dolpic">
       <parameter property="UserId" column="UserId" />
       <parameter property="UserPwd" column="UserPwd" />
+      <parameter property="UserRole" column="UserRole" direction="Output" />
       <parameter property="RetCode" column="RetCode" direction="Output" />
     </parameterMap>
     

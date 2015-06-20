@@ -68,6 +68,7 @@ namespace DolPic.Data.Vos
         public string RetMsg { get; set; }
         public string SearchHashTag { get; set; }
         public short IsLike { get; set; }
+        public short UserRole { get; set; }
 
     }
 }

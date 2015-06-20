@@ -4,10 +4,10 @@ D:\GitHub\DotNet\DolPicWeb\DolPic.Biz\obj\Debug\DolPic.Biz.dll
 D:\GitHub\DotNet\DolPicWeb\DolPic.Biz\obj\Debug\DolPic.Biz.pdb
 D:\GitHub\DotNet\DolPic\DolPicWeb\DolPic.Biz\bin\Debug\DolPic.Biz.dll
 D:\GitHub\DotNet\DolPic\DolPicWeb\DolPic.Biz\bin\Debug\DolPic.Biz.pdb
-D:\GitHub\DotNet\DolPic\DolPicWeb\DolPic.Biz\obj\Debug\DolPic.Biz.csprojResolveAssemblyReference.cache
-D:\GitHub\DotNet\DolPic\DolPicWeb\DolPic.Biz\obj\Debug\DolPic.Biz.dll
-D:\GitHub\DotNet\DolPic\DolPicWeb\DolPic.Biz\obj\Debug\DolPic.Biz.pdb
 D:\GitHub\DotNet\DolPic\DolPicWeb\DolPic.Biz\bin\Debug\DolPic.Data.dll
 D:\GitHub\DotNet\DolPic\DolPicWeb\DolPic.Biz\bin\Debug\IBatisNet.DataMapper.dll
 D:\GitHub\DotNet\DolPic\DolPicWeb\DolPic.Biz\bin\Debug\IBatisNet.Common.dll
 D:\GitHub\DotNet\DolPic\DolPicWeb\DolPic.Biz\bin\Debug\DolPic.Data.pdb
+D:\GitHub\DotNet\DolPic\DolPicWeb\DolPic.Biz\obj\Debug\DolPic.Biz.csprojResolveAssemblyReference.cache
+D:\GitHub\DotNet\DolPic\DolPicWeb\DolPic.Biz\obj\Debug\DolPic.Biz.dll
+D:\GitHub\DotNet\DolPic\DolPicWeb\DolPic.Biz\obj\Debug\DolPic.Biz.pdb

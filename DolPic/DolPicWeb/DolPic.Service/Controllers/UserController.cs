@@ -72,7 +72,9 @@ namespace DolPic.Service.Web.Controllers
                     case (int)e_RetCode.success:
                         if ("/User/SignUp".Equals(model.ReferUrl) || "/User/LogInProc".Equals(model.ReferUrl))
                             model.ReferUrl = "'/";
+
                         DolPicCookie.CookieWrite(this.HttpContext, COOKIE_NAME, model.UserId);
+                        Session["UserRole"] = UserRole.normal;
                         model.RetMsg = "회원 가입을 하셨습니다.";
                         break;
 
@@ -113,16 +115,16 @@ namespace DolPic.Service.Web.Controllers
                         if ("/User/SignUp".Equals(model.ReferUrl) || "/User/LogInProc".Equals(model.ReferUrl))
                             model.ReferUrl = "'/";
 
+                        Session["UserRole"] = entity.UserRole;
+
                         model.RetMsg = "로그인 하셨습니다.";
                         break;
 
                     case (int)e_RetCode.no_has:
-                        //model.ReferUrl = "/User/LogIn";
                         model.RetMsg = "등록된 아이디가 없습니다.";
                         break;
 
                     case (int)e_RetCode.not_auth:
-                        //model.ReferUrl = "/User/LogIn";
                         model.RetMsg = "패스워드를 확인해주세요.";
                         break;
                 }
