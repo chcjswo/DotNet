@@ -9,5 +9,6 @@ namespace DolPic.Data.Pos
         public string ReferUrl { get; set; }
         public int RetCode { get; set; }
         public string RetMsg { get; set; }
+        public short UserRole { get; set; }
     }
 }

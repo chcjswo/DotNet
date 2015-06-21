@@ -1,5 +1,4 @@
-﻿using DolPic.Data.Daos;
-using DolPic.Data.Vos;
+﻿using DolPic.Data.Vos;
 using DolPic.Service.Web.Common;
 using System;
 using System.Collections.Generic;
@@ -13,19 +12,19 @@ using DolPic.Biz.DolPicAdmin;
 
 namespace DolPic.Service.Web.Controllers
 {
-    [AdminAuth(Roles = UserRole.admin)]
+    //[AdminAuth(Roles = UserRole.admin)]
     public class DolPicAdminController : CustomController
     {
         private const string XML_FILE_NAME = "twitter_image.xml";
         // DAO
-        private readonly IDolPicAdmin _dao;
+        private readonly IDolPicAdmin _service;
 
         /// <summary>
         /// 생성자
         /// </summary>
         public DolPicAdminController()
         {
-            _dao = new DolPicAdmin();
+            _service = new DolPicAdmin();
         }
 
         public ActionResult Index()
@@ -51,7 +50,7 @@ namespace DolPic.Service.Web.Controllers
         public ActionResult HashTagList(int? page)
         {
             // 해쉬태그 리스트 조회
-            var list = _dao.GetHashTagList();
+            var list = _service.GetHashTagList();
 
             ViewBag.DataCount = list.Count;
             ViewBag.DataList = list.ToPagedList(page ?? 1, 20);
@@ -76,11 +75,27 @@ namespace DolPic.Service.Web.Controllers
         /// <returns></returns>
         public ActionResult DolPicImageList(int Seq, int? page)
         {
-            var list = _dao.GetDolPicImageList(Seq);
+            var list = _service.GetDolPicImageList(Seq);
 
             ViewBag.DataCount = list.Count;
             ViewBag.DataList = list.ToPagedList(page ?? 1, 20);
             ViewBag.Seq = Seq;
+
+            return View();
+        }
+
+        /// <summary>
+        /// 회원 리스트 화면
+        /// </summary>
+        /// <param name="UserId"></param>
+        /// <returns></returns>
+        public ActionResult DolPicUserList(string UserId, int? page)
+        {
+            var list = _service.GetUserList(UserId ?? "");
+
+            ViewBag.DataCount = list.Count;
+            ViewBag.DataList = list.ToPagedList(page ?? 1, 20);
+            ViewBag.UserId = UserId;
 
             return View();
         } 
@@ -90,7 +105,7 @@ namespace DolPic.Service.Web.Controllers
         public ActionResult HashTagInsert(string HashTag, string Initial)
         {
             // 해쉬태그 입력
-            var nRetCode = _dao.HashTagInsert(HashTag, Initial);
+            var nRetCode = _service.HashTagInsert(HashTag, Initial);
             var result = new { RetCode = 99, RetMsg = "" };
 
             switch (nRetCode)
@@ -130,7 +145,7 @@ namespace DolPic.Service.Web.Controllers
         public ActionResult HashTagXmlMake()
         {
             // 해쉬태그 리스트 조회
-            var list = _dao.GetHashTagList();
+            var list = _service.GetHashTagList();
             var result = new { RetCode = 0, RetMsg = "" };
 
             try
@@ -158,7 +173,7 @@ namespace DolPic.Service.Web.Controllers
         public ActionResult HashTagDelete(int Seq)
         {
             // 해쉬태그 삭제 실행
-            _dao.HashTagDelete(Seq);
+            _service.HashTagDelete(Seq);
 
             return RedirectToAction("HashTagList");
         }

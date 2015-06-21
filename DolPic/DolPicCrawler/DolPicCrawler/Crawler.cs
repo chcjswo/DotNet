@@ -37,7 +37,6 @@ namespace DolPicCrawler
         private const string MATCH_TAG = "data-resolved-url-small=\"(?<url>.*?)\".*?";
         //private const string MATCH_TAG = "<img src=\"(?<url>.*?)\".*?>";
         //private const string MATCH_TAG = "<span class=\"(?<cl>.*?)\".*? data-status-id=\"(?<sid>.*?)\".*? data-url=\"(?<url1>.*?)\".*? data-resolved-url-small=\"(?<url>.*?)\".*? data-resolved-url-large=\"(?<url333>.*?)\".*? data-width=\"(?<url22>.*?)\".*? data-height=\"(?<url11>.*?)\".*?></span>";
-        //private const string XML_URL = "D:\\twitter_image.xml";
         private const string XML_URL = "http://event.mobile.actoz.com/twitter_image.xml";
 
         private double dDay, dMod, dHour, dMin, dSec;
@@ -66,7 +65,6 @@ namespace DolPicCrawler
             dataGridView1.Rows.Clear();
 
             dataGridView1.ColumnCount = 3;
-
             dataGridView1.Columns[0].Name = "번호";
             dataGridView1.Columns[1].Name = "이미지경로";
             dataGridView1.Columns[2].Name = "해쉬태그";
@@ -164,25 +162,14 @@ namespace DolPicCrawler
 
                     //응답을 스트림으로 얻어온다
                     resStream = response.GetResponseStream();
-                    //resReader = new StreamReader(resStream);
 
                     var resString = "";
                     using (resReader = new StreamReader(resStream, System.Text.Encoding.Default))
                     {
-                        //while ((line = resReader.ReadLine()) != null)
-                        //{
-                        //    lineCnt++;
-                        //    txtLog.Text = (ImageGet(line)).ToString();
-                        //}
                         resString = resReader.ReadToEnd();
                     }
 
-                    //결과를 출력
-                    //string resString = resReader.ReadToEnd();
-                    //CreateInfo(resString);
-
-                    //txtLog.Text = resString;
-
+                    // 결과물에서 이미지 URL 추출
                     ImageSearch(resString, _curNo);
                 }
                 catch (Exception ex)
@@ -232,9 +219,6 @@ namespace DolPicCrawler
 
             // 그리드 그리기
             SetGridInfo(ltImg);
-
-            // 이미지 저장
-            //ImageSend();
         }
 
         private bool IsPidCheck()
@@ -379,9 +363,9 @@ namespace DolPicCrawler
                     //요청을 보내고 응답을 받는다
                     response = request.GetResponse();
 
-                    txtLog.Text += row.Cells[0].Value + Environment.NewLine;
-                    txtLog.Text += row.Cells[1].Value + Environment.NewLine;
-                    txtLog.Text += row.Cells[2].Value + Environment.NewLine;
+                    //txtLog.Text += row.Cells[0].Value + Environment.NewLine;
+                    //txtLog.Text += row.Cells[1].Value + Environment.NewLine;
+                    //txtLog.Text += row.Cells[2].Value + Environment.NewLine;
 
                     Console.WriteLine("TagNo == " + row.Cells[0].Value);
                     Console.WriteLine("ImageSrc =={0} / {1}", row.Cells[1].Value, sBase64);

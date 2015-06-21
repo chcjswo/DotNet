@@ -1,5 +1,4 @@
 ﻿using DolPic.Data.Daos;
-using DolPic.Data.Pos;
 using DolPic.Data.Vos;
 using System.Collections.Generic;
 
@@ -69,6 +68,19 @@ namespace DolPic.Biz.DolPicAdmin
             entity.Seq = a_nHashTagNo;
 
             _dao.HashTagDelete(entity);
+        }
+
+        /// <summary>
+        /// 유저 리스트 조회
+        /// </summary>
+        /// <param name="a_sUserId">유저 아이디</param>
+        /// <returns></returns>
+        public IList<UserVo> GetUserList(string a_sUserId)
+        {
+            UserVo entity = new UserVo();
+            entity.UserId = a_sUserId;
+
+            return _dao.DolPicUserList(entity);
         }
     }
 }

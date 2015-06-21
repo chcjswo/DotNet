@@ -1,5 +1,4 @@
-﻿using DolPic.Data.Pos;
-using DolPic.Data.Vos;
+﻿using DolPic.Data.Vos;
 using System.Collections.Generic;
 
 namespace DolPic.Biz.DolPicAdmin
@@ -33,5 +32,12 @@ namespace DolPic.Biz.DolPicAdmin
         /// <param name="a_nHashTagNo">해쉬태그 고유번호</param>
         /// <returns></returns>
         void HashTagDelete(int a_nHashTagNo);
+
+        /// <summary>
+        /// 유저 리스트 조회
+        /// </summary>
+        /// <param name="a_sUserId">유저 아이디</param>
+        /// <returns></returns>
+        IList<UserVo> GetUserList(string a_sUserId);
     }
 }

@@ -1,8 +1,6 @@
 ﻿using DolPic.Biz.DolPicUser;
 using DolPic.Common;
-using DolPic.Data.Daos;
 using DolPic.Data.Pos;
-using DolPic.Data.Vos;
 using DolPic.Service.Web.Common;
 using System.Web.Mvc;
 
@@ -12,14 +10,14 @@ namespace DolPic.Service.Web.Controllers
     {
         private const string COOKIE_NAME = "user";
         // DAO
-        private readonly IDolPicUser _dao;
+        private readonly IDolPicUser _service;
 
         /// <summary>
         /// 생성자
         /// </summary>
         public UserController()
         {
-            //dao = new DolPicUser();
+            _service = new DolPicUser();
         }
 
         /// <summary>
@@ -58,19 +56,15 @@ namespace DolPic.Service.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                DolPicVo entity = new DolPicVo();
-                entity.UserId = model.UserId;
-                entity.UserPwd = model.UserPwd;
+                // 회원가입 실행
+                model.RetCode = _service.DolPicUserSignUp(model.UserId, model.UserPwd);
 
-                DolPicDao dao = new DolPicDao();
-                dao.DolPicUserSignUp(entity);
-
-                model.RetCode = entity.RetCode;
-
-                switch (entity.RetCode)
+                switch (model.RetCode)
                 {
                     case (int)e_RetCode.success:
-                        if ("/User/SignUp".Equals(model.ReferUrl) || "/User/LogInProc".Equals(model.ReferUrl))
+                        if ("/User/SignUp".Equals(model.ReferUrl) || 
+                            "/User/LogInProc".Equals(model.ReferUrl) ||
+                            "".Equals(model.ReferUrl))
                             model.ReferUrl = "'/";
 
                         DolPicCookie.CookieWrite(this.HttpContext, COOKIE_NAME, model.UserId);
@@ -98,38 +92,36 @@ namespace DolPic.Service.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                DolPicVo entity = new DolPicVo();
-                entity.UserId = model.UserId;
-                entity.UserPwd = model.UserPwd;
+                // 로그인 실행
+                UserPo po = _service.DolPicUserLogIn(model.UserId, model.UserPwd);
 
-                DolPicDao dao = new DolPicDao();
-                dao.DolPicUserLogIn(entity);
-
-                model.RetCode = entity.RetCode;
-
-                switch (entity.RetCode)
+                switch (po.RetCode)
                 {
                     case (int)e_RetCode.success:
                         DolPicCookie.CookieWrite(this.HttpContext, COOKIE_NAME, model.UserId);
 
-                        if ("/User/SignUp".Equals(model.ReferUrl) || "/User/LogInProc".Equals(model.ReferUrl))
-                            model.ReferUrl = "'/";
+                        if ("/User/SignUp".Equals(model.ReferUrl) ||
+                            "/User/LogInProc".Equals(model.ReferUrl) ||
+                            "".Equals(model.ReferUrl))
+                            po.ReferUrl = "'/";
+                        else
+                            po.ReferUrl = model.ReferUrl;
 
-                        Session["UserRole"] = entity.UserRole;
+                            Session["UserRole"] = po.UserRole;
 
-                        model.RetMsg = "로그인 하셨습니다.";
+                        po.RetMsg = "로그인 하셨습니다.";
                         break;
 
                     case (int)e_RetCode.no_has:
-                        model.RetMsg = "등록된 아이디가 없습니다.";
+                        po.RetMsg = "등록된 아이디가 없습니다.";
                         break;
 
                     case (int)e_RetCode.not_auth:
-                        model.RetMsg = "패스워드를 확인해주세요.";
+                        po.RetMsg = "패스워드를 확인해주세요.";
                         break;
                 }
 
-                return View(model);
+                return View(po);
             }
 
             return RedirectToAction("LogIn");

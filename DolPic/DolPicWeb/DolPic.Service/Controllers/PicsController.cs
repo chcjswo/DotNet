@@ -19,7 +19,7 @@ namespace DolPic.Service.Web.Controllers
         // 바로가기 리스트 사이즈
         private readonly int _nGotoListSize;
         // DAO
-        private readonly IDolPicService _dao;
+        private readonly IDolPicService _service;
 
         /// <summary>
         /// 생성자
@@ -29,23 +29,17 @@ namespace DolPic.Service.Web.Controllers
             _nImageListSize = 50;
             _nGotoListSize = 10;
 
-            _dao = new DolPicService();
+            _service = new DolPicService();
         }
 
-        //
-        // GET: /Piscs/
-        //public ActionResult Index()
-        //{
-        //    return RedirectToAction("Main");
-        //}
-        public string Index()
+        public ActionResult Index()
         {
-            return Server.MapPath("~");
+            return RedirectToAction("Main");
         }
 
         #region 화면 관련
         /// <summary>
-        /// 돌픽 메인
+        /// 돌픽 메인 화면
         /// </summary>
         /// <returns></returns>
         //[Authorize(Roles = "Administrator")] 
@@ -58,7 +52,7 @@ namespace DolPic.Service.Web.Controllers
             entity.CurPage = 1;
             entity.PageListSize = _nImageListSize;
 
-            ViewBag.DataList = _dao.GetMainImageList(entity);
+            ViewBag.DataList = _service.GetMainImageList(entity);
             ViewBag.HashTag = id;
             ViewBag.PageGotoList = GetGotoPageList(1, entity.TotalCnt, _nImageListSize, _nGotoListSize);
 
@@ -66,20 +60,20 @@ namespace DolPic.Service.Web.Controllers
         }
 
         /// <summary>
-        /// 즐겨찾기 리스트
+        /// 즐겨찾기 리스트 
         /// </summary>
         /// <returns></returns>
         public ActionResult FavoriteBar()
         {
             var UserId = DolPicCookie.CookieRead(this.HttpContext, COOKIE_NAME);
             ViewBag.User = UserId;
-            ViewBag.DataList = _dao.GetFavoriteList(UserId);
+            ViewBag.DataList = _service.GetFavoriteList(UserId);
 
             return View();
         }
 
         /// <summary>
-        /// 이미지 보기
+        /// 이미지 보기 화면
         /// </summary>
         /// <param name="ImgNo">고유번호</param>
         /// <param name="HahTag">해쉬 태그</param>
@@ -91,7 +85,7 @@ namespace DolPic.Service.Web.Controllers
             ViewBag.HashTag = HashTag;
 
             // 이미지 조회
-            DolPicPo po = _dao.GetPicView(ImgNo, UserId, HashTag);
+            DolPicPo po = _service.GetPicView(ImgNo, UserId, HashTag);
 
             return View(po);
         }
@@ -106,7 +100,7 @@ namespace DolPic.Service.Web.Controllers
             ViewBag.User = UserId;
 
             // 초성 리스트 조회
-            ViewBag.DataList = _dao.GetInitialList(UserId);
+            ViewBag.DataList = _service.GetInitialList(UserId);
 
             return View();
         }
@@ -118,14 +112,13 @@ namespace DolPic.Service.Web.Controllers
         public ActionResult HotDolPicList()
         {
             // 핫돌픽 리스트 조회
-            ViewBag.DataList = _dao.GetHotDolPicList();
+            ViewBag.DataList = _service.GetHotDolPicList();
 
             return View();
         } 
         #endregion
 
         #region Ajax 관련
-
         /// <summary>
         /// 메인 이미지 리스트 Ajax
         /// </summary>
@@ -139,7 +132,7 @@ namespace DolPic.Service.Web.Controllers
             entity.PageListSize = _nImageListSize;
 
             ReturnResult result = new ReturnResult();
-            result.ImageList = _dao.GetMainImageList(entity);
+            result.ImageList = _service.GetMainImageList(entity);
             result.PageGotoList = GetGotoPageList(CurPage, entity.TotalCnt, _nImageListSize, _nGotoListSize);
 
             return Json(JsonConvert.SerializeObject(result));
@@ -157,7 +150,7 @@ namespace DolPic.Service.Web.Controllers
             ViewBag.HashTag = HashTag;
 
             // 이미지 조회
-            DolPicPo po = _dao.GetPicView(ImgNo, DolPicCookie.CookieRead(this.HttpContext, COOKIE_NAME), HashTag);
+            DolPicPo po = _service.GetPicView(ImgNo, DolPicCookie.CookieRead(this.HttpContext, COOKIE_NAME), HashTag);
 
             return Json(JsonConvert.SerializeObject(po));
         }
@@ -183,7 +176,7 @@ namespace DolPic.Service.Web.Controllers
             }
 
             // 이미지 좋아요 처리
-            po = _dao.PicLike(Seq, UserId);
+            po = _service.PicLike(Seq, UserId);
 
             switch (po.RetCode)
             {
@@ -222,7 +215,7 @@ namespace DolPic.Service.Web.Controllers
             }
 
             // 즐겨찾기 입력 처리
-            po.RetCode = _dao.FavoriteInsert(TagNo, UserId);
+            po.RetCode = _service.FavoriteInsert(TagNo, UserId);
 
             switch (po.RetCode)
             {
@@ -261,7 +254,7 @@ namespace DolPic.Service.Web.Controllers
             }
 
             // 즐겨찾기 삭제 처리
-            po.RetCode = _dao.FavoriteDelete(TagNo, UserId);
+            po.RetCode = _service.FavoriteDelete(TagNo, UserId);
 
             switch (po.RetCode)
             {
@@ -278,7 +271,6 @@ namespace DolPic.Service.Web.Controllers
 
             return Json(JsonConvert.SerializeObject(po));
         } 
-
         #endregion
 
         #region 외부 API
@@ -289,10 +281,6 @@ namespace DolPic.Service.Web.Controllers
         public void DolPicImageSave(int TagNo, string ImageSrc, int TagUrlType)
         {
             var base64EncodedBytes = System.Convert.FromBase64String(ImageSrc);
-
-            //log.ErrorFormat("TagNo == {0}", TagNo);
-            //log.ErrorFormat("ImageSrc == {0}", System.Text.Encoding.UTF8.GetString(base64EncodedBytes));
-            //log.ErrorFormat("TagUrlType == {0}", TagUrlType);
 
             DolPicVo entity = new DolPicVo();
             entity.Seq = TagNo;

@@ -12,7 +12,7 @@ namespace DolPic.Data.Daos
         /// <returns></returns>
         public IList<DolPicVo> MainImageList(DolPicVo entity)
         {
-            return DolPicServiceDataMapper.Instance().QueryForList<DolPicVo>("UP_MainImage_List", entity);
+            return DolPicServiceDataMapper.Instance().QueryForList<DolPicVo>(SqlMaps.DolPic.UP_MainImage_List, entity);
         }
 
         /// <summary>
@@ -21,7 +21,7 @@ namespace DolPic.Data.Daos
         /// <returns></returns>
         public void DolPicImageSelect(DolPicVo entity)
         {
-            DolPicServiceDataMapper.Instance().QueryForObject<DolPicVo>("UP_Image_Select", entity);
+            DolPicServiceDataMapper.Instance().QueryForObject<DolPicVo>(SqlMaps.DolPic.UP_Image_Select, entity);
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace DolPic.Data.Daos
         /// <returns></returns>
         public IList<DolPicVo> InitialList(DolPicVo entity)
         {
-            return DolPicServiceDataMapper.Instance().QueryForList<DolPicVo>("UP_Initial_List", entity);
+            return DolPicServiceDataMapper.Instance().QueryForList<DolPicVo>(SqlMaps.DolPic.UP_Initial_List, entity);
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace DolPic.Data.Daos
         /// <returns></returns>
         public IList<DolPicVo> HotDolPicList(DolPicVo entity)
         {
-            return DolPicServiceDataMapper.Instance().QueryForList<DolPicVo>("UP_HotDolPic_List", entity);
+            return DolPicServiceDataMapper.Instance().QueryForList<DolPicVo>(SqlMaps.DolPic.UP_HotDolPic_List, entity);
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace DolPic.Data.Daos
         /// <returns></returns>
         public void DolPicUserSignUp(DolPicVo entity)
         {
-            DolPicServiceDataMapper.Instance().QueryForObject<DolPicVo>("UP_DolPicUser_Insert", entity);
+            DolPicServiceDataMapper.Instance().QueryForObject<DolPicVo>(SqlMaps.DolPic.UP_DolPicUser_Insert, entity);
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace DolPic.Data.Daos
         /// <returns></returns>
         public void DolPicUserLogIn(DolPicVo entity)
         {
-            DolPicServiceDataMapper.Instance().QueryForObject<DolPicVo>("UP_DolPicUser_Login", entity);
+            DolPicServiceDataMapper.Instance().QueryForObject<DolPicVo>(SqlMaps.DolPic.UP_DolPicUser_Login, entity);
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace DolPic.Data.Daos
         /// <returns></returns>
         public void DolPicImageLikeInsert(DolPicVo entity)
         {
-            DolPicServiceDataMapper.Instance().QueryForObject<DolPicVo>("UP_DolPicImageLike_Insert", entity);
+            DolPicServiceDataMapper.Instance().QueryForObject<DolPicVo>(SqlMaps.DolPic.UP_DolPicImageLike_Insert, entity);
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace DolPic.Data.Daos
         /// <returns></returns>
         public void FavoriteInsert(DolPicVo entity)
         {
-            DolPicServiceDataMapper.Instance().QueryForObject<DolPicVo>("UP_Favorite_Insert", entity);
+            DolPicServiceDataMapper.Instance().QueryForObject<DolPicVo>(SqlMaps.DolPic.UP_Favorite_Insert, entity);
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace DolPic.Data.Daos
         /// <returns></returns>
         public IList<DolPicVo> FavoriteList(DolPicVo entity)
         {
-            return DolPicServiceDataMapper.Instance().QueryForList<DolPicVo>("UP_Favorite_List", entity);
+            return DolPicServiceDataMapper.Instance().QueryForList<DolPicVo>(SqlMaps.DolPic.UP_Favorite_List, entity);
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace DolPic.Data.Daos
         /// <returns></returns>
         public void FavoriteDelete(DolPicVo entity)
         {
-            DolPicServiceDataMapper.Instance().QueryForObject<DolPicVo>("UP_Favorite_Delete", entity);
+            DolPicServiceDataMapper.Instance().QueryForObject<DolPicVo>(SqlMaps.DolPic.UP_Favorite_Delete, entity);
         }
     }
 }

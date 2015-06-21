@@ -10,9 +10,9 @@ namespace DolPic.Service.Web.Filters
 
         public void OnException(ExceptionContext filterContext)
         {
-            //log.Error("===========================================================================");
-            //log.ErrorFormat("에러 발생  == {0}", filterContext.Exception.ToString());
-            //log.Error("===========================================================================");
+            log.Error("===========================================================================");
+            log.ErrorFormat("에러 발생  == {0}", filterContext.Exception.ToString());
+            log.Error("===========================================================================");
 
             filterContext.HttpContext.Response.Cache.SetMaxAge(new TimeSpan(0));
             //filterContext.Result = new RedirectResult("/Common/Error", true);

@@ -27,8 +27,7 @@ namespace DolPic.Data.SqlMaps
         /// 이미지 리스트
 		/// </summary>
 		public const string UPA_DolPicImage_List = "UPA_DolPicImage_List";
-
-	}
+    }
 
 	public class DolPic
 	{

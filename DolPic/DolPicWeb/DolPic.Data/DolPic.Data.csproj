@@ -60,6 +60,7 @@
       <DependentUpon>SqlMaps.tt</DependentUpon>
     </Compile>
     <Compile Include="Vos\DolPicVo.cs" />
+    <Compile Include="Vos\UserVo.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="SqlMaps\Admin.xml" />
