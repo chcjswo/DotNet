@@ -98,6 +98,22 @@ namespace DolPic.Service.Web.Controllers
             ViewBag.UserId = UserId;
 
             return View();
+        }
+
+        /// <summary>
+        /// 회원 즐겨찾기 리스트 화면
+        /// </summary>
+        /// <param name="UserId"></param>
+        /// <returns></returns>
+        public ActionResult DolPicUserFavoriteList(string UserId, int? page)
+        {
+            var list = _service.GetUserFavoriteList(UserId);
+
+            ViewBag.DataCount = list.Count;
+            ViewBag.DataList = list.ToPagedList(page ?? 1, 20);
+            ViewBag.UserId = UserId;
+
+            return View();
         } 
         #endregion
 

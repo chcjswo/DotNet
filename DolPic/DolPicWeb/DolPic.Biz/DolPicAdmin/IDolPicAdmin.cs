@@ -34,10 +34,17 @@ namespace DolPic.Biz.DolPicAdmin
         void HashTagDelete(int a_nHashTagNo);
 
         /// <summary>
-        /// 유저 리스트 조회
+        /// 회원 리스트 조회
         /// </summary>
         /// <param name="a_sUserId">유저 아이디</param>
         /// <returns></returns>
         IList<UserVo> GetUserList(string a_sUserId);
+
+        /// <summary>
+        /// 회원 즐겨찾기 리스트 조회
+        /// </summary>
+        /// <param name="a_sUserId">유저 아이디</param>
+        /// <returns></returns>
+        IList<DolPicVo> GetUserFavoriteList(string a_sUserId);
     }
 }

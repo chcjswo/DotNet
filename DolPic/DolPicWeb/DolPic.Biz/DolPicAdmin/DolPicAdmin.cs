@@ -71,7 +71,7 @@ namespace DolPic.Biz.DolPicAdmin
         }
 
         /// <summary>
-        /// 유저 리스트 조회
+        /// 회원 리스트 조회
         /// </summary>
         /// <param name="a_sUserId">유저 아이디</param>
         /// <returns></returns>
@@ -81,6 +81,19 @@ namespace DolPic.Biz.DolPicAdmin
             entity.UserId = a_sUserId;
 
             return _dao.DolPicUserList(entity);
+        }
+
+        /// <summary>
+        /// 회원 즐겨찾기 리스트 조회
+        /// </summary>
+        /// <param name="a_sUserId">유저 아이디</param>
+        /// <returns></returns>
+        public IList<DolPicVo> GetUserFavoriteList(string a_sUserId)
+        {
+            UserVo entity = new UserVo();
+            entity.UserId = a_sUserId;
+
+            return _dao.DolPicUserFavoriteList(entity);
         }
     }
 }
