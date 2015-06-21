@@ -18,14 +18,14 @@ namespace DolPic.Service.Web.Controllers
     {
         private const string XML_FILE_NAME = "twitter_image.xml";
         // DAO
-        private readonly IDolPicAdmin dao;
+        private readonly IDolPicAdmin _dao;
 
         /// <summary>
         /// 생성자
         /// </summary>
         public DolPicAdminController()
         {
-            dao = new DolPicAdmin();
+            _dao = new DolPicAdmin();
         }
 
         public ActionResult Index()
@@ -51,7 +51,7 @@ namespace DolPic.Service.Web.Controllers
         public ActionResult HashTagList(int? page)
         {
             // 해쉬태그 리스트 조회
-            var list = dao.GetHashTagList();
+            var list = _dao.GetHashTagList();
 
             ViewBag.DataCount = list.Count;
             ViewBag.DataList = list.ToPagedList(page ?? 1, 20);
@@ -76,7 +76,7 @@ namespace DolPic.Service.Web.Controllers
         /// <returns></returns>
         public ActionResult DolPicImageList(int Seq, int? page)
         {
-            var list = dao.GetDolPicImageList(Seq);
+            var list = _dao.GetDolPicImageList(Seq);
 
             ViewBag.DataCount = list.Count;
             ViewBag.DataList = list.ToPagedList(page ?? 1, 20);
@@ -90,7 +90,7 @@ namespace DolPic.Service.Web.Controllers
         public ActionResult HashTagInsert(string HashTag, string Initial)
         {
             // 해쉬태그 입력
-            var nRetCode = dao.HashTagInsert(HashTag, Initial);
+            var nRetCode = _dao.HashTagInsert(HashTag, Initial);
             var result = new { RetCode = 99, RetMsg = "" };
 
             switch (nRetCode)
@@ -130,7 +130,7 @@ namespace DolPic.Service.Web.Controllers
         public ActionResult HashTagXmlMake()
         {
             // 해쉬태그 리스트 조회
-            var list = dao.GetHashTagList();
+            var list = _dao.GetHashTagList();
             var result = new { RetCode = 0, RetMsg = "" };
 
             try
@@ -158,11 +158,16 @@ namespace DolPic.Service.Web.Controllers
         public ActionResult HashTagDelete(int Seq)
         {
             // 해쉬태그 삭제 실행
-            dao.HashTagDelete(Seq);
+            _dao.HashTagDelete(Seq);
 
             return RedirectToAction("HashTagList");
         }
 
+        #region XML문서 만들기
+        /// <summary>
+        /// 해쉬태그 XML문서 만들고 저장하기
+        /// </summary>
+        /// <param name="list">해쉬태그 리스트</param>
         private void MakeXml(IList<DolPicVo> list)
         {
             //DOM 문서 생성
@@ -192,7 +197,8 @@ namespace DolPic.Service.Web.Controllers
                 // 지정된 XML문서로 만들고 저장한다.
                 doc.Save(Server.MapPath("~/" + XML_FILE_NAME));
             }
-        }
+        } 
+        #endregion
 
     }
 }

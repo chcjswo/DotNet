@@ -19,7 +19,7 @@ namespace DolPic.Service.Web.Controllers
         // 바로가기 리스트 사이즈
         private readonly int _nGotoListSize;
         // DAO
-        private readonly IDolPicService dao;
+        private readonly IDolPicService _dao;
 
         /// <summary>
         /// 생성자
@@ -28,14 +28,19 @@ namespace DolPic.Service.Web.Controllers
         {
             _nImageListSize = 50;
             _nGotoListSize = 10;
-            dao = new DolPicService();
+
+            _dao = new DolPicService();
         }
 
         //
         // GET: /Piscs/
-        public ActionResult Index()
+        //public ActionResult Index()
+        //{
+        //    return RedirectToAction("Main");
+        //}
+        public string Index()
         {
-            return RedirectToAction("Main");
+            return Server.MapPath("~");
         }
 
         #region 화면 관련
@@ -53,7 +58,7 @@ namespace DolPic.Service.Web.Controllers
             entity.CurPage = 1;
             entity.PageListSize = _nImageListSize;
 
-            ViewBag.DataList = dao.GetMainImageList(entity);
+            ViewBag.DataList = _dao.GetMainImageList(entity);
             ViewBag.HashTag = id;
             ViewBag.PageGotoList = GetGotoPageList(1, entity.TotalCnt, _nImageListSize, _nGotoListSize);
 
@@ -68,7 +73,7 @@ namespace DolPic.Service.Web.Controllers
         {
             var UserId = DolPicCookie.CookieRead(this.HttpContext, COOKIE_NAME);
             ViewBag.User = UserId;
-            ViewBag.DataList = dao.GetFavoriteList(UserId);
+            ViewBag.DataList = _dao.GetFavoriteList(UserId);
 
             return View();
         }
@@ -86,7 +91,7 @@ namespace DolPic.Service.Web.Controllers
             ViewBag.HashTag = HashTag;
 
             // 이미지 조회
-            DolPicPo po = dao.GetPicView(ImgNo, UserId, HashTag);
+            DolPicPo po = _dao.GetPicView(ImgNo, UserId, HashTag);
 
             return View(po);
         }
@@ -101,7 +106,7 @@ namespace DolPic.Service.Web.Controllers
             ViewBag.User = UserId;
 
             // 초성 리스트 조회
-            ViewBag.DataList = dao.GetInitialList(UserId);
+            ViewBag.DataList = _dao.GetInitialList(UserId);
 
             return View();
         }
@@ -113,7 +118,7 @@ namespace DolPic.Service.Web.Controllers
         public ActionResult HotDolPicList()
         {
             // 핫돌픽 리스트 조회
-            ViewBag.DataList = dao.GetHotDolPicList();
+            ViewBag.DataList = _dao.GetHotDolPicList();
 
             return View();
         } 
@@ -134,7 +139,7 @@ namespace DolPic.Service.Web.Controllers
             entity.PageListSize = _nImageListSize;
 
             ReturnResult result = new ReturnResult();
-            result.ImageList = dao.GetMainImageList(entity);
+            result.ImageList = _dao.GetMainImageList(entity);
             result.PageGotoList = GetGotoPageList(CurPage, entity.TotalCnt, _nImageListSize, _nGotoListSize);
 
             return Json(JsonConvert.SerializeObject(result));
@@ -152,7 +157,7 @@ namespace DolPic.Service.Web.Controllers
             ViewBag.HashTag = HashTag;
 
             // 이미지 조회
-            DolPicPo po = dao.GetPicView(ImgNo, DolPicCookie.CookieRead(this.HttpContext, COOKIE_NAME), HashTag);
+            DolPicPo po = _dao.GetPicView(ImgNo, DolPicCookie.CookieRead(this.HttpContext, COOKIE_NAME), HashTag);
 
             return Json(JsonConvert.SerializeObject(po));
         }
@@ -178,7 +183,7 @@ namespace DolPic.Service.Web.Controllers
             }
 
             // 이미지 좋아요 처리
-            po = dao.PicLike(Seq, UserId);
+            po = _dao.PicLike(Seq, UserId);
 
             switch (po.RetCode)
             {
@@ -217,7 +222,7 @@ namespace DolPic.Service.Web.Controllers
             }
 
             // 즐겨찾기 입력 처리
-            po.RetCode = dao.FavoriteInsert(TagNo, UserId);
+            po.RetCode = _dao.FavoriteInsert(TagNo, UserId);
 
             switch (po.RetCode)
             {
@@ -256,7 +261,7 @@ namespace DolPic.Service.Web.Controllers
             }
 
             // 즐겨찾기 삭제 처리
-            po.RetCode = dao.FavoriteDelete(TagNo, UserId);
+            po.RetCode = _dao.FavoriteDelete(TagNo, UserId);
 
             switch (po.RetCode)
             {

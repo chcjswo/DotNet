@@ -12,7 +12,7 @@ namespace DolPic.Service.Web.Controllers
     {
         private const string COOKIE_NAME = "user";
         // DAO
-        private readonly IDolPicUser dao;
+        private readonly IDolPicUser _dao;
 
         /// <summary>
         /// 생성자

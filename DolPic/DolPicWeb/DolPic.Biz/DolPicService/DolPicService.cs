@@ -7,14 +7,14 @@ namespace DolPic.Biz.DolPicService
 {
     public class DolPicService : IDolPicService
     {
-        private readonly DolPicDao dao;
+        private readonly DolPicDao _dao;
 
         /// <summary>
         /// 생성자
         /// </summary>
         public DolPicService()
         {
-            dao = new DolPicDao();
+            _dao = new DolPicDao();
         }
 
         /// <summary>
@@ -24,7 +24,7 @@ namespace DolPic.Biz.DolPicService
         /// <returns></returns>
         public IList<DolPicVo> GetMainImageList(DolPicVo entity)
         {
-            return dao.MainImageList(entity);
+            return _dao.MainImageList(entity);
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace DolPic.Biz.DolPicService
             DolPicVo entity = new DolPicVo();
             entity.UserId = a_sUserId;
 
-            return dao.InitialList(entity);
+            return _dao.InitialList(entity);
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace DolPic.Biz.DolPicService
         {
             DolPicVo entity = new DolPicVo();
 
-            return dao.HotDolPicList(entity);
+            return _dao.HotDolPicList(entity);
         }
 
         /// <summary>
@@ -65,8 +65,7 @@ namespace DolPic.Biz.DolPicService
             entity.UserId = a_sUserId;
             entity.SearchHashTag = a_sHahTag ?? "";
 
-            DolPicDao dao = new DolPicDao();
-            dao.DolPicImageSelect(entity);
+            _dao.DolPicImageSelect(entity);
 
             DolPicPo po = new DolPicPo();
             po.ImageSrc = entity.ImageSrc;
@@ -92,34 +91,13 @@ namespace DolPic.Biz.DolPicService
             entity.Seq = a_nSeq;
             entity.UserId = a_sUserId;
 
-            DolPicDao dao = new DolPicDao();
-            dao.DolPicImageLikeInsert(entity);
+            _dao.DolPicImageLikeInsert(entity);
 
             DolPicPo po = new DolPicPo();
             po.RetCode = entity.RetCode;
             po.LikeCnt = entity.LikeCnt;
 
             return po;
-        }
-
-        /// <summary>
-        /// 이미지 저장 API
-        /// </summary>
-        /// <param name="a_nTagNo">태그 고유번호</param>
-        /// <param name="a_sImageSrc">이미지 주소</param>
-        /// <param name="a_nTagUrlType">태그 타입</param>
-        /// <returns></returns>
-        public void PicLike(int a_nTagNo, string a_sImageSrc, int a_nTagUrlType)
-        {
-            var base64EncodedBytes = System.Convert.FromBase64String(a_sImageSrc);
-
-            DolPicVo entity = new DolPicVo();
-            entity.Seq = a_nTagNo;
-            entity.ImageSrc = System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
-            entity.TagUrlType = a_nTagUrlType;
-
-            AdminDao dao = new AdminDao();
-            dao.DolPicImageInsert(entity);
         }
 
         /// <summary>
@@ -134,8 +112,7 @@ namespace DolPic.Biz.DolPicService
             entity.Seq = a_nTagNo;
             entity.UserId = a_sUserId;
 
-            DolPicDao dao = new DolPicDao();
-            dao.FavoriteInsert(entity);
+            _dao.FavoriteInsert(entity);
 
             return entity.RetCode;
         }
@@ -150,7 +127,7 @@ namespace DolPic.Biz.DolPicService
             DolPicVo entity = new DolPicVo();
             entity.UserId = a_sUserId;
 
-            return dao.FavoriteList(entity);
+            return _dao.FavoriteList(entity);
         }
 
         /// <summary>
@@ -165,8 +142,7 @@ namespace DolPic.Biz.DolPicService
             entity.Seq = a_nTagNo;
             entity.UserId = a_sUserId;
 
-            DolPicDao dao = new DolPicDao();
-            dao.FavoriteDelete(entity);
+            _dao.FavoriteDelete(entity);
 
             return entity.RetCode;
         }

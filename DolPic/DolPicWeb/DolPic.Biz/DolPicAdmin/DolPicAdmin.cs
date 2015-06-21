@@ -7,14 +7,14 @@ namespace DolPic.Biz.DolPicAdmin
 {
     public class DolPicAdmin : IDolPicAdmin
     {
-        private readonly AdminDao dao;
+        private readonly AdminDao _dao;
 
         /// <summary>
         /// 생성자
         /// </summary>
         public DolPicAdmin()
         {
-            dao = new AdminDao();
+            _dao = new AdminDao();
         }
 
         /// <summary>
@@ -24,9 +24,8 @@ namespace DolPic.Biz.DolPicAdmin
         public IList<DolPicVo> GetHashTagList()
         {
             DolPicVo entity = new DolPicVo();
-            AdminDao dao = new AdminDao();
 
-            return dao.HashTagList(entity);
+            return _dao.HashTagList(entity);
         }
 
         /// <summary>
@@ -39,9 +38,7 @@ namespace DolPic.Biz.DolPicAdmin
             DolPicVo entity = new DolPicVo();
             entity.Seq = a_nHashTagNo;
 
-            AdminDao dao = new AdminDao();
-
-            return  dao.DolPicImageList(entity);
+            return _dao.DolPicImageList(entity);
         }
 
         /// <summary>
@@ -56,8 +53,7 @@ namespace DolPic.Biz.DolPicAdmin
             entity.HashTag = a_sHashTag;
             entity.Initial = a_sInitia;
 
-            AdminDao dao = new AdminDao();
-            dao.HashTagInsert(entity);
+            _dao.HashTagInsert(entity);
 
             return entity.RetCode;
         }
@@ -72,8 +68,7 @@ namespace DolPic.Biz.DolPicAdmin
             DolPicVo entity = new DolPicVo();
             entity.Seq = a_nHashTagNo;
 
-            AdminDao dao = new AdminDao();
-            dao.HashTagDelete(entity);
+            _dao.HashTagDelete(entity);
         }
     }
 }

@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = "이미지 리스트";
+    Layout = "~/Views/Shared/_Admin/_Layout.cshtml";
+
+    var list = ViewBag.DataList;
+}
+@using PagedList.Mvc;
+@using PagedList;
+
+<link href="~/Css/PagedList.css" rel="stylesheet" />
+<div>
+    <div>
+        <table border="1" cellpadding="0" cellspacing="0" class="notice_table">
+            <tr class="notice_t_alert" style="width:30px">
+                <th style="width:100px">고유번호</th>
+                <th style="width:150px">이미지</th>
+                <th style="width:60px">삭제</th>
+                @*<th style="width:60px">보기</th>*@
+            </tr>
+            @foreach (var item in list)
+            {
+                <tr class="notice_t_alert" style="text-align:center; height:25px">
+                    <td>@item.Seq</td>
+                    <td> <a href="@item.ImageSrc" target="_blank">@item.ImageSrc</a></td>
+                    <td><input type="button" value="수정" seq="@item.Seq" class="delete" /></td>
+                    @*<td><input type="button" value="보기" seq="@item.Seq" class="imgview" /></td>*@
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+<div>
+    @Html.PagedListPager((IPagedList)list, page => Url.Action("DolPicImageList", new {page = page, Seq = ViewBag.Seq}))
+</div>
+
+<input type="button" value="태그 리스트" onclick="location.href = 'HashTagList';" />

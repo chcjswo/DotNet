@@ -44,15 +44,6 @@ namespace DolPic.Biz.DolPicService
         DolPicPo PicLike(int a_nSeq, string a_sUserId);
 
         /// <summary>
-        /// 이미지 저장 API
-        /// </summary>
-        /// <param name="a_nTagNo">태그 고유번호</param>
-        /// <param name="a_sImageSrc">이미지 주소</param>
-        /// <param name="a_nTagUrlType">태그 타입</param>
-        /// <returns></returns>
-        void PicLike(int a_nTagNo, string a_sImageSrc, int a_nTagUrlType);
-
-        /// <summary>
         /// 즐겨찾기 입력
         /// </summary>
         /// <param name="a_nTagNo">고유번호</param>
