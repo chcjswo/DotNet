@@ -23,7 +23,7 @@
             @foreach (var item in list)
             {
                 <tr class="notice_t_alert" style="text-align:center; height:25px">
-                    <td>@item.UserId</td>
+                    <td>@Html.ActionLink("aaa", "DolPicUserFavoriteList", new { UserId=item.UserId })</td>
                     <td>@item.UserRole</td>
                     <td>@item.RegDate</td>
                     <td>@item.UpdateDate</td>

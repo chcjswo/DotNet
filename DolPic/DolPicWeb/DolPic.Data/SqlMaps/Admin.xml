@@ -41,7 +41,7 @@
     </procedure>
 
     <!-- 회원 즐겨찾기 리스트 -->
-    <procedure id="UPA_UserFavorite_List" parameterMap="p_userid" resultClass="dolpic" description="회원 즐겨찾기 리스트">
+    <procedure id="UPA_UserFavorite_List" parameterMap="p_userid" resultClass="user" description="회원 즐겨찾기 리스트">
       UPA_User_List
     </procedure>
   </statements>

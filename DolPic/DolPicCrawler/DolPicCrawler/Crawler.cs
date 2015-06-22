@@ -51,6 +51,8 @@ namespace DolPicCrawler
             //this.WindowState = FormWindowState.Minimized;
             //this.ShowInTaskbar = false;
             //this.Visible = false;
+            Version version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+            txtLog.Text = version.ToString();
 
             this.notifyIcon1.Visible = true;
             notifyIcon1.ContextMenuStrip = contextMenuStrip1;
@@ -120,11 +122,14 @@ namespace DolPicCrawler
                     _arrTag.Add(xn.Attributes["tag"].Value);
                 }
 
-                MessageBox.Show("XML 로딩 완료",  "완료", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button3);
+                //MessageBox.Show("XML 로딩 완료",  "완료", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button3);
+
+                txtLog.Text = "XML 로딩 완료";
             }
             catch (ArgumentException ex)
             {
-                MessageBox.Show("XML 문제 발생\r\n" + ex, "에러발생", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtLog.Text = "XML 문제 발생\r\n" + ex.ToString();
+                //MessageBox.Show("XML 문제 발생\r\n" + ex, "에러발생", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         #endregion
@@ -134,6 +139,9 @@ namespace DolPicCrawler
         /// </summary>
         private void ImageGet()
         {
+            // 일단 XML 로딩
+            XmlInfoInit();
+
             //응답요청을 한다
             WebRequest request = null;
             WebResponse response = null;

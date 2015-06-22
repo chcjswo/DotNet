@@ -31,8 +31,6 @@ D:\GitHub\DotNet\DolPicWeb\DolPic.Service\bin\System.Web.WebPages.Razor.xml
 D:\GitHub\DotNet\DolPicWeb\DolPic.Service\obj\Debug\DolPic.Service.Web.csprojResolveAssemblyReference.cache
 D:\GitHub\DotNet\DolPicWeb\DolPic.Service\obj\Debug\DolPic.Service.Web.dll
 D:\GitHub\DotNet\DolPicWeb\DolPic.Service\obj\Debug\DolPic.Service.Web.pdb
-D:\GitHub\DotNet\DolPic\DolPicWeb\DolPic.Service\obj\Debug\DolPic.Service.Web.csproj.App.config
-D:\GitHub\DotNet\DolPic\DolPicWeb\DolPic.Service\obj\Debug\DolPic.Service.Web.csprojResolveAssemblyReference.cache
 D:\GitHub\DotNet\DolPic\DolPicWeb\DolPic.Service\bin\DolPic.Service.Web.dll.config
 D:\GitHub\DotNet\DolPic\DolPicWeb\DolPic.Service\bin\DolPic.Service.Web.dll
 D:\GitHub\DotNet\DolPic\DolPicWeb\DolPic.Service\bin\DolPic.Service.Web.pdb
@@ -84,5 +82,7 @@ D:\GitHub\DotNet\DolPic\DolPicWeb\DolPic.Service\bin\System.Web.WebPages.Razor.x
 D:\GitHub\DotNet\DolPic\DolPicWeb\DolPic.Service\bin\Newtonsoft.Json.xml
 D:\GitHub\DotNet\DolPic\DolPicWeb\DolPic.Service\bin\System.Web.Http.xml
 D:\GitHub\DotNet\DolPic\DolPicWeb\DolPic.Service\bin\System.Web.Http.WebHost.xml
+D:\GitHub\DotNet\DolPic\DolPicWeb\DolPic.Service\obj\Debug\DolPic.Service.Web.csproj.App.config
+D:\GitHub\DotNet\DolPic\DolPicWeb\DolPic.Service\obj\Debug\DolPic.Service.Web.csprojResolveAssemblyReference.cache
 D:\GitHub\DotNet\DolPic\DolPicWeb\DolPic.Service\obj\Debug\DolPic.Service.Web.dll
 D:\GitHub\DotNet\DolPic\DolPicWeb\DolPic.Service\obj\Debug\DolPic.Service.Web.pdb

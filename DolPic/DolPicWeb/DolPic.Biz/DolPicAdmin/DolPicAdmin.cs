@@ -88,7 +88,7 @@ namespace DolPic.Biz.DolPicAdmin
         /// </summary>
         /// <param name="a_sUserId">유저 아이디</param>
         /// <returns></returns>
-        public IList<DolPicVo> GetUserFavoriteList(string a_sUserId)
+        public IList<UserVo> GetUserFavoriteList(string a_sUserId)
         {
             UserVo entity = new UserVo();
             entity.UserId = a_sUserId;

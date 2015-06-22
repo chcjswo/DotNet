@@ -34,6 +34,11 @@ namespace DolPic.Data.Vos
         /// </summary>
         public DateTime PwUpdateDate { get; set; }
 
+        /// <summary>
+        /// 해쉬태그
+        /// </summary>
+        public DateTime HashTag { get; set; }
+
         public short RetCode { get; set; }
         public string RetMsg { get; set; }
 

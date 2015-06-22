@@ -64,9 +64,9 @@ namespace DolPic.Data.Daos
         /// 회원 즐겨찾기 리스트
         /// </summary>
         /// <returns></returns>
-        public IList<DolPicVo> DolPicUserFavoriteList(UserVo entity)
+        public IList<UserVo> DolPicUserFavoriteList(UserVo entity)
         {
-            return DolPicServiceDataMapper.Instance().QueryForList<DolPicVo>("UPA_User_List", entity);
+            return DolPicServiceDataMapper.Instance().QueryForList<UserVo>("UPA_User_List", entity);
         }
 
     }

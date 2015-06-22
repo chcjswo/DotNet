@@ -12,7 +12,7 @@ using DolPic.Biz.DolPicAdmin;
 
 namespace DolPic.Service.Web.Controllers
 {
-    //[AdminAuth(Roles = UserRole.admin)]
+    [AdminAuth(Roles = UserRole.admin)]
     public class DolPicAdminController : CustomController
     {
         private const string XML_FILE_NAME = "twitter_image.xml";
