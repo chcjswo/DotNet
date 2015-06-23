@@ -15,9 +15,14 @@ namespace DolPic.Service.Web
 
             routes.MapRoute(
                 name: "Default",
-                url: "{controller}/{action}/{id}/{page}",
-                defaults: new { controller = "Pics", action = "Index", id = UrlParameter.Optional, page = UrlParameter.Optional }
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Pics", action = "Index", id = UrlParameter.Optional }
             );
+            //routes.MapRoute(
+            //    name: "Default",
+            //    url: "{controller}/{action}/{id}/{page}",
+            //    defaults: new { controller = "Pics", action = "Index", id = UrlParameter.Optional, page = UrlParameter.Optional }
+            //);
             //routes.MapRoute(
             //    name: "Main",
             //    url: "{controller}/{action}/{Page}/{HashTag}",

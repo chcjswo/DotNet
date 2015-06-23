@@ -1,11 +1,7 @@
-﻿using System;
-using System.IO;
-using System.Security.Cryptography;
-using System.Text;
-
+﻿
 namespace DolPic.Common
 {
-    public class CommonVariable
+    public static class CommonVariable
     {
         /// <summary>
         /// 쿠키 이름

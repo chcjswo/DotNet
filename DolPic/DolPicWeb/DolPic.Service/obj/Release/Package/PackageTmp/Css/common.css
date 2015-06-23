@@ -87,6 +87,9 @@ body{background:url(../images/bg.png) #EDEFF4;color:#282828}
 .sponsor{text-align:center;font-size:10px;color:#4F6998}
 .sponsor a{text-decoration:none;color:#4F6998}
 
+.wrong_pic{text-align:center;font-size:12px;padding-right:20px;padding-bottom:10px;color:#8A8A8A}
+.wrong_pic a{color:#0C9DE4}
+
 .error401_box{position:absolute;left:50%;top:50%;margin-left:-320px;margin-top:-256px;width:640px;height:512px;background:url(https://farm8.staticflickr.com/7148/6508023065_8dae48a30b_z.jpg) no-repeat 0 0;background-size:640px auto}
 .error404_box{position:absolute;left:50%;top:50%;margin-left:-320px;margin-top:-256px;width:640px;height:512px;background:url(https://farm8.staticflickr.com/7172/6508022985_b22200ced0_z.jpg) no-repeat 0 0;background-size:640px auto}
 .error500_box{position:absolute;left:50%;top:50%;margin-left:-320px;margin-top:-256px;width:640px;height:512px;background:url(https://farm8.staticflickr.com/7001/6509400855_aaaf915871_z.jpg) no-repeat 0 0;background-size:640px auto}

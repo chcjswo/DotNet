@@ -28,6 +28,15 @@ namespace DolPic.Service.Web.Filters
 
             return true;
         }
+
+        public override void OnAuthorization(AuthorizationContext filterContext)
+        {
+            if (!AuthorizeCore(filterContext.HttpContext))
+            {
+                filterContext.Result = new RedirectResult("~/Error/AuthorizedError");
+            }
+
+        }
     }
 
 }

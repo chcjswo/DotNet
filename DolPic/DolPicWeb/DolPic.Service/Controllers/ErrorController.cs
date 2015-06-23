@@ -4,7 +4,7 @@ using System.Web.Mvc;
 
 namespace DolPic.Service.Web.Controllers
 {
-    public abstract class ErrorController : CustomController
+    public class ErrorController : CustomController
     {
         public ActionResult Index()
         {
