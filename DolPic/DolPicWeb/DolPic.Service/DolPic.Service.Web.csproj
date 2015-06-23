@@ -143,7 +143,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\CustomController.cs" />
-    <Compile Include="Common\ErrorController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\DolPicAdminController.cs" />
     <Compile Include="Controllers\PicsController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -163,9 +163,11 @@
     <Content Include="Css\common.css" />
     <Content Include="Css\PagedList.css" />
     <Content Include="Css\Site.css" />
+    <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Images\ajax-loader.gif" />
     <Content Include="Images\bg.png" />
+    <Content Include="Images\icon.png" />
     <Content Include="Images\icon_favorite.png" />
     <Content Include="Images\icon_like.png" />
     <Content Include="Images\icon_like_b.png" />

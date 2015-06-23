@@ -1,5 +1,5 @@
 ﻿@model DolPic.Data.Pos.DolPicPo
-
+@using DolPic.Common
 @Html.Action("FavoriteBar", "Pics")
 <!-- 갤러리 -->
 <div class="wrapper">
@@ -19,7 +19,7 @@
 		<div class="clear"></div>
 		<!-- 구글 광고 -->
 		@Html.Partial("_GoogleAd1")
-		<div class="wrong_pic">해당 이미지가 잘못되었으면 <a href="#">여기</a>를 눌러주세요.</div>	</div>
+		<!--<div class="wrong_pic">해당 이미지가 잘못되었으면 <a href="#">여기</a>를 눌러주세요.</div>-->	</div>
 	<div class="gbox_side">
         @Html.Action("HotDolPicList", "Pics")
 		<!-- 구글 광고 -->
@@ -45,6 +45,15 @@
         );
 
         $('.gbox_list li').live('click', function () {
+            var nClickIdx = $(this).index();
+
+            if (nClickIdx == 0) {
+                location.href = "/Pics/Main/@((string.IsNullOrEmpty(ViewBag.HashTag) ? CommonVariable.ALL_IMAGE : ViewBag.HashTag))/@ViewBag.CurPage";
+                return;
+            }
+
+            if (nClickIdx == 2) return;
+
             var seq = $(this).attr("seq");
             if (seq == 0) { alert("더이상 사진이 없습니다."); return; }
 
@@ -66,20 +75,20 @@
             })
             .done(function (data) {
                 var retData = $.parseJSON(data);
-                $('.gbox_list li').eq(0).attr("seq", "0");
-                $('.gbox_list li').eq(2).attr("seq", "0");
+                $('.gbox_list li').eq(1).attr("seq", "0");
+                $('.gbox_list li').eq(3).attr("seq", "0");
                 $("#hashtag").html("#" + retData.HashTag);
                 $("#CurSeq").val(retData.CurSeq);
-                $('.gbox_list li').eq(0).addClass("on");
-                $('.gbox_list li').eq(2).addClass("on");
+                $('.gbox_list li').eq(1).addClass("on");
+                $('.gbox_list li').eq(3).addClass("on");
 
                 if (retData.PrevSeq > 0) {
-                    $('.gbox_list li').eq(0).attr("seq", retData.PrevSeq);
-                    $('.gbox_list li').eq(0).removeClass("on");
+                    $('.gbox_list li').eq(1).attr("seq", retData.PrevSeq);
+                    $('.gbox_list li').eq(1).removeClass("on");
                 }
                 if (retData.NextSeq > 0) {
-                    $('.gbox_list li').eq(2).attr("seq", retData.NextSeq);
-                    $('.gbox_list li').eq(2).removeClass("on");
+                    $('.gbox_list li').eq(3).attr("seq", retData.NextSeq);
+                    $('.gbox_list li').eq(3).removeClass("on");
                 }
 
                 $('#like').removeClass('btn_good').removeClass('btn_good on');

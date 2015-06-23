@@ -1,9 +1,10 @@
 ﻿
+using DolPic.Service.Web.Common;
 using System.Web.Mvc;
 
-namespace DolPic.Service.Web.Common
+namespace DolPic.Service.Web.Controllers
 {
-    public abstract class ErrorController : Controller
+    public abstract class ErrorController : CustomController
     {
         public ActionResult Index()
         {

@@ -124,7 +124,7 @@ namespace DolPicCrawler
 
                 //MessageBox.Show("XML 로딩 완료",  "완료", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button3);
 
-                txtLog.Text = "XML 로딩 완료";
+                txtLog.Text = "XML 로딩 완료" + Environment.NewLine;
             }
             catch (ArgumentException ex)
             {
