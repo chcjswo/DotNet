@@ -41,6 +41,21 @@ namespace DolPic.Biz.DolPicAdmin
         }
 
         /// <summary>
+        /// 이미지 삭제
+        /// </summary>
+        /// <param name="a_nImgNo">이미지 고유번호</param>
+        /// <returns></returns>
+        public int DolPicImageDelete(int a_nImgNo)
+        {
+            DolPicVo entity = new DolPicVo();
+            entity.Seq = a_nImgNo;
+
+            _dao.DolPicImageDelete(entity);
+
+            return entity.RetCode;
+        }
+
+        /// <summary>
         /// 해쉬태그 입력
         /// </summary>
         /// <param name="a_sHashTag">해쉬태그</param>

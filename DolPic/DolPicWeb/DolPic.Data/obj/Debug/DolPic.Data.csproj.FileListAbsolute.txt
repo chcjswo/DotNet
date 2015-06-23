@@ -8,3 +8,4 @@ D:\GitHub\DotNet\DolPic\DolPicWeb\DolPic.Data\bin\Debug\IBatisNet.Common.dll
 D:\GitHub\DotNet\DolPic\DolPicWeb\DolPic.Data\bin\Debug\IBatisNet.DataMapper.dll
 D:\GitHub\DotNet\DolPic\DolPicWeb\DolPic.Data\obj\Debug\DolPic.Data.dll
 D:\GitHub\DotNet\DolPic\DolPicWeb\DolPic.Data\obj\Debug\DolPic.Data.pdb
+D:\GitHub\DotNet\DolPic\DolPicWeb\DolPic.Data\obj\Debug\DolPic.Data.csprojResolveAssemblyReference.cache

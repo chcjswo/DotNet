@@ -37,44 +37,44 @@ namespace DolPic.Service.Web.Controllers
         }
 
         #region 화면 관련
-        /// <summary>
-        /// 돌픽 메인 화면
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult Main(string id)
-        {
-            ViewBag.User = DolPicCookie.CookieRead(this.HttpContext, CommonVariable.COOKIE_NAME);
-
-            DolPicVo entity = new DolPicVo();
-            entity.HashTag = id ?? "";
-            entity.CurPage = 1;
-            entity.PageListSize = _nImageListSize;
-
-            ViewBag.DataList = _service.GetMainImageList(entity);
-            ViewBag.HashTag = id;
-            ViewBag.PageGotoList = GetGotoPageList(1, entity.TotalCnt, _nImageListSize, _nGotoListSize);
-
-            return View();
-        }
         ///// <summary>
         ///// 돌픽 메인 화면
         ///// </summary>
         ///// <returns></returns>
-        //public ActionResult Main(string id, int? page)
+        //public ActionResult Main(string id)
         //{
         //    ViewBag.User = DolPicCookie.CookieRead(this.HttpContext, CommonVariable.COOKIE_NAME);
 
         //    DolPicVo entity = new DolPicVo();
-        //    entity.HashTag = string.IsNullOrEmpty(id) || CommonVariable.ALL_IMAGE.Equals(id) ? "" : id;
-        //    entity.CurPage = page ?? 1;
+        //    entity.HashTag = id ?? "";
+        //    entity.CurPage = 1;
         //    entity.PageListSize = _nImageListSize;
 
         //    ViewBag.DataList = _service.GetMainImageList(entity);
         //    ViewBag.HashTag = id;
-        //    ViewBag.PageGotoList = GetGotoPageList(page ?? 1, entity.TotalCnt, _nImageListSize, _nGotoListSize);
+        //    ViewBag.PageGotoList = GetGotoPageList(1, entity.TotalCnt, _nImageListSize, _nGotoListSize);
 
         //    return View();
         //}
+        /// <summary>
+        /// 돌픽 메인 화면
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Main(string id, int? page)
+        {
+            ViewBag.User = DolPicCookie.CookieRead(this.HttpContext, CommonVariable.COOKIE_NAME);
+
+            DolPicVo entity = new DolPicVo();
+            entity.HashTag = string.IsNullOrEmpty(id) || CommonVariable.ALL_IMAGE.Equals(id) ? "" : id;
+            entity.CurPage = page ?? 1;
+            entity.PageListSize = _nImageListSize;
+
+            ViewBag.DataList = _service.GetMainImageList(entity);
+            ViewBag.HashTag = id;
+            ViewBag.PageGotoList = GetGotoPageList(page ?? 1, entity.TotalCnt, _nImageListSize, _nGotoListSize);
+
+            return View();
+        }
 
         /// <summary>
         /// 즐겨찾기 리스트 
@@ -98,7 +98,7 @@ namespace DolPic.Service.Web.Controllers
         /// <returns></returns>
         public ActionResult PicView(int ImgNo, string HashTag, int Page)
         {
-            //HashTag = CommonVariable.ALL_IMAGE.Equals(HashTag) ? "" : HashTag;
+            HashTag = CommonVariable.ALL_IMAGE.Equals(HashTag) ? "" : HashTag;
             var UserId = DolPicCookie.CookieRead(this.HttpContext, CommonVariable.COOKIE_NAME);
             ViewBag.User = UserId;
             ViewBag.HashTag = HashTag;
@@ -146,7 +146,7 @@ namespace DolPic.Service.Web.Controllers
         [HttpPost]
         public ActionResult ImageList(int CurPage, string HashTag)
         {
-            //HashTag = CommonVariable.ALL_IMAGE.Equals(HashTag) ? "" : HashTag;
+            HashTag = CommonVariable.ALL_IMAGE.Equals(HashTag) ? "" : HashTag;
             DolPicVo entity = new DolPicVo();
             entity.HashTag = HashTag ?? "";
             entity.CurPage = CurPage;
@@ -169,7 +169,7 @@ namespace DolPic.Service.Web.Controllers
         [HttpPost]
         public ActionResult ImageView(int ImgNo, string HashTag)
         {
-            //HashTag = CommonVariable.ALL_IMAGE.Equals(HashTag) ? "" : HashTag;
+            HashTag = CommonVariable.ALL_IMAGE.Equals(HashTag) ? "" : HashTag;
             ViewBag.HashTag = HashTag;
 
             // 이미지 조회

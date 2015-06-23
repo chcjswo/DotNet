@@ -35,6 +35,11 @@
       UPA_DolPicImage_List
     </procedure>
 
+    <!-- 이미지 삭제 -->
+    <procedure id="UPA_DolPicImage_Delete" parameterMap="p_hashtag_delete" resultClass="dolpic" description="이미지 삭제">
+      UPA_DolPicImage_Delete
+    </procedure>
+
     <!-- 회원 리스트 -->
     <procedure id="UPA_User_List" parameterMap="p_userid" resultClass="user" description="회원 리스트">
       UPA_User_List

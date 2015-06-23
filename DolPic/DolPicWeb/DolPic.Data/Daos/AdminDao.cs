@@ -43,6 +43,15 @@ namespace DolPic.Data.Daos
         }
 
         /// <summary>
+        /// 이미지 삭제
+        /// </summary>
+        /// <returns></returns>
+        public void DolPicImageDelete(DolPicVo entity)
+        {
+            DolPicServiceDataMapper.Instance().QueryForObject<DolPicVo>("UPA_DolPicImage_Delete", entity);
+        }
+
+        /// <summary>
         /// 이미지 리스트
         /// </summary>
         /// <returns></returns>

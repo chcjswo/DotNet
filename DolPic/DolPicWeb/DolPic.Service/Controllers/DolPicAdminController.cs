@@ -119,6 +119,7 @@ namespace DolPic.Service.Web.Controllers
         } 
         #endregion
 
+        #region 어드민 동작
         [HttpPost]
         public ActionResult HashTagInsert(string HashTag, string Initial)
         {
@@ -194,7 +195,17 @@ namespace DolPic.Service.Web.Controllers
             _service.HashTagDelete(Seq);
 
             return RedirectToAction("HashTagList");
+        } 
+
+        [HttpPost]
+        public ActionResult DolPicImageDelete(int HashTagNo, int ImgNo)
+        {
+            // 이미지 삭제 실행
+            _service.DolPicImageDelete(ImgNo);
+
+            return RedirectToAction("DolPicImageList", new { Seq = HashTagNo});
         }
+        #endregion
 
         #region XML문서 만들기
         /// <summary>

@@ -109,6 +109,7 @@ namespace DolPic.Service.Web.Controllers
                             po.ReferUrl = model.ReferUrl;
 
                             Session["UserRole"] = po.UserRole;
+                            Session.Timeout = 600;
 
                         po.RetMsg = "로그인 하셨습니다.";
                         break;

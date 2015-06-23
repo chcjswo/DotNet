@@ -12,8 +12,11 @@
     <div>
         <table border="1" cellpadding="0" cellspacing="0" class="notice_table">
             <tr class="notice_t_alert" style="width:30px">
-                <th style="width:100px">고유번호</th>
+                <th style="width:120px">고유번호</th>
                 <th style="width:150px">이미지</th>
+                <th style="width:100px">원본 사이트</th>
+                <th style="width:100px">좋아요</th>
+                <th style="width:100px">삭제여부</th>
                 <th style="width:60px">삭제</th>
                 @*<th style="width:60px">보기</th>*@
             </tr>
@@ -22,7 +25,10 @@
                 <tr class="notice_t_alert" style="text-align:center; height:25px">
                     <td>@item.Seq</td>
                     <td> <a href="@item.ImageSrc" target="_blank">@item.ImageSrc</a></td>
-                    <td><input type="button" value="수정" seq="@item.Seq" class="delete" /></td>
+                    <td>@item.TagUrlType</td>
+                    <td>@item.LikeCnt</td>
+                    <td>@item.IsView</td>
+                    <td><input type="button" value="삭제" seq="@item.Seq" class="delete" /></td>
                     @*<td><input type="button" value="보기" seq="@item.Seq" class="imgview" /></td>*@
                 </tr>
             }
@@ -33,4 +39,26 @@
     @Html.PagedListPager((IPagedList)list, page => Url.Action("DolPicImageList", new {page = page, Seq = ViewBag.Seq}))
 </div>
 
+<form id="frm" method="post">
+    <input type="hidden" name="HashTagNo" value="@ViewBag.Seq" />
+    <input type="hidden" name="ImgNo" id="ImgNo" />
+</form>
 <input type="button" value="태그 리스트" onclick="location.href = 'HashTagList';" />
+
+@section scripts
+{
+    <script type="text/javascript">
+        var bExec = false;
+        $(function () {
+            $('.delete').click(function () { fnImageDelete($(this).attr("seq")); })
+        });
+
+        function fnImageDelete(seq) {
+            if (confirm("정말 삭제할꺼야????")) {
+                $('#frm').attr('action', 'DolPicImageDelete');
+                $('#ImgNo').val(seq);
+                $('#frm').submit();
+            }
+        }
+    </script>
+}

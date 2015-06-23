@@ -19,6 +19,13 @@ namespace DolPic.Biz.DolPicAdmin
         IList<DolPicVo> GetDolPicImageList(int a_nHashTagNo);
 
         /// <summary>
+        /// 이미지 삭제
+        /// </summary>
+        /// <param name="a_nImgNo">이미지 고유번호</param>
+        /// <returns></returns>
+        int DolPicImageDelete(int a_nImgNo);
+
+        /// <summary>
         /// 해쉬태그 입력
         /// </summary>
         /// <param name="a_sHashTag">해쉬태그</param>
