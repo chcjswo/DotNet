@@ -23,6 +23,11 @@ namespace DolPic.Service.Web
                 url: "{controller}/{action}/{TagNo}/{ImageSrc}/{TagUrlType}",
                 defaults: new { TagNo = UrlParameter.Optional, ImageSrc = UrlParameter.Optional, TagUrlType = UrlParameter.Optional }
             );
+            routes.MapRoute(
+                name: "Common",
+                url: "Common/{controller}/{action}/{id}",
+                defaults: new { controller = "Error", action = "Index", id = UrlParameter.Optional }
+            );
         }
     }
 }

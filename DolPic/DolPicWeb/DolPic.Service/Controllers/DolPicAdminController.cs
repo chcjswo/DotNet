@@ -96,6 +96,7 @@ namespace DolPic.Service.Web.Controllers
             ViewBag.DataCount = list.Count;
             ViewBag.DataList = list.ToPagedList(page ?? 1, 20);
             ViewBag.UserId = UserId;
+            ViewBag.CurPage = page ?? 1;
 
             return View();
         }
@@ -112,6 +113,7 @@ namespace DolPic.Service.Web.Controllers
             ViewBag.DataCount = list.Count;
             ViewBag.DataList = list.ToPagedList(page ?? 1, 20);
             ViewBag.UserId = UserId;
+            ViewBag.CurPage = page ?? 1;
 
             return View();
         } 

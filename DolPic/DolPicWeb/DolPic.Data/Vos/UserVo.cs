@@ -37,7 +37,7 @@ namespace DolPic.Data.Vos
         /// <summary>
         /// 해쉬태그
         /// </summary>
-        public DateTime HashTag { get; set; }
+        public string HashTag { get; set; }
 
         public short RetCode { get; set; }
         public string RetMsg { get; set; }

@@ -143,6 +143,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\CustomController.cs" />
+    <Compile Include="Common\ErrorController.cs" />
     <Compile Include="Controllers\DolPicAdminController.cs" />
     <Compile Include="Controllers\PicsController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -282,6 +283,9 @@
     <None Include="Properties\PublishProfiles\돌픽.pubxml" />
     <Content Include="Views\DolPicAdmin\DolPicUserList.cshtml" />
     <Content Include="Views\DolPicAdmin\DolPicUserFavoriteList.cshtml" />
+    <Content Include="Views\Error\PageNotFound.cshtml" />
+    <Content Include="Views\Error\ServerError.cshtml" />
+    <Content Include="Views\Error\AuthorizedError.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -21,7 +21,7 @@ namespace DolPic.Common
     }
     public class DolPicEncryption
     {
-        private const string CODE_KEY = "password";
+        private const string CODE_KEY = "dolpic";
 
         //암호화에 사용되는 Key 값을 선언합니다.
         static byte[] pbyteKey = ASCIIEncoding.ASCII.GetBytes(CODE_KEY);

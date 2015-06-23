@@ -66,7 +66,7 @@ namespace DolPic.Data.Daos
         /// <returns></returns>
         public IList<UserVo> DolPicUserFavoriteList(UserVo entity)
         {
-            return DolPicServiceDataMapper.Instance().QueryForList<UserVo>("UPA_User_List", entity);
+            return DolPicServiceDataMapper.Instance().QueryForList<UserVo>("UPA_UserFavorite_List", entity);
         }
 
     }
