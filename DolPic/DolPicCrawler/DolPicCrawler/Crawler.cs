@@ -22,7 +22,6 @@ namespace DolPicCrawler
         private const string IMAGE_SEND_URL = "http://localhost:3281/Pics/DolPicImageSave/{0}/{1}/{2}/{3}";
         //private const string IMAGE_SEND_URL = "http://www.dolpic.kr/Pics/DolPicImageSave/{0}/{1}/{2}/{3}";
         
-        private int _nErrCnt;
         private int CHECK_TIME = 0;
         private StringBuilder _sbErr;
         private ErrFrm errfrm;
@@ -35,8 +34,8 @@ namespace DolPicCrawler
         private Dictionary<int, List<string>> _dImage;
 
 
-        private const string MATCH_TAG = "data-resolved-url-small=\"(?<url>.*?)\".*?";
-        //private const string MATCH_TAG = "<img src=\"(?<url>.*?)\".*?>";
+        private const string MATCH_TAG = "data-resolved-url-small=\"(?<ImageSrc>.*?)\".*?";
+        //private const string MATCH_TAG = "<img src=\"(?<ImageSrc>.*?)\".*?>";
         //private const string MATCH_TAG = "<span class=\"(?<cl>.*?)\".*? data-status-id=\"(?<sid>.*?)\".*? data-url=\"(?<url1>.*?)\".*? data-resolved-url-small=\"(?<url>.*?)\".*? data-resolved-url-large=\"(?<url333>.*?)\".*? data-width=\"(?<url22>.*?)\".*? data-height=\"(?<url11>.*?)\".*?></span>";
         private const string XML_URL = "http://www.dolpic.kr/twitter_image.xml";
 
@@ -85,7 +84,6 @@ namespace DolPicCrawler
         private void FormInit()
         {
             lblChkTime.Text = "";
-            _nErrCnt = 0;
             _sbErr = new StringBuilder();
             _arrTxt = new List<string[]>();
             errfrm = new ErrFrm();
@@ -122,14 +120,11 @@ namespace DolPicCrawler
                     _arrTag.Add(xn.Attributes["tag"].Value);
                 }
 
-                //MessageBox.Show("XML 로딩 완료",  "완료", MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button3);
-
                 txtLog.Text = "XML 로딩 완료" + Environment.NewLine;
             }
             catch (ArgumentException ex)
             {
                 txtLog.Text = "XML 문제 발생\r\n" + ex.ToString();
-                //MessageBox.Show("XML 문제 발생\r\n" + ex, "에러발생", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         #endregion
@@ -215,10 +210,9 @@ namespace DolPicCrawler
 
             for (Match m = re.Match(resString); m.Success; m = m.NextMatch())
             {
-                string url = m.Groups["url"].Value;
-                //string w = m.Groups["w"].Value;
+                string sImageSrc = m.Groups["ImageSrc"].Value;
 
-                ltImg.Add(url);
+                ltImg.Add(sImageSrc);
             }
 
             // Dictionary 저장
@@ -230,13 +224,17 @@ namespace DolPicCrawler
             SetGridInfo(ltImg);
         }
 
-        private bool IsPidCheck()
+        /// <summary>
+        /// 시간 입력 체크
+        /// </summary>
+        /// <returns>체크값</returns>
+        private bool IsTimeCheck()
         {
-            //if (string.IsNullOrEmpty(textBox1.Text))
-            //{
-            //    MessageBox.Show("PID를 입력해야지~~~", "에러 발생", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //    return false;
-            //}
+            if (string.IsNullOrEmpty(txtTime.Text))
+            {
+                MessageBox.Show("체크시간을 입력해야지~~~", "에러 발생", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
             return true;
         }
 
@@ -266,6 +264,9 @@ namespace DolPicCrawler
             MakeFile();
         }
 
+        /// <summary>
+        /// 파일 만들기
+        /// </summary>
         private void MakeFile()
         {
             string sDirName = string.Format("{0}{1}", "D:\\DolPic\\", DateTime.Now.ToString("yyyy-MM-dd"));
@@ -308,14 +309,14 @@ namespace DolPicCrawler
 
         private void ShowError()
         {
-            if (_nErrCnt > 0)
-            {
-                errfrm.Owner = this;
-                errfrm.textBox1.Text = _sbErr.ToString();
-                errfrm.Show();
-            }
+            errfrm.Owner = this;
+            errfrm.textBox1.Text = _sbErr.ToString();
+            errfrm.Show();
         }
 
+        /// <summary>
+        /// 남은시간 카운트다운
+        /// </summary>
         private void CountDown()
         {
             string text = "";
@@ -357,51 +358,51 @@ namespace DolPicCrawler
 
             try
             {
-                foreach (DataGridViewRow row in dataGridView1.Rows)
-                {
-                    if (row.Cells[1].Value == null)
-                        continue;
-
-                    var sBase64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(row.Cells[1].Value.ToString()));
-
-                    //URI로부터 요청을 생성한다
-                    request = WebRequest.Create(string.Format(IMAGE_SEND_URL, row.Cells[0].Value, sBase64, TagUrlType, 1));
-
-                    Console.WriteLine("url == " + string.Format(IMAGE_SEND_URL, row.Cells[0].Value, sBase64, TagUrlType, 1));
-
-                    //요청을 보내고 응답을 받는다
-                    response = request.GetResponse();
-
-                    //txtLog.Text += row.Cells[0].Value + Environment.NewLine;
-                    //txtLog.Text += row.Cells[1].Value + Environment.NewLine;
-                    //txtLog.Text += row.Cells[2].Value + Environment.NewLine;
-
-                    Console.WriteLine("TagNo == " + row.Cells[0].Value);
-                    Console.WriteLine("ImageSrc =={0} / {1}", row.Cells[1].Value, sBase64);
-                }
-
-                //foreach (KeyValuePair<int, List<string>> kvp in _dImage)
+                //foreach (DataGridViewRow row in dataGridView1.Rows)
                 //{
-                //    Console.WriteLine("Key: " + kvp.Key);
-                //    Console.WriteLine("Value: " + kvp.Value);
+                //    if (row.Cells[1].Value == null)
+                //        continue;
 
-                //    foreach (var item in kvp.Value)
-                //    {
-                //        var sBase64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(item));
+                //    var sBase64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(row.Cells[1].Value.ToString()));
 
-                //        //URI로부터 요청을 생성한다
-                //        request = WebRequest.Create(string.Format(IMAGE_SEND_URL, kvp.Key, sBase64, TagUrlType, 1));
+                //    //URI로부터 요청을 생성한다
+                //    request = WebRequest.Create(string.Format(IMAGE_SEND_URL, row.Cells[0].Value, sBase64, TagUrlType, 1));
 
-                //        Console.WriteLine("url == " + string.Format(IMAGE_SEND_URL, kvp.Key, sBase64, TagUrlType, 1));
+                //    Console.WriteLine("url == " + string.Format(IMAGE_SEND_URL, row.Cells[0].Value, sBase64, TagUrlType, 1));
 
-                //        //요청을 보내고 응답을 받는다
-                //        response = request.GetResponse();
+                //    //요청을 보내고 응답을 받는다
+                //    response = request.GetResponse();
 
-                //        Console.WriteLine("TagNo == " + kvp.Key);
-                //        Console.WriteLine("ImageSrc == " + sBase64);
+                //    //txtLog.Text += row.Cells[0].Value + Environment.NewLine;
+                //    //txtLog.Text += row.Cells[1].Value + Environment.NewLine;
+                //    //txtLog.Text += row.Cells[2].Value + Environment.NewLine;
 
-                //    }
+                //    Console.WriteLine("TagNo == " + row.Cells[0].Value);
+                //    Console.WriteLine("ImageSrc =={0} / {1}", row.Cells[1].Value, sBase64);
                 //}
+
+                foreach (KeyValuePair<int, List<string>> kvp in _dImage)
+                {
+                    Console.WriteLine("Key: " + kvp.Key);
+                    Console.WriteLine("Value: " + kvp.Value);
+
+                    foreach (var item in kvp.Value)
+                    {
+                        var sBase64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(item));
+
+                        //URI로부터 요청을 생성한다
+                        request = WebRequest.Create(string.Format(IMAGE_SEND_URL, kvp.Key, sBase64, TagUrlType, 1));
+
+                        Console.WriteLine("url == " + string.Format(IMAGE_SEND_URL, kvp.Key, sBase64, TagUrlType, 1));
+
+                        //요청을 보내고 응답을 받는다
+                        response = request.GetResponse();
+
+                        Console.WriteLine("TagNo == " + kvp.Key);
+                        Console.WriteLine("ImageSrc == " + sBase64);
+
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -461,8 +462,6 @@ namespace DolPicCrawler
         /// <param name="e"></param>
         private void btnAuthCheck_Click(object sender, EventArgs e)
         {
-            timer1.Interval = Convert.ToInt32(txtTime.Text) * 60000;
-            
             if (timer1.Enabled)
             {
                 btnAuthCheck.Text = "자동 체크 시작";
@@ -479,8 +478,10 @@ namespace DolPicCrawler
             }
             else
             {
-                if (IsPidCheck())
+                if (IsTimeCheck())
                 {
+                    timer1.Interval = Convert.ToInt32(txtTime.Text) * 60000;
+
                     btnAuthCheck.Text = "자동 체크 멈춤";
                     btnImageLoad.Enabled = false;
                     lblCountdown.Visible = true;
