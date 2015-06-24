@@ -207,6 +207,21 @@ namespace DolPic.Service.Web.Controllers
         }
         #endregion
 
+        #region 외부 API
+        /// <summary>
+        /// 이미지 저장
+        /// </summary>
+        /// <returns></returns>
+        public void DolPicImageSave(int TagNo, string ImageSrc, int TagUrlType, int IsView)
+        {
+            log.DebugFormat("TagNo == {0}", TagNo);
+            log.DebugFormat("ImageSrc == {0}", ImageSrc);
+            log.DebugFormat("TagUrlType == {0}", TagUrlType);
+
+            _service.DolPicImageInsert(TagNo, ImageSrc, TagUrlType);
+        }
+        #endregion
+
         #region XML문서 만들기
         /// <summary>
         /// 해쉬태그 XML문서 만들고 저장하기

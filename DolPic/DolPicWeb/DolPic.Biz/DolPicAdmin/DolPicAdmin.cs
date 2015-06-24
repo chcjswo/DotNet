@@ -41,6 +41,25 @@ namespace DolPic.Biz.DolPicAdmin
         }
 
         /// <summary>
+        /// 이미지 입력
+        /// </summary>
+        /// <param name="a_nTagNo">해쉬태그 고유번호</param>
+        /// <param name="a_sImageSrc">이미지 주소</param>
+        /// <param name="a_nTagUrlType">이미지 출처</param>
+        /// <returns></returns>
+        public void DolPicImageInsert(int a_nTagNo, string a_sImageSrc, int a_nTagUrlType)
+        {
+            var base64EncodedBytes = System.Convert.FromBase64String(a_sImageSrc);
+
+            DolPicVo entity = new DolPicVo();
+            entity.Seq = a_nTagNo;
+            entity.ImageSrc = System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
+            entity.TagUrlType = a_nTagUrlType;
+
+            _dao.DolPicImageInsert(entity);
+        }
+
+        /// <summary>
         /// 이미지 삭제
         /// </summary>
         /// <param name="a_nImgNo">이미지 고유번호</param>

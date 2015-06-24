@@ -60,6 +60,8 @@
             location.href = '/Pics/PicView/' + $(this).attr("seq") + "/@((string.IsNullOrEmpty(ViewBag.HashTag) ? CommonVariable.ALL_IMAGE : ViewBag.HashTag))" + "/" + $("#CurPage").val();
         });
         $('.gbox_list li').live('click', function (event) {
+            location.href = "/Pics/Main/@((string.IsNullOrEmpty(ViewBag.HashTag) ? CommonVariable.ALL_IMAGE : ViewBag.HashTag))" + "/" + $(this).attr("page");
+            return;
             if (bExec) {
                 alert("요청을 처리중입니다.잠시만 기다려주세요.");
                 return;
