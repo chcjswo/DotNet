@@ -1,7 +1,6 @@
 D:\GitHub\DotNet\DolPic\DolPicCrawler\DolPicCrawler\bin\Release\DolPicCrawler.exe.config
 D:\GitHub\DotNet\DolPic\DolPicCrawler\DolPicCrawler\bin\Release\DolPicCrawler.exe
 D:\GitHub\DotNet\DolPic\DolPicCrawler\DolPicCrawler\bin\Release\DolPicCrawler.pdb
-D:\GitHub\DotNet\DolPic\DolPicCrawler\DolPicCrawler\obj\Release\DolPicCrawler.csprojResolveAssemblyReference.cache
 D:\GitHub\DotNet\DolPic\DolPicCrawler\DolPicCrawler\obj\Release\DolPicCrawler.Crawler.resources
 D:\GitHub\DotNet\DolPic\DolPicCrawler\DolPicCrawler\obj\Release\DolPicCrawler.ErrFrm.resources
 D:\GitHub\DotNet\DolPic\DolPicCrawler\DolPicCrawler\obj\Release\DolPicCrawler.Properties.Resources.resources

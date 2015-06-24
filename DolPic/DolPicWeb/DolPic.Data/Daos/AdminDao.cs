@@ -39,7 +39,7 @@ namespace DolPic.Data.Daos
         /// <returns></returns>
         public void DolPicImageInsert(DolPicVo entity)
         {
-            DolPicServiceDataMapper.Instance().QueryForObject<DolPicVo>(SqlMaps.Admin.UPA_DolPicImage_Insert, entity);
+            DolPicServiceDataMapper.Instance().QueryForObject<DolPicVo>("UPA_DolPicImage_Insert", entity);
         }
 
         /// <summary>

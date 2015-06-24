@@ -65,5 +65,13 @@ namespace DolPic.Biz.DolPicService
         /// <param name="a_sUserId">유저 아이디</param>
         /// <returns></returns>
         int FavoriteDelete(int a_nTagNo, string a_sUserId);
+
+        /// <summary>
+        /// 신고하기 입력
+        /// </summary>
+        /// <param name="a_nImgNo">고유번호</param>
+        /// <param name="a_sUserId">유저 아이디</param>
+        /// <returns></returns>
+        int ImgReportInsert(int a_nImgNo, string a_sUserId);
     }
 }

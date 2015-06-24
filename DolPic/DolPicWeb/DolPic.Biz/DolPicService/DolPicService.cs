@@ -146,5 +146,16 @@ namespace DolPic.Biz.DolPicService
 
             return entity.RetCode;
         }
+
+        /// <summary>
+        /// 신고하기 입력
+        /// </summary>
+        /// <param name="a_nImgNo">고유번호</param>
+        /// <param name="a_sUserId">유저 아이디</param>
+        /// <returns></returns>
+        public int ImgReportInsert(int a_nImgNo, string a_sUserId)
+        {
+            return 1;
+        }
     }
 }

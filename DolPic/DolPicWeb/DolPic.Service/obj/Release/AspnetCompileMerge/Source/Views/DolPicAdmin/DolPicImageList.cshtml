@@ -16,16 +16,18 @@
                 <th style="width:150px">이미지</th>
                 <th style="width:100px">원본 사이트</th>
                 <th style="width:100px">좋아요</th>
+                <th style="width:100px">삭제여부</th>
                 <th style="width:60px">삭제</th>
                 @*<th style="width:60px">보기</th>*@
             </tr>
             @foreach (var item in list)
             {
-                <tr class="notice_t_alert" style="text-align:center; height:25px">
+                <tr class="notice_t_alert" style="text-align:center; height:25px; @((item.IsView == 0) ? ("background-color:#f1d7a9") : "")">
                     <td>@item.Seq</td>
                     <td> <a href="@item.ImageSrc" target="_blank">@item.ImageSrc</a></td>
                     <td>@item.TagUrlType</td>
                     <td>@item.LikeCnt</td>
+                    <td>@item.IsView</td>
                     <td><input type="button" value="삭제" seq="@item.Seq" class="delete" /></td>
                     @*<td><input type="button" value="보기" seq="@item.Seq" class="imgview" /></td>*@
                 </tr>

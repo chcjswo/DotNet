@@ -22,7 +22,7 @@
             </tr>
             @foreach (var item in list)
             {
-                <tr class="notice_t_alert" style="text-align:center; height:25px">
+                <tr class="notice_t_alert" style="text-align:center; height:25px; @((item.IsView == 0) ? ("background-color:#f1d7a9") : "")">
                     <td>@item.Seq</td>
                     <td> <a href="@item.ImageSrc" target="_blank">@item.ImageSrc</a></td>
                     <td>@item.TagUrlType</td>

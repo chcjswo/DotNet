@@ -19,8 +19,8 @@ namespace DolPicCrawler
     public partial class Crawler : Form
     {
         private const string TW_IMAGE_URL = "http://twitter.com/hashtag/{0}";
-        //private const string IMAGE_SEND_URL = "http://localhost:3281/Pics/DolPicImageSave/{0}/{1}/{2}";
-        private const string IMAGE_SEND_URL = "http://www.dolpic.kr/Pics/DolPicImageSave/{0}/{1}/{2}";
+        //private const string IMAGE_SEND_URL = "http://localhost:3281/Pics/DolPicImageSave/{0}/{1}/{2}/{3}";
+        private const string IMAGE_SEND_URL = "http://www.dolpic.kr/Pics/DolPicImageSave/{0}/{1}/{2}/{3}";
         
         private int _nErrCnt;
         private int CHECK_TIME = 0;
@@ -365,9 +365,9 @@ namespace DolPicCrawler
                     var sBase64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(row.Cells[1].Value.ToString()));
 
                     //URI로부터 요청을 생성한다
-                    request = WebRequest.Create(string.Format(IMAGE_SEND_URL, row.Cells[0].Value, sBase64, TagUrlType));
+                    request = WebRequest.Create(string.Format(IMAGE_SEND_URL, row.Cells[0].Value, sBase64, TagUrlType, 1));
 
-                    Console.WriteLine("url == " + string.Format(IMAGE_SEND_URL, row.Cells[0].Value, sBase64, TagUrlType));
+                    Console.WriteLine("url == " + string.Format(IMAGE_SEND_URL, row.Cells[0].Value, sBase64, TagUrlType, 1));
 
                     //요청을 보내고 응답을 받는다
                     response = request.GetResponse();
@@ -390,9 +390,9 @@ namespace DolPicCrawler
                 //        var sBase64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(item));
 
                 //        //URI로부터 요청을 생성한다
-                //        request = WebRequest.Create(string.Format(IMAGE_SEND_URL, kvp.Key, sBase64, TagUrlType));
+                //        request = WebRequest.Create(string.Format(IMAGE_SEND_URL, kvp.Key, sBase64, TagUrlType, 1));
 
-                //        Console.WriteLine("url == " + string.Format(IMAGE_SEND_URL, kvp.Key, sBase64, TagUrlType));
+                //        Console.WriteLine("url == " + string.Format(IMAGE_SEND_URL, kvp.Key, sBase64, TagUrlType, 1));
 
                 //        //요청을 보내고 응답을 받는다
                 //        response = request.GetResponse();

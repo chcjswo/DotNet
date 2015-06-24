@@ -165,9 +165,10 @@ namespace DolPic.Service.Web.Controllers
         /// </summary>
         /// <param name="ImgNo">고유번호</param>
         /// <param name="HahTag">해쉬 태그</param>
+        /// <param name="Page">현재 페이지</param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult ImageView(int ImgNo, string HashTag)
+        public ActionResult ImageView(int ImgNo, string HashTag, int Page)
         {
             HashTag = CommonVariable.ALL_IMAGE.Equals(HashTag) ? "" : HashTag;
             ViewBag.HashTag = HashTag;
@@ -293,7 +294,46 @@ namespace DolPic.Service.Web.Controllers
             }
 
             return Json(JsonConvert.SerializeObject(po));
-        } 
+        }
+
+        /// <summary>
+        /// 신고하기 Ajax
+        /// </summary>
+        /// <param name="ImgNo">이미지 고유번호</param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult ImgReport(int ImgNo)
+        {
+            var UserId = DolPicCookie.CookieRead(this.HttpContext, CommonVariable.COOKIE_NAME);
+            DolPicPo po = new DolPicPo();
+
+            // 로그인 체크
+            if (string.IsNullOrEmpty(UserId))
+            {
+                po.RetCode = (int)e_RetCode.discord;
+                po.RetMsg = "로그인후 사용 가능합니다.";
+
+                return Json(JsonConvert.SerializeObject(po));
+            }
+
+            // 신고하기 입력 처리
+            po.RetCode = _service.FavoriteInsert(ImgNo, UserId);
+
+            switch (po.RetCode)
+            {
+                // 이미 등록된 경우
+                case (int)e_RetCode.has:
+                    po.RetMsg = "이미 즐겨찾기를 하셨습니다.";
+                    break;
+
+                // DB에러
+                case (int)e_RetCode.db_error:
+                    po.RetMsg = "에러가 발생했습니다. 다시 한번 시도해주세요.";
+                    break;
+            }
+
+            return Json(JsonConvert.SerializeObject(po));
+        }
         #endregion
 
         #region 외부 API
@@ -301,7 +341,7 @@ namespace DolPic.Service.Web.Controllers
         /// 이미지 저장
         /// </summary>
         /// <returns></returns>
-        public void DolPicImageSave(int TagNo, string ImageSrc, int TagUrlType)
+        public void DolPicImageSave(int TagNo, string ImageSrc, int TagUrlType, int IsView)
         {
             var base64EncodedBytes = System.Convert.FromBase64String(ImageSrc);
 

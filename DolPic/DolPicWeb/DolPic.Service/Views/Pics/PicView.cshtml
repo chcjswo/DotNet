@@ -19,7 +19,7 @@
 		<div class="clear"></div>
 		<!-- 구글 광고 -->
 		@Html.Partial("_GoogleAd1")
-		<!--<div class="wrong_pic">해당 이미지가 잘못되었으면 <a href="#">여기</a>를 눌러주세요.</div>-->	</div>
+		<div class="wrong_pic">해당 이미지가 잘못되었으면 <a href="javascript:void(0)" class="report">여기</a>를 눌러주세요.</div>	</div>
 	<div class="gbox_side">
         @Html.Action("HotDolPicList", "Pics")
 		<!-- 구글 광고 -->
@@ -39,6 +39,7 @@
             fnPicLike();
         });
         $('.btn_good').live('click', function () { fnPicLike(); });
+        $('.report').live('click', function () { fnImgReport(); });
         $('.gbox').hover(
             function () { $('.gbox_thumb', this).fadeIn(300); },
             function () { $('.gbox_thumb', this).fadeOut(100); }
@@ -70,7 +71,8 @@
                 dataType: "json",
                 data: {
                     "ImgNo": seq,
-                    "HashTag": "@ViewBag.HashTag"
+                    "HashTag": "@ViewBag.HashTag",
+                    "Page": $("#CurSeq").val()
                 }
             })
             .done(function (data) {
@@ -128,6 +130,47 @@
             dataType: "json",
             data: {
                 "Seq": $("#CurSeq").val()
+            }
+        })
+        .done(function (data) {
+            var retData = $.parseJSON(data);
+            if (retData.RetCode == 0) {
+                $('.like_box').fadeIn('swing').delay(200).fadeOut('fast');
+                $('#like').addClass('btn_good on');
+                $('#like').html("좋아요 " + retData.LikeCnt);
+            } else {
+                alert(retData.RetMsg);
+            }
+        })
+        .fail(function () {
+            alert("실행중 에러가 발생했습니다.");
+        })
+        .always(function () {
+            bExec = false;
+        });
+    }
+
+    function fnImgReport() {
+        alert("기능 추가중입니다.");
+        return;
+        if ("@ViewBag.User" == "") {
+            alert("로그인후 사용 가능합니다.");
+            return;
+        }
+
+        if (bExec) {
+            alert("요청을 처리중입니다.잠시만 기다려주세요.");
+            return;
+        }
+
+        bExec = true;
+
+        $.ajax({
+            url: "/Pics/ImgReport",
+            type: "POST",
+            dataType: "json",
+            data: {
+                "ImgNo": $("#CurSeq").val()
             }
         })
         .done(function (data) {

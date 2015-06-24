@@ -1,6 +1,7 @@
 ﻿@{
     var list = ViewBag.DataList;
 }
+@using DolPic.Common
 
 <style media="screen,projection" type="text/css">
     #loading {  
@@ -56,7 +57,7 @@
             mouseleave: function () { $('.gbox_thumb', this).fadeOut(100); $('.gbox_thumb', this).parent("div").removeClass('transition'); }
         });
         $('.gbox').live('click', function () {
-            location.href = '/Pics/PicView?ImgNo=' + $(this).attr("seq") + "&HashTag=@ViewBag.HashTag" + "&Page=" + $("#CurPage").val();
+            location.href = '/Pics/PicView/' + $(this).attr("seq") + "/@((string.IsNullOrEmpty(ViewBag.HashTag) ? CommonVariable.ALL_IMAGE : ViewBag.HashTag))" + "/" + $("#CurPage").val();
         });
         $('.gbox_list li').live('click', function (event) {
             if (bExec) {

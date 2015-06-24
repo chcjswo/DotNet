@@ -30,10 +30,10 @@ D:\GitHub\DotNet\DolPicCrawler\DolPicCrawler\obj\Debug\DolPicCrawler.csproj.Gene
 D:\GitHub\DotNet\DolPic\DolPicCrawler\DolPicCrawler\bin\Debug\DolPicCrawler.exe.config
 D:\GitHub\DotNet\DolPic\DolPicCrawler\DolPicCrawler\bin\Debug\DolPicCrawler.exe
 D:\GitHub\DotNet\DolPic\DolPicCrawler\DolPicCrawler\bin\Debug\DolPicCrawler.pdb
-D:\GitHub\DotNet\DolPic\DolPicCrawler\DolPicCrawler\obj\Debug\DolPicCrawler.csprojResolveAssemblyReference.cache
 D:\GitHub\DotNet\DolPic\DolPicCrawler\DolPicCrawler\obj\Debug\DolPicCrawler.Crawler.resources
 D:\GitHub\DotNet\DolPic\DolPicCrawler\DolPicCrawler\obj\Debug\DolPicCrawler.ErrFrm.resources
 D:\GitHub\DotNet\DolPic\DolPicCrawler\DolPicCrawler\obj\Debug\DolPicCrawler.Properties.Resources.resources
 D:\GitHub\DotNet\DolPic\DolPicCrawler\DolPicCrawler\obj\Debug\DolPicCrawler.csproj.GenerateResource.Cache
 D:\GitHub\DotNet\DolPic\DolPicCrawler\DolPicCrawler\obj\Debug\DolPicCrawler.exe
 D:\GitHub\DotNet\DolPic\DolPicCrawler\DolPicCrawler\obj\Debug\DolPicCrawler.pdb
+D:\GitHub\DotNet\DolPic\DolPicCrawler\DolPicCrawler\obj\Debug\DolPicCrawler.csprojResolveAssemblyReference.cache
