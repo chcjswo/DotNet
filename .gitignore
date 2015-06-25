@@ -17,6 +17,14 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# Æú´õ
+bin/
+obj/
+
+Web.config
+Web.Debug.config
+Web.Release.config
+
 # =========================
 # Operating System Files
 # =========================
