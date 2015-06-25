@@ -1,0 +1,20 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>돌픽 어드민</title>
+    <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.4/jquery-ui.min.js"></script>
+    <script src="/Js/CommonAdmin.js"></script>
+    <link rel="stylesheet" type="text/css" href="/Css/Site.css">
+</head>
+<body>
+    <div id="divLoadingBar" title="기다림의 미학....." align="center" style="display:none;"><img src="/Images/ajax-loader.gif" alt="" /></div>
+    <div class="SUBTITLE">@ViewBag.Title</div>
+    <div class="SUBMENU">
+        <br />
+        @RenderBody()
+    </div>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

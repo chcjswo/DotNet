@@ -1,0 +1,60 @@
+﻿<#@ template debug="true" hostspecific="true" language="C#" #>
+<#@ assembly name="System.Core.dll" #>
+<#@ assembly name="System.Xml.dll" #>
+<#@ assembly name="System.Xml.Linq.dll" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Xml" #>
+<#@ import namespace="System.Xml.Linq" #>
+<#@ import namespace="System.IO" #>
+<#@ output extension=".cs" #>
+<#
+XDocument xdoc;
+DirectoryInfo dir = new DirectoryInfo(Host.ResolvePath(""));
+string fileName = string.Empty;
+
+FileInfo[] files = dir.GetFiles().Where(t=>t.Extension == ".xml").ToArray();
+#>
+/// <#= DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") #>
+namespace <#= System.Runtime.Remoting.Messaging.CallContext.LogicalGetData("NamespaceHint") #>
+{
+<#
+	foreach(FileInfo file in files)
+	{
+		
+			fileName = file.FullName;
+			using (XmlReader reader = XmlReader.Create(file.FullName))
+			{
+				xdoc = XDocument.Load(reader);
+			}
+#>
+	public class <#= fileName.Substring(fileName.LastIndexOf(@"\") + 1).Replace(file.Extension, "") #>
+	{
+<#
+            foreach (XElement code in xdoc.Root.Elements())
+            {
+                if (code.Name.LocalName == "statements")
+				{
+					foreach (XElement procedure in code.Elements())
+					{
+						if(procedure.Attribute("description") != null)
+						{
+#>
+		/// <summary>
+        /// <#= procedure.Attribute("description").Value #>
+		/// </summary>
+<#
+						}
+#>
+		public const string <#= procedure.Attribute("id").Value #> = "<#= procedure.Attribute("id").Value #>";
+
+<#
+					}
+				}
+			}
+#>
+	}
+
+<#
+}
+#>
+}
