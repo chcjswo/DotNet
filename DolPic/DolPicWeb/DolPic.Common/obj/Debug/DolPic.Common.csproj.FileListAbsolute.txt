@@ -1,9 +1,0 @@
-D:\GitHub\DotNet\DolPicWeb\DolPic.Common\bin\Debug\DolPic.Common.dll
-D:\GitHub\DotNet\DolPicWeb\DolPic.Common\bin\Debug\DolPic.Common.pdb
-D:\GitHub\DotNet\DolPicWeb\DolPic.Common\obj\Debug\DolPic.Common.dll
-D:\GitHub\DotNet\DolPicWeb\DolPic.Common\obj\Debug\DolPic.Common.pdb
-D:\GitHub\DotNet\DolPic\DolPicWeb\DolPic.Common\bin\Debug\DolPic.Common.dll
-D:\GitHub\DotNet\DolPic\DolPicWeb\DolPic.Common\bin\Debug\DolPic.Common.pdb
-D:\GitHub\DotNet\DolPic\DolPicWeb\DolPic.Common\obj\Debug\DolPic.Common.dll
-D:\GitHub\DotNet\DolPic\DolPicWeb\DolPic.Common\obj\Debug\DolPic.Common.pdb
-D:\GitHub\DotNet\DolPic\DolPicWeb\DolPic.Common\obj\Debug\DolPic.Common.csprojResolveAssemblyReference.cache
