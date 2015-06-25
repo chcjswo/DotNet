@@ -1,0 +1,100 @@
+﻿@{
+    Layout = null;
+    
+    var list = ViewBag.DataList;
+}
+
+<!-- 하단 리스트 -->
+<div class="dolpic_warp">
+	<div class="go_top" onClick="location.href='#top'"></div>
+	<div class="wrapper">
+        @{
+            var sPrevInitial = "";
+            var sCurInitial = "";
+            var nLoopCnt = 1;
+            var nCurInitialCnt = 0;
+            
+        }
+        @foreach (var item in list)
+        {
+            sCurInitial = item.Initial;
+            nCurInitialCnt = item.InitialCnt;
+            
+            var sIcon = "+";
+
+            if (item.Seq == item.FavoriteSeq)
+            {
+                sIcon = "♡";
+            }
+            
+            var bEqual = sCurInitial.Equals(sPrevInitial);
+            if (!sCurInitial.Equals(sPrevInitial))
+            {
+                @:<div class="dolpic_box">
+			    @:<span class="tbox on">@sCurInitial</span>
+            }
+			    <span class="tbox"><a href="/Pics/Main/@item.HashTag" class="tbox_a">@item.HashTag</a>
+                    <a href="javascript:void(0);" class="@string.Format("in{0}", item.Seq)" onclick="fnFavoriteInsert('@item.Seq', '@item.HashTag');">@sIcon</a></span>
+            if (nCurInitialCnt == nLoopCnt)
+            {
+                @:<div class="clear"></div></div>
+                nLoopCnt = 1;
+            }
+            else
+            {
+                nLoopCnt++;
+            }
+
+            sPrevInitial = sCurInitial;
+        }
+		<div class="clear"></div>
+	</div>
+    <div class="sponsor">Icons made by <a href="http://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>
+</div>
+
+<script type="text/javascript">
+    var bExec = false;
+
+    function fnFavoriteInsert(seq, tag) {
+        if ("@ViewBag.User" == "") {
+            alert("로그인후 사용 가능합니다.");
+            return;
+        }
+
+        if (bExec) {
+            alert("요청을 처리중입니다.잠시만 기다려주세요.");
+            return;
+        }
+
+        bExec = true;
+
+        $.ajax({
+            url: "/Pics/FavoriteInsert",
+            type: "POST",
+            dataType: "json",
+            data: {
+                "TagNo": seq
+            }
+        })
+        .done(function (data) {
+            var retData = $.parseJSON(data);
+            if (retData.RetCode == 0) {
+                $(".in" + seq).text('♡');
+
+                var div;
+                div = "<span class='fbar" + seq + " tbox'>";
+                div += "<a href='/Pics/Main/" + tag + "' class=\"tbox_a\">" + tag + "</a> ";
+                div += "<a href='javascript:void(0);' onclick=\"fnFavoriteDelete('" + seq + "');\">X</a></span>";
+
+                $('.flist').append(div);
+            } else {
+                alert(retData.RetMsg);
+            }
+            bExec = false;
+        })
+        .fail(function () {
+            alert("실행중 에러가 발생했습니다.");
+            bExec = false;
+        });
+    }
+</script>
