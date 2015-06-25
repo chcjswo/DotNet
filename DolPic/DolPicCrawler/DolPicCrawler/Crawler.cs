@@ -53,17 +53,6 @@ namespace DolPicCrawler
             Version version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
             txtLog.Text = version.ToString();
 
-            this.notifyIcon1.Visible = true;
-            notifyIcon1.ContextMenuStrip = contextMenuStrip1;
-
-            // NotifyIcon에 메뉴 추가
-            ContextMenu ctx = new ContextMenu();
-            ctx.MenuItems.Add(new MenuItem("열기"));
-            ctx.MenuItems.Add(new MenuItem("실행"));
-            ctx.MenuItems.Add("-");
-            ctx.MenuItems.Add(new MenuItem("종료", new EventHandler((s, ex) => this.Close())));
-            notifyIcon1.ContextMenu = ctx;
-
         }
 
         #region Init
@@ -515,9 +504,14 @@ namespace DolPicCrawler
 
         private void ShowForm()
         {
-            if (this.WindowState == FormWindowState.Minimized)
-                this.WindowState = FormWindowState.Normal;
-            this.Activate();
+            //if (this.WindowState == FormWindowState.Minimized)
+            //    this.WindowState = FormWindowState.Normal;
+            //this.Activate();
+
+            this.Visible = true;
+            this.ShowInTaskbar = true;
+            this.WindowState = FormWindowState.Normal;
+            notifyIcon1.Visible = false;
         }
 
         private void contextMenuStrip1_Click(object sender, EventArgs e)
@@ -527,6 +521,16 @@ namespace DolPicCrawler
 
         private void Crawler_Load(object sender, EventArgs e)
         {
+            this.notifyIcon1.Visible = true;
+            notifyIcon1.ContextMenuStrip = contextMenuStrip1;
+
+            // NotifyIcon에 메뉴 추가
+            ContextMenu ctx = new ContextMenu();
+            ctx.MenuItems.Add(new MenuItem("열기"));
+            ctx.MenuItems.Add(new MenuItem("실행"));
+            ctx.MenuItems.Add("-");
+            ctx.MenuItems.Add(new MenuItem("종료", new EventHandler((s, ex) => this.Close())));
+            notifyIcon1.ContextMenu = ctx;
         }
 
         private void 열기ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -537,6 +541,15 @@ namespace DolPicCrawler
         private void 종료ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void Crawler_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // 이벤트 취소
+            e.Cancel = true;
+            this.Hide();
+            notifyIcon1.Visible = true;
+            this.Hide();
         }
         #endregion
     }
