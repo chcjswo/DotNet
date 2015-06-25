@@ -16,11 +16,11 @@ namespace DolPic.Common
                 case DeployType.Dev:
                 case DeployType.Qa:
                     WebDomain = "http://localhost:3281";
-                    MobileDomain = "http://localhost:3281";
+                    MobileDomain = "http://localhost:5102";
                     break;
                 case DeployType.Live:
-                    WebDomain = "http://www.dolpic.com";
-                    MobileDomain = "http://www.dolpic.com";
+                    WebDomain = "http://www.dolpic.kr";
+                    MobileDomain = "http://m.dolpic.kr";
                     break;
             }
         }

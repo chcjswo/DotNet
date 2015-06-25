@@ -8,7 +8,7 @@ namespace DolPic.Service.Web.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("ServerError");
         }
 
         /// <summary>

@@ -8,9 +8,11 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Text;
 using System.Web.Mvc;
+using DolPic.Service.Web.Filters;
 
 namespace DolPic.Service.Web.Controllers
 {
+    [DeviceCheck]
     public class PicsController : CustomController
     {
         // 이미지 리스트 사이즈

@@ -1,0 +1,15 @@
+﻿@model DolPic.Data.Pos.UserPo
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            alert("@Model.RetMsg");
+            if ("@Model.RetCode" == "0") {
+                location.href = "@Model.ReferUrl";
+            } else {
+                history.back();
+            }
+        });
+    </script>
+}

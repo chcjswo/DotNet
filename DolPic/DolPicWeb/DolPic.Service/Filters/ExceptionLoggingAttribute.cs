@@ -15,7 +15,7 @@ namespace DolPic.Service.Web.Filters
             log.Error("===========================================================================");
 
             filterContext.HttpContext.Response.Cache.SetMaxAge(new TimeSpan(0));
-            //filterContext.Result = new RedirectResult("/Common/Error", true);
+            filterContext.Result = new RedirectResult("/Error/ServerError", true);
 
             filterContext.ExceptionHandled = true;
         }

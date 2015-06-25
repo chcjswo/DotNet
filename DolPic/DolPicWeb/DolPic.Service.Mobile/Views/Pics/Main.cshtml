@@ -1,0 +1,114 @@
+﻿@{
+    var list = ViewBag.DataList;
+}
+@using DolPic.Common
+
+<style media="screen,projection" type="text/css">
+    #loading {  
+        text-align: center;  
+        color: #67a;  
+        position: absolute;  
+        left: 300px;      
+        top: 300px; 
+    } 
+</style>
+@Html.Action("FavoriteBar", "Pics")
+<div id="loading" style="display:none"><img src="/Images/loader.gif" /><br /><br />로딩하는 중입니다...</div><!-- 갤러리 -->
+<div class="wrapper">
+	<div class="gbox_gallery">
+        <div class="img_list">
+		<!-- 갤러리 리스트 -->
+        @foreach (var item in list)
+        {
+		    <div seq="@item.Seq" class="gbox" style="background:url(@item.ImageSrc) center center no-repeat;background-size:cover">
+                <div class="gbox_thumb g_t_twitter">
+                    <div class="gbox_t_title">#@item.HashTag</div>
+                    <div class="gbox_t_text"><img src="../../images/icon_like.png" height="9">@string.Format("{0:N0}", item.LikeCnt)</div>
+                </div>
+		    </div>
+        }
+        </div>
+        <div class="clear"></div>
+		<ul class="gbox_list">
+            <div class="goto_list">
+			@Html.Raw(ViewBag.PageGotoList)
+            </div>
+		</ul>
+		<!-- 구글 광고 -->
+		@Html.Partial("_GoogleAd1")
+	</div>
+	<div class="gbox_side">
+        @Html.Action("HotDolPicList", "Pics")
+		<!-- 구글 광고 -->
+		@Html.Partial("_GoogleAd2")
+		<!-- 공지사항 -->
+		@Html.Partial("_Notice")
+	</div>
+	<div class="clear"></div>
+</div>
+<input type="hidden" id="CurPage" value="@ViewBag.CurPage" />
+@Html.Action("InitialList", "Pics")
+
+<script type="text/javascript">
+    var bExec = false;
+    $(function () {
+        $('.gbox').live({
+            mouseenter: function () { $('.gbox_thumb', this).fadeIn(300); $('.gbox_thumb', this).parent("div").addClass('transition'); },
+            mouseleave: function () { $('.gbox_thumb', this).fadeOut(100); $('.gbox_thumb', this).parent("div").removeClass('transition'); }
+        });
+        $('.gbox').live('click', function () {
+            location.href = '/Pics/PicView/' + $(this).attr("seq") + "/@((string.IsNullOrEmpty(ViewBag.HashTag) ? CommonVariable.ALL_IMAGE : ViewBag.HashTag))" + "/" + $("#CurPage").val();
+        });
+        $('.gbox_list li').live('click', function (event) {
+            location.href = "/Pics/Main/@((string.IsNullOrEmpty(ViewBag.HashTag) ? CommonVariable.ALL_IMAGE : ViewBag.HashTag))" + "/" + $(this).attr("page");
+            return;
+            if (bExec) {
+                alert("요청을 처리중입니다.잠시만 기다려주세요.");
+                return;
+            }
+
+            bExec = true;
+
+            $("#loading").show();
+            $("#CurPage").val($(this).attr("page"));
+
+            $.ajax({
+                url: "/Pics/ImageList",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    "CurPage": $(this).attr("page"),
+                    "HashTag": "@ViewBag.HashTag"
+                }
+            })
+            .done(function (data) {
+                var retData = $.parseJSON(data);
+                var imgList = retData.ImageList;
+
+                $(".gbox").remove();
+                $(".goto_list").remove();
+                var div = "";
+
+                for (var i = 0; i < imgList.length; i++) {
+                    div = "<div seq='" + imgList[i].Seq + "' class='gbox' style='background:url(" + imgList[i].ImageSrc + ") center center no-repeat;background-size:cover'>";
+                    div += "<div class='gbox_thumb g_t_twitter'>";
+                    div += "<div class='gbox_t_title'>#" + imgList[i].HashTag + "</div>";
+                    div += "<div class='gbox_t_text'><img src='../../images/icon_like.png' height='9'>" + imgList[i].LikeCnt + "</div>";
+                    div += "</div>";
+                    div += "</div>";
+                    $(".img_list").append(div);
+                }                div = "<div class='goto_list'>" + retData.PageGotoList + "</div>";
+                $(".gbox_list").append(div);
+
+                $('html,body').animate({ scrollTop: 0 }, 500);            })
+            .fail(function () {
+                alert("실행중 에러가 발생했습니다.");
+            })
+            .always(function () {
+                bExec = false;
+                $("#loading").hide();
+            });
+        });
+    });
+
+</script>
