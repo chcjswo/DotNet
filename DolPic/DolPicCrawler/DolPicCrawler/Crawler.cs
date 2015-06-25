@@ -56,6 +56,14 @@ namespace DolPicCrawler
             this.notifyIcon1.Visible = true;
             notifyIcon1.ContextMenuStrip = contextMenuStrip1;
 
+            // NotifyIcon에 메뉴 추가
+            ContextMenu ctx = new ContextMenu();
+            ctx.MenuItems.Add(new MenuItem("열기"));
+            ctx.MenuItems.Add(new MenuItem("실행"));
+            ctx.MenuItems.Add("-");
+            ctx.MenuItems.Add(new MenuItem("종료", new EventHandler((s, ex) => this.Close())));
+            notifyIcon1.ContextMenu = ctx;
+
         }
 
         #region Init
@@ -502,10 +510,14 @@ namespace DolPicCrawler
         private void notifyIcon1_DoubleClick(object sender, EventArgs e)
         {
             // 아이콘을 더블클릭하면 폼 화면을 보여줌
+            ShowForm();
+        }
+
+        private void ShowForm()
+        {
             if (this.WindowState == FormWindowState.Minimized)
                 this.WindowState = FormWindowState.Normal;
             this.Activate();
-
         }
 
         private void contextMenuStrip1_Click(object sender, EventArgs e)
@@ -515,13 +527,16 @@ namespace DolPicCrawler
 
         private void Crawler_Load(object sender, EventArgs e)
         {
-            // NotifyIcon에 메뉴 추가
-            ContextMenu ctx = new ContextMenu();
-            ctx.MenuItems.Add(new MenuItem("열기"));
-            ctx.MenuItems.Add(new MenuItem("실행"));
-            ctx.MenuItems.Add("-");
-            ctx.MenuItems.Add(new MenuItem("종료", new EventHandler((s, ex) => this.Close())));
-            notifyIcon1.ContextMenu = ctx;
+        }
+
+        private void 열기ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowForm();
+        }
+
+        private void 종료ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
         #endregion
     }
