@@ -19,8 +19,8 @@ namespace DolPicCrawler
     public partial class Crawler : Form
     {
         private const string TW_IMAGE_URL = "http://twitter.com/hashtag/{0}";
-        private const string IMAGE_SEND_URL = "http://localhost:3281/Pics/DolPicImageSave/{0}/{1}/{2}/{3}";
-        //private const string IMAGE_SEND_URL = "http://www.dolpic.kr/Pics/DolPicImageSave/{0}/{1}/{2}/{3}";
+        //private const string IMAGE_SEND_URL = "http://localhost:3281/Pics/DolPicImageSave/{0}/{1}/{2}/{3}";
+        private const string IMAGE_SEND_URL = "http://www.dolpic.kr/Pics/DolPicImageSave/{0}/{1}/{2}/{3}";
         
         private int _nErrCnt;
         private int CHECK_TIME = 0;
