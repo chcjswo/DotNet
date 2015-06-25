@@ -63,15 +63,17 @@ namespace DolPic.Service.Web.Controllers
         public ActionResult Main(string id, int? page)
         {
             ViewBag.User = DolPicCookie.CookieRead(this.HttpContext, CommonVariable.COOKIE_NAME);
+            var nCurPage = page ?? 1;
 
             DolPicVo entity = new DolPicVo();
             entity.HashTag = string.IsNullOrEmpty(id) || CommonVariable.ALL_IMAGE.Equals(id) ? "" : id;
-            entity.CurPage = page ?? 1;
+            entity.CurPage = nCurPage;
             entity.PageListSize = _nImageListSize;
 
             ViewBag.DataList = _service.GetMainImageList(entity);
             ViewBag.HashTag = id;
-            ViewBag.PageGotoList = GetGotoPageList(page ?? 1, entity.TotalCnt, _nImageListSize, _nGotoListSize);
+            ViewBag.CurPage = nCurPage;
+            ViewBag.PageGotoList = GetGotoPageList(nCurPage, entity.TotalCnt, _nImageListSize, _nGotoListSize);
 
             return View();
         }
@@ -185,7 +187,7 @@ namespace DolPic.Service.Web.Controllers
         /// <param name="Seq">고유번호</param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult PicLike(int Seq)
+        public ActionResult PicLikeInsert(int Seq)
         {
             var UserId = DolPicCookie.CookieRead(this.HttpContext, CommonVariable.COOKIE_NAME);
             DolPicPo po = new DolPicPo();
@@ -302,7 +304,7 @@ namespace DolPic.Service.Web.Controllers
         /// <param name="ImgNo">이미지 고유번호</param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult ImgReport(int ImgNo)
+        public ActionResult ImgReportInsert(int ImgNo)
         {
             var UserId = DolPicCookie.CookieRead(this.HttpContext, CommonVariable.COOKIE_NAME);
             DolPicPo po = new DolPicPo();
@@ -317,13 +319,18 @@ namespace DolPic.Service.Web.Controllers
             }
 
             // 신고하기 입력 처리
-            po.RetCode = _service.FavoriteInsert(ImgNo, UserId);
+            po.RetCode = _service.ImgReportInsert(ImgNo, UserId);
 
             switch (po.RetCode)
             {
+                // 등록 성공
+                case (int)e_RetCode.success:
+                    po.RetMsg = "신고가 등록 됐습니다.";
+                    break;
+
                 // 이미 등록된 경우
                 case (int)e_RetCode.has:
-                    po.RetMsg = "이미 즐겨찾기를 하셨습니다.";
+                    po.RetMsg = "이미 신고를 하셨습니다.";
                     break;
 
                 // DB에러

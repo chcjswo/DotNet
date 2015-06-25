@@ -95,5 +95,14 @@ namespace DolPic.Data.Daos
         {
             DolPicServiceDataMapper.Instance().QueryForObject<DolPicVo>(SqlMaps.DolPic.UP_Favorite_Delete, entity);
         }
+
+        /// <summary>
+        /// 신고하기 입력
+        /// </summary>
+        /// <returns></returns>
+        public void DolPicImageReportInsert(DolPicVo entity)
+        {
+            DolPicServiceDataMapper.Instance().QueryForObject<DolPicVo>("UP_DolPicImageReport_Insert", entity);
+        }
     }
 }

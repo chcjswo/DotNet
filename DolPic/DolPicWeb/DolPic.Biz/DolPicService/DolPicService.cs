@@ -155,7 +155,13 @@ namespace DolPic.Biz.DolPicService
         /// <returns></returns>
         public int ImgReportInsert(int a_nImgNo, string a_sUserId)
         {
-            return 1;
+            DolPicVo entity = new DolPicVo();
+            entity.Seq = a_nImgNo;
+            entity.UserId = a_sUserId;
+
+            _dao.DolPicImageReportInsert(entity);
+
+            return entity.RetCode;
         }
     }
 }

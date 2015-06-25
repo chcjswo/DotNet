@@ -58,6 +58,9 @@
             var seq = $(this).attr("seq");
             if (seq == 0) { alert("더이상 사진이 없습니다."); return; }
 
+            location.href = "/Pics/PicView/" + seq + "/@((string.IsNullOrEmpty(ViewBag.HashTag) ? CommonVariable.ALL_IMAGE : ViewBag.HashTag))/@ViewBag.CurPage";
+            return;
+
             if (bExec) {
                 alert("요청을 처리중입니다.잠시만 기다려주세요.");
                 return;
@@ -125,7 +128,7 @@
         bExec = true;
 
         $.ajax({
-            url: "/Pics/PicLike",
+            url: "/Pics/PicLikeInsert",
             type: "POST",
             dataType: "json",
             data: {
@@ -151,8 +154,6 @@
     }
 
     function fnImgReport() {
-        alert("기능 추가중입니다.");
-        return;
         if ("@ViewBag.User" == "") {
             alert("로그인후 사용 가능합니다.");
             return;
@@ -166,7 +167,7 @@
         bExec = true;
 
         $.ajax({
-            url: "/Pics/ImgReport",
+            url: "/Pics/ImgReportInsert",
             type: "POST",
             dataType: "json",
             data: {
@@ -175,13 +176,7 @@
         })
         .done(function (data) {
             var retData = $.parseJSON(data);
-            if (retData.RetCode == 0) {
-                $('.like_box').fadeIn('swing').delay(200).fadeOut('fast');
-                $('#like').addClass('btn_good on');
-                $('#like').html("좋아요 " + retData.LikeCnt);
-            } else {
-                alert(retData.RetMsg);
-            }
+            alert(retData.RetMsg);
         })
         .fail(function () {
             alert("실행중 에러가 발생했습니다.");
