@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DolPic.Service.Web", "DolPic.Service\DolPic.Service.Web.csproj", "{E01B3017-EC5E-4782-B56C-7624A83ABB4C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DolPic.Service.Web", "DolPic.Service.Web\DolPic.Service.Web.csproj", "{E01B3017-EC5E-4782-B56C-7624A83ABB4C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DolPic.Common", "DolPic.Common\DolPic.Common.csproj", "{48051F79-0498-45DD-BA48-241B28E00D11}"
 EndProject

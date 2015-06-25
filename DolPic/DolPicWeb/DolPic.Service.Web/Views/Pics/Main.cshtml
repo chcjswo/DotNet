@@ -23,7 +23,7 @@
 		    <div seq="@item.Seq" class="gbox" style="background:url(@item.ImageSrc) center center no-repeat;background-size:cover">
                 <div class="gbox_thumb g_t_twitter">
                     <div class="gbox_t_title">#@item.HashTag</div>
-                    <div class="gbox_t_text"><img src="../../images/icon_like.png" height="9">@string.Format("{0:N0}", item.LikeCnt)</div>
+                    <div class="gbox_t_text"><img src="/images/icon_like.png" height="9">@string.Format("{0:N0}", item.LikeCnt)</div>
                 </div>
 		    </div>
         }
@@ -93,7 +93,7 @@
                     div = "<div seq='" + imgList[i].Seq + "' class='gbox' style='background:url(" + imgList[i].ImageSrc + ") center center no-repeat;background-size:cover'>";
                     div += "<div class='gbox_thumb g_t_twitter'>";
                     div += "<div class='gbox_t_title'>#" + imgList[i].HashTag + "</div>";
-                    div += "<div class='gbox_t_text'><img src='../../images/icon_like.png' height='9'>" + imgList[i].LikeCnt + "</div>";
+                    div += "<div class='gbox_t_text'><img src='/images/icon_like.png' height='9'>" + imgList[i].LikeCnt + "</div>";
                     div += "</div>";
                     div += "</div>";
                     $(".img_list").append(div);

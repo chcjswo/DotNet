@@ -41,18 +41,17 @@ namespace DolPicCrawler
 
         private double dDay, dMod, dHour, dMin, dSec;
 
+        private readonly string _sXmlNode;
+
         public Crawler()
         {
+            _sXmlNode = "/twitter/images";
+
             InitializeComponent();
             FormInit();
-            btnImageLoad.Enabled = false;
 
-            //this.WindowState = FormWindowState.Minimized;
-            //this.ShowInTaskbar = false;
-            //this.Visible = false;
             Version version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
             txtLog.Text = version.ToString();
-
         }
 
         #region Init
@@ -86,8 +85,8 @@ namespace DolPicCrawler
             errfrm = new ErrFrm();
             _dImage = new Dictionary<int, List<string>>();
             comSite.SelectedIndex = 0;
+            btnImageLoad.Enabled = false;
 
-            //btnImageLoad.Enabled = false;
 
             if (timer2.Enabled)
                 btnImageLoad.Enabled = false;
@@ -106,8 +105,10 @@ namespace DolPicCrawler
             {
                 XmlDocument xml = new XmlDocument();
                 xml.Load(XML_URL);
-                XmlNodeList xnList = xml.SelectNodes("/twitter/images"); //접근할 노드
+                // 접근할 노드
+                XmlNodeList xnList = xml.SelectNodes(_sXmlNode);
 
+                // 리스트 초기화
                 _arrNo = new List<int>(xnList.Count);
                 _arrTag = new List<string>(xnList.Count);
 
@@ -187,9 +188,10 @@ namespace DolPicCrawler
                 }
             }
 
-            // 이미지 저장
+            // 해당 사이트로 부터 이미지정보를 가져오고 이미지 저장
             ImageSend();
 
+            // 로딩 시간 측정
             sw.Stop();
             lblWatch.Text = (sw.ElapsedMilliseconds / 1000.0F).ToString() + " 초 로딩";
         }
@@ -385,6 +387,7 @@ namespace DolPicCrawler
 
                     foreach (var item in kvp.Value)
                     {
+                        // Bsee64 인코딩
                         var sBase64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(item));
 
                         //URI로부터 요청을 생성한다
@@ -397,7 +400,6 @@ namespace DolPicCrawler
 
                         Console.WriteLine("TagNo == " + kvp.Key);
                         Console.WriteLine("ImageSrc == " + sBase64);
-
                     }
                 }
             }
@@ -504,42 +506,28 @@ namespace DolPicCrawler
 
         private void ShowForm()
         {
-            //if (this.WindowState == FormWindowState.Minimized)
-            //    this.WindowState = FormWindowState.Normal;
-            //this.Activate();
-
-            this.Visible = true;
-            this.ShowInTaskbar = true;
-            this.WindowState = FormWindowState.Normal;
-            notifyIcon1.Visible = false;
-        }
-
-        private void contextMenuStrip1_Click(object sender, EventArgs e)
-        {
-
+            this.Visible = true; // 폼의 표시
+            if (this.WindowState == FormWindowState.Minimized)
+                this.WindowState = FormWindowState.Normal; // 최소화를 멈춘다 
+            this.Activate(); // 폼을 활성화 시킨다
+            this.notifyIcon1.Visible = false;
         }
 
         private void Crawler_Load(object sender, EventArgs e)
         {
             this.notifyIcon1.Visible = true;
             notifyIcon1.ContextMenuStrip = contextMenuStrip1;
-
-            // NotifyIcon에 메뉴 추가
-            ContextMenu ctx = new ContextMenu();
-            ctx.MenuItems.Add(new MenuItem("열기"));
-            ctx.MenuItems.Add(new MenuItem("실행"));
-            ctx.MenuItems.Add("-");
-            ctx.MenuItems.Add(new MenuItem("종료", new EventHandler((s, ex) => this.Close())));
-            notifyIcon1.ContextMenu = ctx;
         }
 
-        private void 열기ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ShowForm();
         }
 
-        private void 종료ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            notifyIcon1.Visible = false;
+            this.Dispose();
             Application.Exit();
         }
 
@@ -549,7 +537,6 @@ namespace DolPicCrawler
             e.Cancel = true;
             this.Hide();
             notifyIcon1.Visible = true;
-            this.Hide();
         }
         #endregion
     }
