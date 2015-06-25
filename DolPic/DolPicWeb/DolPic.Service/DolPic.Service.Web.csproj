@@ -290,6 +290,7 @@
     <Content Include="Views\Error\PageNotFound.cshtml" />
     <Content Include="Views\Error\ServerError.cshtml" />
     <Content Include="Views\Error\AuthorizedError.cshtml" />
+    <Content Include="Views\Shared\_GoogleAd3.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
