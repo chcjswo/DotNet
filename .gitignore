@@ -20,10 +20,8 @@ $RECYCLE.BIN/
 # dir
 [Bb]in/
 [Oo]bj/
-[Dd]lls/
 
 # asp.net
-Web.config
 Web.Debug.config
 Web.Release.config
 
