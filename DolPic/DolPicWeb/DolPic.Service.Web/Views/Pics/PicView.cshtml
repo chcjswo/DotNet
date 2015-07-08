@@ -7,19 +7,21 @@
 		<div class="vbox">
 			<div class="like_box" style="display:none"></div>
 			<img src="@Model.ImageSrc:large">
+		    <div class="wrong_pic">해당 이미지가 잘못되었으면 <a href="javascript:void(0)" class="report">여기</a>를 눌러주세요. 출처:Twitter</div>
 		</div>
 		<div class="clear"></div>
 		<!-- 갤러리 네비게이션 -->
 		<ul class="gbox_list">
 			<li>메인</li>
 			<li seq="@Model.NextSeq" class="@(Model.NextSeq == 0 ? "on" : "")">&lt; 이전 페이지</li>
-			<li class="on"><span id="hashtag">#@Model.HashTag</span></li>			<li seq="@Model.PrevSeq" class="@(Model.PrevSeq == 0 ? "on" : "")">다음 페이지 &gt;</li>
+			<li class="on"><span id="hashtag">@Model.HashTag</span></li>			<li seq="@Model.PrevSeq" class="@(Model.PrevSeq == 0 ? "on" : "")">다음 페이지 &gt;</li>
 		</ul>
 		<div id="like" class="@(Model.IsLike == 0 ? "btn_good" : "btn_good on")">좋아요 @string.Format("{0:N0}", Model.LikeCnt)</div>
 		<div class="clear"></div>
 		<!-- 구글 광고 -->
 		@Html.Partial("_GoogleAd1")
-		<div class="wrong_pic">해당 이미지가 잘못되었으면 <a href="javascript:void(0)" class="report">여기</a>를 눌러주세요.</div>	</div>
+        <!-- Disqus -->
+		@Html.Partial("_Disqus")	</div>
 	<div class="gbox_side">
         @Html.Action("HotDolPicList", "Pics")
 		<!-- 구글 광고 -->
