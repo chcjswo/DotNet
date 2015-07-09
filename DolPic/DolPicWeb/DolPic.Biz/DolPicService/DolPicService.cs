@@ -163,5 +163,18 @@ namespace DolPic.Biz.DolPicService
 
             return entity.RetCode;
         }
+
+        /// <summary>
+        /// 추천 이미지 리스트
+        /// </summary>
+        /// <param name="a_nImgNo">고유번호</param>
+        /// <returns></returns>
+        public IList<DolPicVo> RecommImgList(int a_nImgNo)
+        {
+            DolPicVo entity = new DolPicVo();
+            entity.Seq = a_nImgNo;
+
+            return _dao.DolPicRecommImageList(entity);
+        }
     }
 }

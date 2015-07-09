@@ -294,6 +294,7 @@
     <Content Include="Views\Error\AuthorizedError.cshtml" />
     <Content Include="Views\Shared\_GoogleAd3.cshtml" />
     <Content Include="Views\Shared\_Disqus.cshtml" />
+    <Content Include="Views\Pics\RecommPicList.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

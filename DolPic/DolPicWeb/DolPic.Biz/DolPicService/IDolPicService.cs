@@ -73,5 +73,12 @@ namespace DolPic.Biz.DolPicService
         /// <param name="a_sUserId">유저 아이디</param>
         /// <returns></returns>
         int ImgReportInsert(int a_nImgNo, string a_sUserId);
+
+        /// <summary>
+        /// 추천 이미지 리스트
+        /// </summary>
+        /// <param name="a_nImgNo">고유번호</param>
+        /// <returns></returns>
+        IList<DolPicVo> RecommImgList(int a_nImgNo);
     }
 }

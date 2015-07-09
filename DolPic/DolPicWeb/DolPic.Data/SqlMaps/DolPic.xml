@@ -64,6 +64,11 @@
     <procedure id="UP_DolPicImageReport_Insert" parameterMap="p_seq_userid" description="신고하기 입력">
       UP_DolPicImageReport_Insert
     </procedure>
+
+    <!-- 추천 이미지 리스트 -->
+    <procedure id="UP_DolPicRecommImage_List" parameterMap="p_img_no" resultClass="dolpic" description="추천 이미지 리스트">
+      UP_DolPicRecommImage_List
+    </procedure>
   </statements>
 
   <!--ParameterMap 을 정의합니다.-->
@@ -109,6 +114,10 @@
 
     <parameterMap id="p_favorite_list" class="dolpic">
       <parameter property="UserId" column="UserId" />
+    </parameterMap>
+
+    <parameterMap id="p_img_no" class="dolpic">
+      <parameter property="Seq" column="Seq" />
     </parameterMap>
   </parameterMaps>
 

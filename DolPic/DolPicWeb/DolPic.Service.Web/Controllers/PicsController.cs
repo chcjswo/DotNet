@@ -39,25 +39,6 @@ namespace DolPic.Service.Web.Controllers
         }
 
         #region 화면 관련
-        ///// <summary>
-        ///// 돌픽 메인 화면
-        ///// </summary>
-        ///// <returns></returns>
-        //public ActionResult Main(string id)
-        //{
-        //    ViewBag.User = DolPicCookie.CookieRead(this.HttpContext, CommonVariable.COOKIE_NAME);
-
-        //    DolPicVo entity = new DolPicVo();
-        //    entity.HashTag = id ?? "";
-        //    entity.CurPage = 1;
-        //    entity.PageListSize = _nImageListSize;
-
-        //    ViewBag.DataList = _service.GetMainImageList(entity);
-        //    ViewBag.HashTag = id;
-        //    ViewBag.PageGotoList = GetGotoPageList(1, entity.TotalCnt, _nImageListSize, _nGotoListSize);
-
-        //    return View();
-        //}
         /// <summary>
         /// 돌픽 메인 화면
         /// </summary>
@@ -137,6 +118,23 @@ namespace DolPic.Service.Web.Controllers
         {
             // 핫돌픽 리스트 조회
             ViewBag.DataList = _service.GetHotDolPicList();
+
+            return View();
+        }
+
+        /// <summary>
+        /// 추천 이미지 리스트
+        /// </summary>
+        /// <param name="ImgNo">고유번호</param>
+        /// <param name="HahTag">해쉬 태그</param>
+        /// <param name="CurPage">현재 페이지</param>
+        /// <returns></returns>
+        public ActionResult RecommPicList(int ImgNo, string HashTag, int CurPage)
+        {
+            // 추천 이미지 리스트 조회
+            ViewBag.DataList = _service.RecommImgList(ImgNo);
+            ViewBag.HashTag = HashTag;
+            ViewBag.CurPage = CurPage;
 
             return View();
         } 

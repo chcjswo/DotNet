@@ -31,7 +31,7 @@
                     <td> <a href="@Url.Action("DolPicImageList", new { controller = "DolPicAdmin", Seq = @item.Seq})"> @item.HashTag</a> </td>
                     <td>@item.Initial</td>
                     <td><input type="button" value="수정" seq="@item.Seq" class="update" /></td>
-                    <td><input type="button" value="수정" seq="@item.Seq" class="delete" /></td>
+                    <td><input type="button" value="삭제" seq="@item.Seq" class="delete" /></td>
                     @*<td><input type="button" value="보기" seq="@item.Seq" class="imgview" /></td>*@
                 </tr>
             }

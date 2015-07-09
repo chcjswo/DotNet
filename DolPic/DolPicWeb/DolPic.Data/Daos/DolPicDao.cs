@@ -104,5 +104,14 @@ namespace DolPic.Data.Daos
         {
             DolPicServiceDataMapper.Instance().QueryForObject<DolPicVo>("UP_DolPicImageReport_Insert", entity);
         }
+
+        /// <summary>
+        /// 추천 이미지 리스트
+        /// </summary>
+        /// <returns></returns>
+        public IList<DolPicVo> DolPicRecommImageList(DolPicVo entity)
+        {
+            return DolPicServiceDataMapper.Instance().QueryForList<DolPicVo>("UP_DolPicRecommImage_List", entity);
+        }
     }
 }
