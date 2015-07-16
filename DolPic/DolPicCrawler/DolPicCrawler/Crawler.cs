@@ -7,6 +7,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -233,6 +234,9 @@ namespace DolPicCrawler
             return true;
         }
 
+        /// <summary>
+        /// 돈 좀 벌러 가볼까~~~
+        /// </summary>
         private void GoShowMeTheMoney()
         {
             CHECK_TIME = Convert.ToInt32(txtTime.Text) * 60;
@@ -240,10 +244,13 @@ namespace DolPicCrawler
             ShowMeTheMoney();
         }
 
+        /// <summary>
+        /// 돈 좀 벌어 볼까~~~
+        /// </summary>
         private void ShowMeTheMoney()
         {
             // 폼은 숨기고
-            HideFrm();
+            errfrm.Hide();
 
             // 초기화하고 시작하자
             FormInit();
@@ -279,6 +286,10 @@ namespace DolPicCrawler
             }
         }
 
+        /// <summary>
+        /// 그리드 셋팅
+        /// </summary>
+        /// <param name="a_list">이미지 정보</param>
         private void SetGridInfo(List<string> a_list)
         {
             foreach (var item in a_list)
@@ -294,11 +305,10 @@ namespace DolPicCrawler
             }
         }
 
-        private void HideFrm()
-        {
-            errfrm.Hide();
-        }
-
+        /// <summary>
+        /// 에러 보여주기
+        /// </summary>
+        /// <param name="ex">에러 정보</param>
         private void ShowError(Exception ex)
         {
             errfrm.Owner = this;
@@ -347,33 +357,39 @@ namespace DolPicCrawler
         private void ImageSend()
         {
             //응답요청을 한다
-            WebRequest request = null;
-            WebResponse response = null;
+            //WebRequest request = null;
+            //WebResponse response = null;
 
             var TagUrlType = comSite.SelectedIndex + 1;
 
             try
             {
-                foreach (KeyValuePair<int, List<string>> kvp in _dImage)
+                using (var client = new HttpClient())
                 {
-                    Console.WriteLine("Key: " + kvp.Key);
-                    Console.WriteLine("Value: " + kvp.Value);
 
-                    foreach (var item in kvp.Value)
+                    foreach (KeyValuePair<int, List<string>> kvp in _dImage)
                     {
-                        // Bsee64 인코딩
-                        var sBase64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(item));
+                        Console.WriteLine("Key: " + kvp.Key);
+                        Console.WriteLine("Value: " + kvp.Value);
 
-                        //URI로부터 요청을 생성한다
-                        request = WebRequest.Create(string.Format(IMAGE_SEND_URL, kvp.Key, sBase64, TagUrlType, 1));
+                        foreach (var item in kvp.Value)
+                        {
+                            // Bsee64 인코딩
+                            var sBase64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(item));
 
-                        Console.WriteLine("url == " + string.Format(IMAGE_SEND_URL, kvp.Key, sBase64, TagUrlType, 1));
+                            //URI로부터 요청을 생성한다
+                            //request = WebRequest.Create(string.Format(IMAGE_SEND_URL, kvp.Key, sBase64, TagUrlType, 1));
 
-                        //요청을 보내고 응답을 받는다
-                        response = request.GetResponse();
+                            client.GetAsync(string.Format(IMAGE_SEND_URL, kvp.Key, sBase64, TagUrlType, 1));
+                            
+                            Console.WriteLine("url == " + string.Format(IMAGE_SEND_URL, kvp.Key, sBase64, TagUrlType, 1));
 
-                        Console.WriteLine("TagNo == " + kvp.Key);
-                        Console.WriteLine("ImageSrc == " + sBase64);
+                            //요청을 보내고 응답을 받는다
+                            //response = request.GetResponse();
+
+                            Console.WriteLine("TagNo == " + kvp.Key);
+                            Console.WriteLine("ImageSrc == " + sBase64);
+                        }
                     }
                 }
             }
