@@ -20,6 +20,8 @@ $RECYCLE.BIN/
 # dir
 [Bb]in/
 [Oo]bj/
+[Ii]mages/
+[Cc]ss/
 
 # asp.net
 Web.Debug.config
