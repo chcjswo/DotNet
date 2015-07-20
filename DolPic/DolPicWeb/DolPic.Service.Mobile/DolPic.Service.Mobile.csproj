@@ -133,6 +133,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\CustomController.cs" />
+    <Compile Include="Common\CustomWebViewPage.cs" />
     <Compile Include="Controllers\DolPicAdminController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\PicsController.cs" />
@@ -150,7 +151,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Content Include="Css\common.css" />
+    <Content Include="Css\common.m.css" />
     <Content Include="Css\PagedList.css" />
     <Content Include="Css\Site.css" />
     <Content Include="Global.asax" />
@@ -173,11 +174,14 @@
     <Content Include="Images\num_4.png" />
     <Content Include="Images\num_5.png" />
     <Content Include="Images\sample_ad.jpg" />
+    <Content Include="Images\sample_ad.png" />
     <Content Include="Images\sample_ad2.jpg" />
+    <Content Include="Images\sample_disqus.png" />
     <Content Include="Images\sns_facebook.png" />
     <Content Include="Images\sns_Instagram.png" />
     <Content Include="Images\sns_twitter.png" />
     <Content Include="Js\CommonAdmin.js" />
+    <Content Include="Js\jquery.mobile-events.min.js" />
     <Content Include="Js\jquery.placeholder.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -200,12 +204,6 @@
   <ItemGroup>
     <None Include="Properties\PublishProfiles\돌픽_모바일.pubxml" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\DolPicAdmin\DolPicImageList.cshtml" />
-    <Content Include="Views\DolPicAdmin\DolPicUserFavoriteList.cshtml" />
-    <Content Include="Views\DolPicAdmin\DolPicUserList.cshtml" />
-    <Content Include="Views\DolPicAdmin\HashTagList.cshtml" />
-    <Content Include="Views\DolPicAdmin\HashTagMakeForm.cshtml" />
-    <Content Include="Views\DolPicAdmin\MenuList.cshtml" />
     <Content Include="Views\Error\AuthorizedError.cshtml" />
     <Content Include="Views\Error\PageNotFound.cshtml" />
     <Content Include="Views\Error\ServerError.cshtml" />
@@ -228,6 +226,7 @@
     <Content Include="Views\User\LogIn.cshtml" />
     <Content Include="Views\User\LogInProc.cshtml" />
     <Content Include="Views\User\SignUp.cshtml" />
+    <Content Include="Views\Shared\_Disqus.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DolPic.Biz\DolPic.Biz.csproj">

@@ -16,26 +16,17 @@
 <div id="loading" style="display:none"><img src="/Images/loader.gif" /><br /><br />로딩하는 중입니다...</div><!-- 갤러리 -->
 <div class="wrapper">
 	<div class="gbox_gallery">
-        <div class="img_list">
-		<!-- 갤러리 리스트 -->
-        @foreach (var item in list)
-        {
-		    <div seq="@item.Seq" class="gbox" style="background:url(@item.ImageSrc) center center no-repeat;background-size:cover">
-                <div class="gbox_thumb g_t_twitter">
-                    <div class="gbox_t_title">#@item.HashTag</div>
-                    <div class="gbox_t_text"><img src="../../images/icon_like.png" height="9">@string.Format("{0:N0}", item.LikeCnt)</div>
-                </div>
-		    </div>
-        }
-        </div>
-        <div class="clear"></div>
-		<ul class="gbox_list">
-            <div class="goto_list">
-			@Html.Raw(ViewBag.PageGotoList)
-            </div>
-		</ul>
-		<!-- 구글 광고 -->
-		@Html.Partial("_GoogleAd1")
+	<!-- 갤러리 리스트 -->
+    @foreach (var item in list)
+    {
+		<div seq="@item.Seq" class="gbox" style="background:url(@item.ImageSrc) center center no-repeat;background-size:cover">
+		</div>
+    }
+    <div class="clear"></div>
+	<ul class="gbox_list">
+		@Html.Raw(ViewBag.PageGotoList)
+	</ul>
+    <div class="clear"></div>
 	</div>
 	<div class="gbox_side">
         @Html.Action("HotDolPicList", "Pics")
@@ -48,6 +39,48 @@
 </div>
 <input type="hidden" id="CurPage" value="@ViewBag.CurPage" />
 @Html.Action("InitialList", "Pics")
+
+<script>
+    $(document).ready(function () {
+        var gboxDefault = ($('.gbox_gallery').width() - 24) / 3;
+        var gboxWide = ($('.gbox_gallery').width() - 40) / 5;
+        if (window.innerHeight > window.innerWidth) {
+            $('.gbox').css({
+                width: gboxDefault,
+                height: gboxDefault
+            });
+            $('.hot_box').removeClass('wide');
+            $('.ad_wrap').removeClass('wide');
+        } else {
+            $('.gbox').css({
+                width: gboxWide,
+                height: gboxWide
+            });
+            $('.hot_box').addClass('wide');
+            $('.ad_wrap').addClass('wide');
+        }
+        if ($('.fbar').height() < 75) {
+            $('.fbar_wrap').removeClass('more');
+            $('.btn_more').hide();
+        } else {
+            $('.fbar_wrap').addClass('more');
+            $('.btn_more').show();
+        }
+        $('.btn_more').live('click', function () {
+            $('.fbar_wrap').removeClass('more');
+            $('.btn_more').hide();
+        });
+
+        // 화면 전환시 새로고침
+        var windowWidth = $(window).width();
+        $(window).resize(function () {
+            if (windowWidth != $(window).width()) {
+                location.reload();
+                return;
+            }
+        });
+    });
+</script>
 
 <script type="text/javascript">
     var bExec = false;

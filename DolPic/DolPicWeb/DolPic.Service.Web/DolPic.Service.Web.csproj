@@ -143,6 +143,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\CustomController.cs" />
+    <Compile Include="Common\CustomWebViewPage.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\DolPicAdminController.cs" />
     <Compile Include="Controllers\PicsController.cs" />
@@ -184,7 +185,9 @@
     <Content Include="Images\num_4.png" />
     <Content Include="Images\num_5.png" />
     <Content Include="Images\sample_ad.jpg" />
+    <Content Include="Images\sample_ad.png" />
     <Content Include="Images\sample_ad2.jpg" />
+    <Content Include="Images\sample_disqus.png" />
     <Content Include="Images\sns_facebook.png" />
     <Content Include="Images\sns_Instagram.png" />
     <Content Include="Images\sns_twitter.png" />

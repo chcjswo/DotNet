@@ -7,19 +7,20 @@
 		<div class="vbox">
 			<div class="like_box" style="display:none"></div>
 			<img src="@Model.ImageSrc:large">
+		    <div class="wrong_pic">해당 이미지가 잘못되었으면 <a href="javascript:void(0)" class="report">여기</a>를 눌러주세요.</div>
 		</div>
 		<div class="clear"></div>
 		<!-- 갤러리 네비게이션 -->
 		<ul class="gbox_list">
 			<li>메인</li>
-			<li seq="@Model.NextSeq" class="@(Model.NextSeq == 0 ? "on" : "")">&lt; 이전 페이지</li>
-			<li class="on"><span id="hashtag">#@Model.HashTag</span></li>			<li seq="@Model.PrevSeq" class="@(Model.PrevSeq == 0 ? "on" : "")">다음 페이지 &gt;</li>
+			<li seq="@Model.NextSeq" class="@(Model.NextSeq == 0 ? "on" : "")">&lt; 이전 페이지</li>			<li seq="@Model.PrevSeq" class="@(Model.PrevSeq == 0 ? "on" : "")">다음 페이지 &gt;</li>
 		</ul>
 		<div id="like" class="@(Model.IsLike == 0 ? "btn_good" : "btn_good on")">좋아요 @string.Format("{0:N0}", Model.LikeCnt)</div>
 		<div class="clear"></div>
-		<!-- 구글 광고 -->
-		@Html.Partial("_GoogleAd1")
-		<div class="wrong_pic">해당 이미지가 잘못되었으면 <a href="javascript:void(0)" class="report">여기</a>를 눌러주세요.</div>	</div>
+        <!-- 추천 이미지 리스트 -->
+        @Html.Action("RecommPicList", "Pics", new { ImgNo = Model.CurSeq, HashTag = Model.HashTag, CurPage = ViewBag.CurPage })
+        <!-- Disqus -->
+		@Html.Partial("_Disqus")	</div>
 	<div class="gbox_side">
         @Html.Action("HotDolPicList", "Pics")
 		<!-- 구글 광고 -->
@@ -31,6 +32,54 @@
 </div>
 @Html.HiddenFor(m => m.CurSeq, new { @Value = Model.CurSeq })
 @Html.Action("InitialList", "Pics")
+
+<script>
+    $(document).ready(function () {
+        var gboxDefault = ($('.gbox_gallery').width() - 24) / 3;
+        var gboxWide = ($('.gbox_gallery').width() - 40) / 5;
+        if (window.innerHeight > window.innerWidth) {
+            $('.gbox').css({
+                width: gboxDefault,
+                height: gboxDefault
+            });
+            $('.hot_box').removeClass('wide');
+            $('.ad_wrap').removeClass('wide');
+            $('#gboxRecmd4, #gboxRecmd5').hide();
+        } else {
+            $('.gbox').css({
+                width: gboxWide,
+                height: gboxWide
+            });
+            $('.hot_box').addClass('wide');
+            $('.ad_wrap').addClass('wide');
+            $('#gboxRecmd4, #gboxRecmd5').show();
+        }
+        if ($('.fbar').height() < 75) {
+            $('.fbar_wrap').removeClass('more');
+            $('.btn_more').hide();
+        } else {
+            $('.fbar_wrap').addClass('more');
+            $('.btn_more').show();
+        }
+        $('.btn_more').live('click', function () {
+            $('.fbar_wrap').removeClass('more');
+            $('.btn_more').hide();
+        });
+
+        $('.vbox').live('doubletap', function () {
+            fnPicLike();
+        });
+
+        // 화면 전환시 새로고침
+        var windowWidth = $(window).width();
+        $(window).resize(function () {
+            if (windowWidth != $(window).width()) {
+                location.reload();
+                return;
+            }
+        });
+    });
+</script>
 
 <script type="text/javascript">
     var bExec = false;
@@ -52,8 +101,6 @@
                 location.href = "/Pics/Main/@((string.IsNullOrEmpty(ViewBag.HashTag) ? CommonVariable.ALL_IMAGE : ViewBag.HashTag))/@ViewBag.CurPage";
                 return;
             }
-
-            if (nClickIdx == 2) return;
 
             var seq = $(this).attr("seq");
             if (seq == 0) { alert("더이상 사진이 없습니다."); return; }
