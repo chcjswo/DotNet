@@ -25,7 +25,7 @@ namespace DolPic.Service.Mobile.Controllers
         /// </summary>
         public PicsController()
         {
-            _nImageListSize = 50;
+            _nImageListSize = 30;
             _nGotoListSize = 10;
 
             _service = new DolPicService();
