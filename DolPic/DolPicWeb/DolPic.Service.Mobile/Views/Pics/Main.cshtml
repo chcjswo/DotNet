@@ -13,13 +13,15 @@
     } 
 </style>
 @Html.Action("FavoriteBar", "Pics")
+<!-- 구글 광고 -->
+@Html.Partial("_GoogleAdTop")
 <div id="loading" style="display:none"><img src="/Images/loader.gif" /><br /><br />로딩하는 중입니다...</div><!-- 갤러리 -->
 <div class="wrapper">
 	<div class="gbox_gallery">
 	<!-- 갤러리 리스트 -->
     @foreach (var item in list)
     {
-		<div seq="@item.Seq" class="gbox" style="background:url(@item.ImageSrc) center center no-repeat;background-size:cover">
+		<div seq="@item.Seq" class="gbox" style="background:url(@item.ImageSrc:thumb) center center no-repeat;background-size:cover">
 		</div>
     }
     <div class="clear"></div>

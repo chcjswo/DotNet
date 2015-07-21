@@ -227,6 +227,7 @@
     <Content Include="Views\User\LogInProc.cshtml" />
     <Content Include="Views\User\SignUp.cshtml" />
     <Content Include="Views\Shared\_Disqus.cshtml" />
+    <Content Include="Views\Shared\_GoogleAdTop.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DolPic.Biz\DolPic.Biz.csproj">
