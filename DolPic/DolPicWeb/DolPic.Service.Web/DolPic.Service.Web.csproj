@@ -205,9 +205,7 @@
     </Content>
     <Content Include="Views\Web.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config">
       <SubType>Designer</SubType>
@@ -289,7 +287,6 @@
     <Content Include="Views\Pics\FavoriteBar.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Properties\PublishProfiles\돌픽.pubxml" />
     <Content Include="Views\DolPicAdmin\DolPicUserList.cshtml" />
     <Content Include="Views\DolPicAdmin\DolPicUserFavoriteList.cshtml" />
     <Content Include="Views\Error\PageNotFound.cshtml" />
@@ -298,6 +295,9 @@
     <Content Include="Views\Shared\_GoogleAd3.cshtml" />
     <Content Include="Views\Shared\_Disqus.cshtml" />
     <Content Include="Views\Pics\RecommPicList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\PublishProfiles\웹.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
