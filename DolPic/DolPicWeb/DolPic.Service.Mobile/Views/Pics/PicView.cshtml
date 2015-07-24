@@ -34,7 +34,6 @@
 </div>
 @Html.HiddenFor(m => m.CurSeq, new { @Value = Model.CurSeq })
 @Html.Action("InitialList", "Pics")
-
 <script>
     $(document).ready(function () {
         var gboxDefault = ($('.gbox_gallery').width() - 24) / 3;
@@ -86,6 +85,15 @@
 <script type="text/javascript">
     var bExec = false;
     $(function () {
+        var swipe = $('.vbox');
+        // Swipes:
+        swipe.swipeleft(function () {
+            fnImgViewGo($('.gbox_list li').eq(2).attr("seq"));
+        });
+        swipe.swiperight(function () {
+            fnImgViewGo($('.gbox_list li').eq(1).attr("seq"));
+        });
+
         $('.vbox').dblclick(function () {
             fnPicLike();
         });
@@ -104,10 +112,7 @@
                 return;
             }
 
-            var seq = $(this).attr("seq");
-            if (seq == 0) { alert("더이상 사진이 없습니다."); return; }
-
-            location.href = "/Pics/PicView/" + seq + "/@((string.IsNullOrEmpty(ViewBag.HashTag) ? CommonVariable.ALL_IMAGE : ViewBag.HashTag))/@ViewBag.CurPage";
+            fnImgViewGo($(this).attr("seq"));
             return;
 
             if (bExec) {
@@ -162,6 +167,11 @@
             });
         });
     });
+
+    function fnImgViewGo(seq) {
+        if (seq == 0) { alert("더이상 사진이 없습니다."); return; }
+        location.href = "/Pics/PicView/" + seq + "/@((string.IsNullOrEmpty(ViewBag.HashTag) ? CommonVariable.ALL_IMAGE : ViewBag.HashTag))/@ViewBag.CurPage";
+    }
 
     function fnPicLike() {
         if ("@ViewBag.User" == "") {

@@ -87,6 +87,17 @@
 <script type="text/javascript">
     var bExec = false;
     $(function () {
+
+        var swipe = $('.gbox_gallery');
+        // Swipes:
+        swipe.swipeleft(function () {
+            location.href = "/Pics/Main/@((string.IsNullOrEmpty(ViewBag.HashTag) ? CommonVariable.ALL_IMAGE : ViewBag.HashTag))" + "/" + parseInt(parseInt($("#CurPage").val()) + 1);
+        });
+        swipe.swiperight(function () {
+            if ($("#CurPage").val() == 1) return;
+            location.href = "/Pics/Main/@((string.IsNullOrEmpty(ViewBag.HashTag) ? CommonVariable.ALL_IMAGE : ViewBag.HashTag))" + "/" + parseInt(parseInt($("#CurPage").val()) - 1);
+        });
+
         $('.gbox').live({
             mouseenter: function () { $('.gbox_thumb', this).fadeIn(300); $('.gbox_thumb', this).parent("div").addClass('transition'); },
             mouseleave: function () { $('.gbox_thumb', this).fadeOut(100); $('.gbox_thumb', this).parent("div").removeClass('transition'); }
