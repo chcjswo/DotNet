@@ -20,8 +20,6 @@ $RECYCLE.BIN/
 # dir
 [Bb]in/
 [Oo]bj/
-[Ii]mages/
-[Cc]ss/
 
 # asp.net
 Web.Debug.config
@@ -57,8 +55,3 @@ Web.Release.config
 Network Trash Folder
 Temporary Items
 .apdisk
-
-/DolPic/DolPicWeb/DolPic.Service.Web/Images
-/DolPic/DolPicWeb/DolPic.Service.Web/Css
-/DolPic/DolPicWeb/DolPic.Service.Mobile/Images
-/DolPic/DolPicWeb/DolPic.Service.Mobile/Css
