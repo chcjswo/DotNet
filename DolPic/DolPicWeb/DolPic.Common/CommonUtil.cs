@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Security.Cryptography;
-using System.Text;
+﻿using System.Text;
 
 namespace DolPic.Common
 {
@@ -18,82 +15,50 @@ namespace DolPic.Common
 
             return false;
         }
-    }
-    public class DolPicEncryption
-    {
-        private const string CODE_KEY = "dolpic";
 
-        //암호화에 사용되는 Key 값을 선언합니다.
-        static byte[] pbyteKey = ASCIIEncoding.ASCII.GetBytes(CODE_KEY);
-        //위의 pbyteKey 변수는 아래의 Encrypt 와 Decrypt 함수에서 정의되서 사용해도 됩니다.
-        //단... 암호화하는데 쓰이는 Key 값은 동일해야 합니다.
-        //아래의 Encrypt 와 Decrypt 함수를 선언합니다.
+        #region 바로가기 페이지 목록 만들기
 
         /// <summary>
-        /// Base64 엔코딩
+        /// 바로가기 페이지 목록 만들기
         /// </summary>
-        /// <param name="a_sOri"></param>
-        /// <returns></returns>
-        public static string Base64Encode(string a_sOri)
+        /// <param name="a_nCurPage">현재 페이지</param>
+        /// <param name="a_nRecCnt">레코드 수</param>
+        /// <param name="a_nPageSize">한페이지에 보여줄 페이지 수</param>
+        /// <param name="a_nViewPageCnt">바로가기에 보여줄 페이지 수</param>
+        /// <returns>바로가기목록</returns>
+        public static string GetGotoPageList(int a_nCurPage, int a_nRecCnt, int a_nPageSize, int a_nViewPageCnt)
         {
-            byte[] arrByte = Encoding.Default.GetBytes(a_sOri);
+            StringBuilder sbPage = new StringBuilder();
 
-            return Convert.ToBase64String(arrByte);
+            //바로가기 첫페이지 계산
+            int nStartPage = ((a_nCurPage - 1) / a_nViewPageCnt) * a_nViewPageCnt + 1;
+            // 전체 페이지수 계산
+            int nPageCnt = (a_nRecCnt - 1) / a_nPageSize + 1;
+            // 블럭페이지 계산
+            int nBlockPage = ((a_nCurPage - 1) / a_nViewPageCnt) * a_nViewPageCnt + 1;
+
+            if (nBlockPage != 1)
+                sbPage.AppendFormat("<li page='{0}'><</li>&nbsp", nBlockPage - a_nViewPageCnt);
+
+            int nCnt = 1;
+            while (nStartPage <= nPageCnt && nCnt <= a_nViewPageCnt)
+            {
+                if (nStartPage == a_nCurPage)
+                    sbPage.AppendFormat("<li page='{0}' class='on'>{0}</li>&nbsp;", nStartPage);
+                else
+                    sbPage.AppendFormat("<li page='{0}'>{0}</li>&nbsp;", nStartPage);
+
+                nStartPage++;
+                nCnt++;
+                nBlockPage++;
+            }
+
+            if (nBlockPage < nPageCnt)
+                sbPage.AppendFormat("<li page='{0}'>></li>", nBlockPage);
+
+            return sbPage.ToString();
         }
 
-        /// <summary>
-        /// Base64 디코딩
-        /// </summary>
-        /// <param name="a_sOri"></param>
-        /// <returns></returns>
-        public static string Base64Decode(string a_sOri)
-        {
-            if (string.IsNullOrEmpty(a_sOri)) return a_sOri;
-
-            return Encoding.Default.GetString(Convert.FromBase64String(a_sOri));
-        }
-
-        // 암호화 하고자 하는 Key 값(String) 을 받아서 DES 알고리즘으로 암호화한 문자열을 Return 함
-        public static string Encrypt(String strKey)
-        {
-            DESCryptoServiceProvider desCSP = new DESCryptoServiceProvider();
-            desCSP.Mode = CipherMode.ECB;
-            desCSP.Padding = PaddingMode.PKCS7;
-            desCSP.Key = pbyteKey;
-            desCSP.IV = pbyteKey;
-            MemoryStream ms = new MemoryStream();
-            CryptoStream cryptStream = new CryptoStream(ms, desCSP.CreateEncryptor(), CryptoStreamMode.Write);
-            byte[] data = Encoding.UTF8.GetBytes(strKey.ToCharArray());
-            cryptStream.Write(data, 0, data.Length);
-            cryptStream.FlushFinalBlock();
-            String strReturn = Convert.ToBase64String(ms.ToArray());
-            cryptStream = null;
-            ms = null;
-            desCSP = null;
-
-            return strReturn;
-        }
-
-        // DES 알고리즘으로 암호화된 문자열을 받아서 복호화 한 후 암호화 이전의 원래 문자열을 Return 함
-        public static string Decrypt(String strKey)
-        {
-            DESCryptoServiceProvider desCSP = new DESCryptoServiceProvider();
-            desCSP.Mode = CipherMode.ECB;
-            desCSP.Padding = PaddingMode.PKCS7;
-            desCSP.Key = pbyteKey;
-            desCSP.IV = pbyteKey;
-            MemoryStream ms = new MemoryStream();
-            CryptoStream cryptStream = new CryptoStream(ms, desCSP.CreateDecryptor(), CryptoStreamMode.Write);
-            strKey = strKey.Replace(" ", "+");
-            byte[] data = Convert.FromBase64String(strKey);
-            cryptStream.Write(data, 0, data.Length);
-            cryptStream.FlushFinalBlock();
-            String strReturn = Encoding.UTF8.GetString(ms.GetBuffer());
-            cryptStream = null;
-            ms = null;
-            desCSP = null;
-
-            return strReturn;
-        }
+        #endregion
     }
 }

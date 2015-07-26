@@ -135,6 +135,7 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\PicsController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Filters\AdminAuthAttribute.cs" />
     <Compile Include="Filters\DeviceCheckAttribute.cs" />
     <Compile Include="Filters\ExceptionLoggingAttribute.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\PageList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -238,6 +240,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\PublishProfiles\모바일.pubxml" />
+    <Content Include="Views\App\AppInitialList.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

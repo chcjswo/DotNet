@@ -4,8 +4,8 @@ using DolPic.Data.Daos;
 using DolPic.Data.Pos;
 using DolPic.Data.Vos;
 using DolPic.Service.Mobile.Common;
+using DolPic.Service.Mobile.Models;
 using Newtonsoft.Json;
-using System.Collections.Generic;
 using System.Text;
 using System.Web.Mvc;
 
@@ -37,6 +37,7 @@ namespace DolPic.Service.Mobile.Controllers
         }
 
         #region 화면 관련
+
         /// <summary>
         /// 돌픽 메인 화면
         /// </summary>
@@ -54,7 +55,7 @@ namespace DolPic.Service.Mobile.Controllers
             ViewBag.DataList = _service.GetMainImageList(entity);
             ViewBag.HashTag = id;
             ViewBag.CurPage = nCurPage;
-            ViewBag.PageGotoList = GetGotoPageList(nCurPage, entity.TotalCnt, _nImageListSize, _nGotoListSize);
+            ViewBag.PageGotoList = CommonUtil.GetGotoPageList(nCurPage, entity.TotalCnt, _nImageListSize, _nGotoListSize);
 
             return View();
         }
@@ -135,7 +136,8 @@ namespace DolPic.Service.Mobile.Controllers
             ViewBag.CurPage = CurPage;
 
             return View();
-        } 
+        }
+
         #endregion
 
         #region Ajax 관련
@@ -152,12 +154,12 @@ namespace DolPic.Service.Mobile.Controllers
             entity.CurPage = CurPage;
             entity.PageListSize = _nImageListSize;
 
-            ReturnResult result = new ReturnResult();
-            result.ImageList = _service.GetMainImageList(entity);
-            result.PageGotoList = GetGotoPageList(CurPage, entity.TotalCnt, _nImageListSize, _nGotoListSize);
+            PageList pageList = new PageList();
+            pageList.ImageList = _service.GetMainImageList(entity);
+            pageList.PageGotoList = CommonUtil.GetGotoPageList(CurPage, entity.TotalCnt, _nImageListSize, _nGotoListSize);
             ViewBag.CurPage = CurPage;
 
-            return Json(JsonConvert.SerializeObject(result));
+            return Json(JsonConvert.SerializeObject(pageList));
         }
 
         /// <summary>
@@ -359,59 +361,5 @@ namespace DolPic.Service.Mobile.Controllers
             dao.DolPicImageInsert(entity);
         } 
         #endregion
-
-        #region 바로가기 페이지 목록 만들기
-        /// <summary>
-        /// 바로가기 페이지 목록 만들기
-        /// </summary>
-        /// <param name="a_nCurPage">현재 페이지</param>
-        /// <param name="a_nRecCnt">레코드 수</param>
-        /// <param name="a_nPageSize">한페이지에 보여줄 페이지 수</param>
-        /// <param name="a_nViewPageCnt">바로가기에 보여줄 페이지 수</param>
-        /// <returns>바로가기목록</returns>
-        private string GetGotoPageList(int a_nCurPage, int a_nRecCnt, int a_nPageSize, int a_nViewPageCnt)
-        {
-            StringBuilder sbPage = new StringBuilder();
-
-            //바로가기 첫페이지 계산
-            int nStartPage = ((a_nCurPage - 1) / a_nViewPageCnt) * a_nViewPageCnt + 1;
-            // 전체 페이지수 계산
-            int nPageCnt = (a_nRecCnt - 1) / a_nPageSize + 1;
-            // 블럭페이지 계산
-            int nBlockPage = ((a_nCurPage - 1) / a_nViewPageCnt) * a_nViewPageCnt + 1;
-
-            if (nBlockPage != 1)
-                sbPage.AppendFormat("<li page='{0}'><</li>&nbsp", nBlockPage - a_nViewPageCnt);
-
-            int nCnt = 1;
-            while (nStartPage <= nPageCnt && nCnt <= a_nViewPageCnt)
-            {
-                if (nStartPage == a_nCurPage)
-                    sbPage.AppendFormat("<li page='{0}' class='on'>{0}</li>&nbsp;", nStartPage);
-                else
-                    sbPage.AppendFormat("<li page='{0}'>{0}</li>&nbsp;", nStartPage);
-
-                nStartPage++;
-                nCnt++;
-                nBlockPage++;
-            }
-
-            if (nBlockPage < nPageCnt)
-                sbPage.AppendFormat("<li page='{0}'>></li>", nBlockPage);
-
-            return sbPage.ToString();
-        } 
-        #endregion
     }
-
-    #region 이미지 리스트 결과값 클래스
-    /// <summary>
-    /// 이미지 리스트 결과값 클래스
-    /// </summary>
-    public class ReturnResult
-    {
-        public IList<DolPicVo> ImageList;
-        public string PageGotoList;
-    } 
-    #endregion
 }

@@ -46,6 +46,7 @@
     <Compile Include="CommonUtil.cs" />
     <Compile Include="DeployType.cs" />
     <Compile Include="DolPicCookie.cs" />
+    <Compile Include="DolPicSecurity.cs" />
     <Compile Include="Domains.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RetCode.cs" />

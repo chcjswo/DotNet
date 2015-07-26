@@ -19,8 +19,6 @@
 		</ul>
 		<div id="like" class="@(Model.IsLike == 0 ? "btn_good" : "btn_good on")">좋아요 @string.Format("{0:N0}", Model.LikeCnt)</div>
 		<div class="clear"></div>
-        <!-- 추천 이미지 리스트 -->
-        @Html.Action("RecommPicList", "Pics", new { ImgNo = Model.CurSeq, HashTag = Model.HashTag, CurPage = ViewBag.CurPage })
         <!-- Disqus -->
 		@Html.Partial("_Disqus")	</div>
 	<div class="gbox_side">
