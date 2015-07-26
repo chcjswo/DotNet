@@ -1,17 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Web;
 using System.Windows.Forms;
 using System.Xml;
 
@@ -85,7 +79,6 @@ namespace DolPicCrawler
             _dImage = new Dictionary<int, List<string>>();
             comSite.SelectedIndex = 0;
             btnImageLoad.Enabled = false;
-
 
             if (timer2.Enabled)
                 btnImageLoad.Enabled = false;
@@ -268,7 +261,7 @@ namespace DolPicCrawler
         /// </summary>
         private void MakeFile()
         {
-            string sDirName = string.Format("{0}{1}", "D:\\DolPic\\", DateTime.Now.ToString("yyyy-MM-dd"));
+            string sDirName = string.Format("{0}{1}", "D:\\DolPicLogs\\", DateTime.Now.ToString("yyyy-MM-dd"));
             DirectoryInfo dir = new DirectoryInfo(sDirName);
             if (!dir.Exists)
             {
@@ -277,7 +270,7 @@ namespace DolPicCrawler
 
             string sFileName = string.Format("{0}\\{1}.txt", sDirName, DateTime.Now.ToString("HHmmss"));
 
-            using (System.IO.StreamWriter file = new System.IO.StreamWriter(sFileName, true))
+            using (StreamWriter file = new StreamWriter(sFileName, true))
             {
                 foreach (string[] arrStr in _arrTxt)
                 {
@@ -351,6 +344,7 @@ namespace DolPicCrawler
         }
 
         #region 이미지 저장하기
+
         /// <summary>
         /// 이미지 저장
         /// </summary>
@@ -399,9 +393,11 @@ namespace DolPicCrawler
                 ShowError(ex);
             }
         }
+
         #endregion
 
         #region 이벤트 모음
+
         /// <summary>
         /// 이미지 가져오기
         /// </summary>
@@ -525,6 +521,7 @@ namespace DolPicCrawler
             this.Hide();
             notifyIcon1.Visible = true;
         }
+
         #endregion
     }
 }
