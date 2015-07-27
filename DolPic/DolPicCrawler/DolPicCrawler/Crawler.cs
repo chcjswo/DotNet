@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Formatting;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -15,7 +16,8 @@ namespace DolPicCrawler
     {
         private const string TW_IMAGE_URL = "http://twitter.com/hashtag/{0}";
         //private const string IMAGE_SEND_URL = "http://localhost:3281/Pics/DolPicImageSave/{0}/{1}/{2}/{3}";
-        private const string IMAGE_SEND_URL = "http://www.dolpic.kr/Pics/DolPicImageSave/{0}/{1}/{2}/{3}";
+        //private const string IMAGE_SEND_URL = "http://www.dolpic.kr/Pics/DolPicImageSave/{0}/{1}/{2}/{3}";
+        private const string IMAGE_SEND_URL = "http://localhost:3281/api/PostDefaultApi/";
         
         private int CHECK_TIME = 0;
         private ErrFrm errfrm;
@@ -122,6 +124,7 @@ namespace DolPicCrawler
         /// <summary>
         /// 이미지 정보 가져오기
         /// </summary>
+        //private async void ImageGet()
         private void ImageGet()
         {
             // 일단 XML 로딩
@@ -157,14 +160,26 @@ namespace DolPicCrawler
                     //응답을 스트림으로 얻어온다
                     resStream = response.GetResponseStream();
 
-                    var resString = "";
+                    //var resString = "";
                     using (resReader = new StreamReader(resStream, System.Text.Encoding.Default))
                     {
-                        resString = resReader.ReadToEnd();
+                        //resString = resReader.ReadToEnd();
+                        // 결과물에서 이미지 URL 추출
+                        ImageSearch(resReader.ReadToEnd(), _curNo);
                     }
 
+                    //using (HttpClient httpClient = new HttpClient())
+                    //{
+                    //    var response = await httpClient.GetAsync(string.Format(TW_IMAGE_URL, tag));
+                    //    //return (await response.Content.ReadAsAsync<List<Gizmo>>());
+                    //    var s = await response.Content.ReadAsStringAsync();
+                    //    ImageSearch(s, _curNo);
+                    //} 
+
+
+
                     // 결과물에서 이미지 URL 추출
-                    ImageSearch(resString, _curNo);
+                    //ImageSearch(resString, _curNo);
                 }
                 catch (Exception ex)
                 {
@@ -360,6 +375,7 @@ namespace DolPicCrawler
             {
                 using (var client = new HttpClient())
                 {
+                    client.DefaultRequestHeaders.ExpectContinue = false;
 
                     foreach (KeyValuePair<int, List<string>> kvp in _dImage)
                     {
@@ -374,7 +390,17 @@ namespace DolPicCrawler
                             //URI로부터 요청을 생성한다
                             //request = WebRequest.Create(string.Format(IMAGE_SEND_URL, kvp.Key, sBase64, TagUrlType, 1));
 
-                            client.GetAsync(string.Format(IMAGE_SEND_URL, kvp.Key, sBase64, TagUrlType, 1));
+                            //client.GetAsync(string.Format(IMAGE_SEND_URL, kvp.Key, sBase64, TagUrlType, 1));
+
+                            var result = client.PostAsync(string.Format("{0}", "http://cert-api.mobile.actoz.com/event/member/check"),
+                            new
+                            {
+                                TagNo = kvp.Key,
+                                ImageSrc = sBase64,
+                                TagUrlType = TagUrlType,
+                                IsView = 1
+                            }, new JsonMediaTypeFormatter()).Result;
+
                             
                             Console.WriteLine("url == " + string.Format(IMAGE_SEND_URL, kvp.Key, sBase64, TagUrlType, 1));
 
