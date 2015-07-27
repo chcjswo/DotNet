@@ -25,14 +25,14 @@ namespace DolPic.Service.Web.Controllers
         }
 
         // POST api/default1
-        public HttpResponseMessage PostDefaultApi(HsahTag item)
+        public void Post(HsahTag item)
         {
             log.DebugFormat("ImageSrc == {0}", item.ImageSrc);
             log.DebugFormat("TagNo == {0}", item.TagNo);
             log.DebugFormat("TagUrlType == {0}", item.TagUrlType);
             log.DebugFormat("IsView == {0}", item.IsView);
 
-            return Request.CreateResponse<HsahTag>(HttpStatusCode.Created, item);
+            //return Request.CreateResponse<HsahTag>(HttpStatusCode.Created, item);
         }
 
         // PUT api/default1/5

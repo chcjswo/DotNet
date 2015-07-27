@@ -365,17 +365,13 @@ namespace DolPicCrawler
         /// </summary>
         private void ImageSend()
         {
-            //응답요청을 한다
-            //WebRequest request = null;
-            //WebResponse response = null;
-
             var TagUrlType = comSite.SelectedIndex + 1;
 
             try
             {
                 using (var client = new HttpClient())
                 {
-                    client.DefaultRequestHeaders.ExpectContinue = false;
+                    //client.DefaultRequestHeaders.ExpectContinue = false;
 
                     foreach (KeyValuePair<int, List<string>> kvp in _dImage)
                     {
@@ -387,12 +383,7 @@ namespace DolPicCrawler
                             // Bsee64 인코딩
                             var sBase64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(item));
 
-                            //URI로부터 요청을 생성한다
-                            //request = WebRequest.Create(string.Format(IMAGE_SEND_URL, kvp.Key, sBase64, TagUrlType, 1));
-
-                            //client.GetAsync(string.Format(IMAGE_SEND_URL, kvp.Key, sBase64, TagUrlType, 1));
-
-                            var result = client.PostAsync(string.Format("{0}", "http://cert-api.mobile.actoz.com/event/member/check"),
+                            var result = client.PostAsync("http://localhost:3281/api/DefaultApi",
                             new
                             {
                                 TagNo = kvp.Key,
@@ -400,7 +391,6 @@ namespace DolPicCrawler
                                 TagUrlType = TagUrlType,
                                 IsView = 1
                             }, new JsonMediaTypeFormatter()).Result;
-
                             
                             Console.WriteLine("url == " + string.Format(IMAGE_SEND_URL, kvp.Key, sBase64, TagUrlType, 1));
 
