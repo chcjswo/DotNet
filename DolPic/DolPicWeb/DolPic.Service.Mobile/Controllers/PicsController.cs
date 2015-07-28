@@ -342,24 +342,5 @@ namespace DolPic.Service.Mobile.Controllers
             return Json(JsonConvert.SerializeObject(po));
         }
         #endregion
-
-        #region 외부 API
-        /// <summary>
-        /// 이미지 저장
-        /// </summary>
-        /// <returns></returns>
-        public void DolPicImageSave(int TagNo, string ImageSrc, int TagUrlType, int IsView)
-        {
-            var base64EncodedBytes = System.Convert.FromBase64String(ImageSrc);
-
-            DolPicVo entity = new DolPicVo();
-            entity.Seq = TagNo;
-            entity.ImageSrc = System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
-            entity.TagUrlType = TagUrlType;
-
-            AdminDao dao = new AdminDao();
-            dao.DolPicImageInsert(entity);
-        } 
-        #endregion
     }
 }

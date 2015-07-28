@@ -240,7 +240,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\PublishProfiles\모바일.pubxml" />
-    <Content Include="Views\App\AppInitialList.cshtml" />
+    <Content Include="Views\App\InitialList.cshtml" />
+    <Content Include="Views\App\Main.cshtml" />
+    <Content Include="Views\App\FavoriteBar.cshtml" />
+    <Content Include="Views\App\PicView.cshtml" />
+    <Content Include="Views\App\HotDolPicList.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

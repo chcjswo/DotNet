@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DolPicCrawler.Properties;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -17,7 +18,8 @@ namespace DolPicCrawler
         private const string TW_IMAGE_URL = "http://twitter.com/hashtag/{0}";
         //private const string IMAGE_SEND_URL = "http://localhost:3281/Pics/DolPicImageSave/{0}/{1}/{2}/{3}";
         //private const string IMAGE_SEND_URL = "http://www.dolpic.kr/Pics/DolPicImageSave/{0}/{1}/{2}/{3}";
-        private const string IMAGE_SEND_URL = "http://localhost:3281/api/PostDefaultApi/";
+        //private const string CON_IMAGE_SEND_URL = "http://localhost:3281/api/DolPicImg/";
+        private const string CON_IMAGE_SEND_URL = "http://www.dolpic.kr/api/DolPicImg/";
         
         private int CHECK_TIME = 0;
         private ErrFrm errfrm;
@@ -47,10 +49,12 @@ namespace DolPicCrawler
             FormInit();
 
             Version version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
-            txtLog.Text = version.ToString();
+            txtLog.Text = version.ToString() + Environment.NewLine;
+            txtLog.Text += Application.StartupPath;
         }
 
         #region Init
+
         /// <summary>
         /// Grid 초기화
         /// </summary>
@@ -328,6 +332,8 @@ namespace DolPicCrawler
             Console.WriteLine(ex.ToString());
         }
 
+        #region 남은시간 카운트다운
+
         /// <summary>
         /// 남은시간 카운트다운
         /// </summary>
@@ -358,6 +364,8 @@ namespace DolPicCrawler
             lblCountdown.Text = text.ToString();
         }
 
+        #endregion
+
         #region 이미지 저장하기
 
         /// <summary>
@@ -383,16 +391,16 @@ namespace DolPicCrawler
                             // Bsee64 인코딩
                             var sBase64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(item));
 
-                            var result = client.PostAsync("http://localhost:3281/api/DefaultApi",
+                            var result = client.PostAsync(CON_IMAGE_SEND_URL,
                             new
                             {
                                 TagNo = kvp.Key,
                                 ImageSrc = sBase64,
                                 TagUrlType = TagUrlType,
                                 IsView = 1
-                            }, new JsonMediaTypeFormatter()).Result;
-                            
-                            Console.WriteLine("url == " + string.Format(IMAGE_SEND_URL, kvp.Key, sBase64, TagUrlType, 1));
+                            }, new  JsonMediaTypeFormatter()).Result;
+
+                            Console.WriteLine("url == " + string.Format(CON_IMAGE_SEND_URL, kvp.Key, sBase64, TagUrlType, 1));
 
                             //요청을 보내고 응답을 받는다
                             //response = request.GetResponse();
@@ -516,6 +524,21 @@ namespace DolPicCrawler
         {
             this.notifyIcon1.Visible = true;
             notifyIcon1.ContextMenuStrip = contextMenuStrip1;
+
+            // 프로그램 실행시 임시로 Json.dll 파일을 생성한다. 
+            //String strJsonPath = Application.ExecutablePath.Replace("/", "\\");
+            //int intPos = strJsonPath.LastIndexOf("\\");
+            //if (intPos >= 1) strJsonPath = strJsonPath.Substring(0, intPos).Trim('\\');
+            //strJsonPath += "\\Newtonsoft.Json.dll";
+
+            //FileInfo fileInfo = new FileInfo(strJsonPath);
+            //if (fileInfo.Exists == false)
+            //{
+            //    byte[] aryData = Resources.Newtonsoft_Json; // 여기서 Newtonsoft_Json 대신에 리소스 디자이너에서 명명된 이름을 넣으면 된다.
+            //    FileStream fileStream = new FileStream(fileInfo.FullName, FileMode.CreateNew);
+            //    fileStream.Write(aryData, 0, aryData.Length);
+            //    fileStream.Close();
+            //}
         }
 
         private void OpenToolStripMenuItem_Click(object sender, EventArgs e)

@@ -16,6 +16,10 @@ namespace DolPic.Service.Mobile.Controllers
     /// </summary>
     public class AppController : CustomController
     {
+        // 이미지 리스트 사이즈
+        private readonly short _nImageListSize;
+        // 바로가기 리스트 사이즈
+        private readonly int _nGotoListSize;
         // DAO
         private readonly IDolPicService _service;
 
@@ -24,16 +28,75 @@ namespace DolPic.Service.Mobile.Controllers
         /// </summary>
         public AppController()
         {
+            _nImageListSize = 30;
+            _nGotoListSize = 5;
+
             _service = new DolPicService();
         }
 
         #region 화면 관련
 
         /// <summary>
+        /// 돌픽 메인 화면
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Main(string id, int? page)
+        {
+            ViewBag.User = DolPicCookie.CookieRead(this.HttpContext, CommonVariable.COOKIE_NAME);
+            var nCurPage = page ?? 1;
+
+            DolPicVo entity = new DolPicVo();
+            entity.HashTag = string.IsNullOrEmpty(id) || CommonVariable.ALL_IMAGE.Equals(id) ? "" : id;
+            entity.CurPage = nCurPage;
+            entity.PageListSize = _nImageListSize;
+
+            ViewBag.DataList = _service.GetMainImageList(entity);
+            ViewBag.HashTag = id;
+            ViewBag.CurPage = nCurPage;
+            ViewBag.PageGotoList = CommonUtil.GetGotoPageList(nCurPage, entity.TotalCnt, _nImageListSize, _nGotoListSize);
+
+            return View();
+        }
+
+        /// <summary>
+        /// 즐겨찾기 리스트 
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult FavoriteBar()
+        {
+            var UserId = DolPicCookie.CookieRead(this.HttpContext, CommonVariable.COOKIE_NAME);
+            ViewBag.User = UserId;
+            ViewBag.DataList = _service.GetFavoriteList(UserId);
+
+            return View();
+        }
+
+        /// <summary>
+        /// 이미지 보기 화면
+        /// </summary>
+        /// <param name="ImgNo">고유번호</param>
+        /// <param name="HahTag">해쉬 태그</param>
+        /// <param name="Page">현재 페이지</param>
+        /// <returns></returns>
+        public ActionResult PicView(int ImgNo, string HashTag, int Page)
+        {
+            HashTag = CommonVariable.ALL_IMAGE.Equals(HashTag) ? "" : HashTag;
+            var UserId = DolPicCookie.CookieRead(this.HttpContext, CommonVariable.COOKIE_NAME);
+            ViewBag.User = UserId;
+            ViewBag.HashTag = HashTag;
+            ViewBag.CurPage = Page;
+
+            // 이미지 조회
+            DolPicPo po = _service.GetPicView(ImgNo, UserId, HashTag);
+
+            return View(po);
+        }
+
+        /// <summary>
         /// 초성 리스트
         /// </summary>
         /// <returns></returns>
-        public ActionResult AppInitialList()
+        public ActionResult InitialList()
         {
             var UserId = DolPicCookie.CookieRead(this.HttpContext, CommonVariable.COOKIE_NAME);
             ViewBag.User = UserId;

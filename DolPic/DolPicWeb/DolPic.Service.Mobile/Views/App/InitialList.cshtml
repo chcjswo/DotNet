@@ -1,6 +1,6 @@
 ﻿@{
     Layout = null;
-    
+
     var list = ViewBag.DataList;
 }
 
@@ -33,14 +33,23 @@
         {
             sCurInitial = item.Initial;
             nCurInitialCnt = item.InitialCnt;
-            
+
+            var sIcon = "+";
+
+            if (item.Seq == item.FavoriteSeq)
+            {
+                sIcon = "♡";
+            }
+
             var bEqual = sCurInitial.Equals(sPrevInitial);
             if (!sCurInitial.Equals(sPrevInitial))
             {
                 @:<div class="dolpic_box">
 			    @:<span class="tbox on">@sCurInitial</span>
             }
-			    <span class="tbox"><a href="/Pics/Main/@item.HashTag" class="tbox_a">@item.HashTag</a></span>
+			    <span class="tbox"><a href="/Pics/Main/@item.HashTag" class="tbox_a">@item.HashTag</a>
+                    <a href="javascript:void(0);" class="@string.Format("in{0}", item.Seq)" onclick="fnFavoriteInsert('@item.Seq', '@item.HashTag');">@sIcon</a></span>
+            
             if (nCurInitialCnt == nLoopCnt)
             {
                 @:<div class="clear"></div></div>
@@ -86,13 +95,6 @@
             var retData = $.parseJSON(data);
             if (retData.RetCode == 0) {
                 $(".in" + seq).text('♡');
-
-                var div;
-                div = "<span class='fbar" + seq + " tbox'>";
-                div += "<a href='/Pics/Main/" + tag + "' class=\"tbox_a\">" + tag + "</a> ";
-                div += "<a href='javascript:void(0);' onclick=\"fnFavoriteDelete('" + seq + "');\">X</a></span>";
-
-                $('.flist').append(div);
             } else {
                 alert(retData.RetMsg);
             }
