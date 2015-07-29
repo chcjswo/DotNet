@@ -105,6 +105,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="XmlHashTag\XmlMake.cs" />
+    <Compile Include="XmlHashTag\TwitterXmlMake.cs" />
+    <Compile Include="XmlHashTag\InstagramXmlMake.cs" />
     <EmbeddedResource Include="Crawler.resx">
       <DependentUpon>Crawler.cs</DependentUpon>
     </EmbeddedResource>

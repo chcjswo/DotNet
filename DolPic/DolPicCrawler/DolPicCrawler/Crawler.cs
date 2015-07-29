@@ -1,4 +1,4 @@
-﻿using DolPicCrawler.Properties;
+﻿using DolPicCrawler.XmlHashTag;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -27,24 +27,29 @@ namespace DolPicCrawler
         private int _curNo = 0;
         private string _curTag = "";
 
-        private List<int> _arrNo;
-        private List<string> _arrTag;
-        private Dictionary<int, List<string>> _dImage;
+        /// <summary>
+        /// 해쉬태그 고유 번호
+        /// </summary>
+        private List<int> _listNo;
+        /// <summary>
+        /// 트위터 해쉬태그 리스트
+        /// </summary>
+        private List<string> _listTwitterHashTag;
+        /// <summary>
+        /// 인스타그램 해쉬태그 리스트
+        /// </summary>
+        private List<string> _listInstagramHashTag;
 
+        private Dictionary<int, List<string>> _dImage;
 
         private const string MATCH_TAG = "data-resolved-url-small=\"(?<ImageSrc>.*?)\".*?";
         //private const string MATCH_TAG = "<img src=\"(?<ImageSrc>.*?)\".*?>";
         //private const string MATCH_TAG = "<span class=\"(?<cl>.*?)\".*? data-status-id=\"(?<sid>.*?)\".*? data-url=\"(?<url1>.*?)\".*? data-resolved-url-small=\"(?<url>.*?)\".*? data-resolved-url-large=\"(?<url333>.*?)\".*? data-width=\"(?<url22>.*?)\".*? data-height=\"(?<url11>.*?)\".*?></span>";
-        private const string XML_URL = "http://www.dolpic.kr/twitter_image.xml";
 
         private double dDay, dMod, dHour, dMin, dSec;
 
-        private readonly string _sXmlNode;
-
         public Crawler()
         {
-            _sXmlNode = "/twitter/images";
-
             InitializeComponent();
             FormInit();
 
@@ -91,6 +96,7 @@ namespace DolPicCrawler
             else
                 btnImageLoad.Enabled = true;
 
+            // 그리드 초기화
             GridInit();
         }
 
@@ -101,26 +107,17 @@ namespace DolPicCrawler
         {
             try
             {
-                XmlDocument xml = new XmlDocument();
-                xml.Load(XML_URL);
-                // 접근할 노드
-                XmlNodeList xnList = xml.SelectNodes(_sXmlNode);
+                // 트위터용 리스트 만들기
+                XmlMake.XmlFactory(OriginSiteType.twitter).XmlListMake(ref _listNo, ref _listTwitterHashTag);
+                txtLog.Text += "트위터 XML 로딩 완료" + Environment.NewLine;
 
-                // 리스트 초기화
-                _arrNo = new List<int>(xnList.Count);
-                _arrTag = new List<string>(xnList.Count);
-
-                foreach (XmlNode xn in xnList)
-                {
-                    _arrNo.Add(int.Parse(xn.Attributes["no"].Value));
-                    _arrTag.Add(xn.Attributes["tag"].Value);
-                }
-
-                txtLog.Text = "XML 로딩 완료" + Environment.NewLine;
+                // 인스타그램용 리스트 만들기
+                XmlMake.XmlFactory(OriginSiteType.instagram).XmlListMake(ref _listNo, ref _listInstagramHashTag);
+                txtLog.Text += "인스타그램 XML 로딩 완료" + Environment.NewLine;
             }
-            catch (ArgumentException ex)
+            catch (Exception ex)
             {
-                txtLog.Text = "XML 문제 발생\r\n" + ex.ToString();
+                txtLog.Text = "XML 만들기 문제 발생\r\n" + ex.ToString();
             }
         }
         #endregion
@@ -148,9 +145,11 @@ namespace DolPicCrawler
             sw.Start();
 
             // 해쉬 태그대로 검색
-            foreach (var tag in _arrTag)
+            foreach (var tag in _listTwitterHashTag)
             {
-                _curNo = _arrNo[nLoopCnt++];
+                //if (nLoopCnt >= 2) break;
+
+                _curNo = _listNo[nLoopCnt++];
                 _curTag = tag;
 
                 try
