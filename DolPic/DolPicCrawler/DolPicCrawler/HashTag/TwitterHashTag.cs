@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Xml;
 
-namespace DolPicCrawler.XmlHashTag
+namespace DolPicCrawler.HashTag
 {
-    public class TwitterXmlMake : XmlMake
+    public class TwitterHashTag : OriginHashTag
     {
         /// <summary>
         /// 트위터 해쉬태그 xml문서가 있는 주소
@@ -37,5 +37,6 @@ namespace DolPicCrawler.XmlHashTag
                 _listTwitterHashTag.Add(xn.Attributes["tag"].Value);
             }
         }
+
     }
 }

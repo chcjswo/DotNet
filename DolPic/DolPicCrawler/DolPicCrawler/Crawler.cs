@@ -1,25 +1,19 @@
-﻿using DolPicCrawler.XmlHashTag;
+﻿using DolPicCrawler.HashTag;
+using DolPicCrawler.Image;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Formatting;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using System.Xml;
 
 namespace DolPicCrawler
 {
     public partial class Crawler : Form
     {
         private const string TW_IMAGE_URL = "http://twitter.com/hashtag/{0}";
-        //private const string IMAGE_SEND_URL = "http://localhost:3281/Pics/DolPicImageSave/{0}/{1}/{2}/{3}";
-        //private const string IMAGE_SEND_URL = "http://www.dolpic.kr/Pics/DolPicImageSave/{0}/{1}/{2}/{3}";
-        //private const string CON_IMAGE_SEND_URL = "http://localhost:3281/api/DolPicImg/";
-        private const string CON_IMAGE_SEND_URL = "http://www.dolpic.kr/api/DolPicImg/";
         
         private int CHECK_TIME = 0;
         private ErrFrm errfrm;
@@ -55,7 +49,7 @@ namespace DolPicCrawler
 
             Version version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
             txtLog.Text = version.ToString() + Environment.NewLine;
-            txtLog.Text += Application.StartupPath;
+            txtLog.Text += Application.StartupPath + Environment.NewLine;
         }
 
         #region Init
@@ -108,16 +102,17 @@ namespace DolPicCrawler
             try
             {
                 // 트위터용 리스트 만들기
-                XmlMake.XmlFactory(OriginSiteType.twitter).XmlListMake(ref _listNo, ref _listTwitterHashTag);
+                OriginHashTag.XmlFactory(OriginSiteType.twitter).XmlListMake(ref _listNo, ref _listTwitterHashTag);
                 txtLog.Text += "트위터 XML 로딩 완료" + Environment.NewLine;
 
                 // 인스타그램용 리스트 만들기
-                XmlMake.XmlFactory(OriginSiteType.instagram).XmlListMake(ref _listNo, ref _listInstagramHashTag);
+                OriginHashTag.XmlFactory(OriginSiteType.instagram).XmlListMake(ref _listNo, ref _listInstagramHashTag);
                 txtLog.Text += "인스타그램 XML 로딩 완료" + Environment.NewLine;
             }
             catch (Exception ex)
             {
-                txtLog.Text = "XML 만들기 문제 발생\r\n" + ex.ToString();
+                // 에러 보여주기
+                ShowError(ex);
             }
         }
         #endregion
@@ -147,8 +142,6 @@ namespace DolPicCrawler
             // 해쉬 태그대로 검색
             foreach (var tag in _listTwitterHashTag)
             {
-                //if (nLoopCnt >= 2) break;
-
                 _curNo = _listNo[nLoopCnt++];
                 _curTag = tag;
 
@@ -171,13 +164,14 @@ namespace DolPicCrawler
                         ImageSearch(resReader.ReadToEnd(), _curNo);
                     }
 
-                    //using (HttpClient httpClient = new HttpClient())
-                    //{
-                    //    var response = await httpClient.GetAsync(string.Format(TW_IMAGE_URL, tag));
-                    //    //return (await response.Content.ReadAsAsync<List<Gizmo>>());
-                    //    var s = await response.Content.ReadAsStringAsync();
-                    //    ImageSearch(s, _curNo);
-                    //} 
+                    ////using (HttpClient httpClient = new HttpClient())
+                    ////{
+                    //    httpClient.DefaultRequestHeaders.ExpectContinue = false;
+                    //    var res = httpClient.GetAsync(string.Format(TW_IMAGE_URL, tag)).Result;
+                    //    var responseText = res.Content.ReadAsStringAsync().Result;
+
+                    //    ImageSearch(responseText, _curNo);
+                    ////} 
 
 
 
@@ -197,8 +191,8 @@ namespace DolPicCrawler
             }
 
             // 해당 사이트로 부터 이미지정보를 가져오고 이미지 저장
-            ImageSend();
-
+            ImageService.getInstance.ImageSend(_dImage);
+            
             // 로딩 시간 측정
             sw.Stop();
             lblWatch.Text = (sw.ElapsedMilliseconds / 1000.0F).ToString() + " 초 로딩";
@@ -365,60 +359,6 @@ namespace DolPicCrawler
 
         #endregion
 
-        #region 이미지 저장하기
-
-        /// <summary>
-        /// 이미지 저장
-        /// </summary>
-        private void ImageSend()
-        {
-            var TagUrlType = comSite.SelectedIndex + 1;
-
-            try
-            {
-                using (var client = new HttpClient())
-                {
-                    //client.DefaultRequestHeaders.ExpectContinue = false;
-
-                    foreach (KeyValuePair<int, List<string>> kvp in _dImage)
-                    {
-                        Console.WriteLine("Key: " + kvp.Key);
-                        Console.WriteLine("Value: " + kvp.Value);
-
-                        foreach (var item in kvp.Value)
-                        {
-                            // Bsee64 인코딩
-                            var sBase64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(item));
-
-                            var result = client.PostAsync(CON_IMAGE_SEND_URL,
-                            new
-                            {
-                                TagNo = kvp.Key,
-                                ImageSrc = sBase64,
-                                TagUrlType = TagUrlType,
-                                IsView = 1
-                            }, new  JsonMediaTypeFormatter()).Result;
-
-                            Console.WriteLine("url == " + string.Format(CON_IMAGE_SEND_URL, kvp.Key, sBase64, TagUrlType, 1));
-
-                            //요청을 보내고 응답을 받는다
-                            //response = request.GetResponse();
-
-                            Console.WriteLine("TagNo == " + kvp.Key);
-                            Console.WriteLine("ImageSrc == " + sBase64);
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                // 에러 보여주기
-                ShowError(ex);
-            }
-        }
-
-        #endregion
-
         #region 이벤트 모음
 
         /// <summary>
@@ -432,7 +372,15 @@ namespace DolPicCrawler
             dataGridView1.Rows.Clear();
             btnImageLoad.Enabled = false;
 
-            ImageGet();
+            try
+            {
+                ImageGet();
+            }
+            catch (Exception ex)
+            {
+                // 에러 보여주기
+                ShowError(ex);
+            }
         }
 
         /// <summary>
@@ -523,21 +471,6 @@ namespace DolPicCrawler
         {
             this.notifyIcon1.Visible = true;
             notifyIcon1.ContextMenuStrip = contextMenuStrip1;
-
-            // 프로그램 실행시 임시로 Json.dll 파일을 생성한다. 
-            //String strJsonPath = Application.ExecutablePath.Replace("/", "\\");
-            //int intPos = strJsonPath.LastIndexOf("\\");
-            //if (intPos >= 1) strJsonPath = strJsonPath.Substring(0, intPos).Trim('\\');
-            //strJsonPath += "\\Newtonsoft.Json.dll";
-
-            //FileInfo fileInfo = new FileInfo(strJsonPath);
-            //if (fileInfo.Exists == false)
-            //{
-            //    byte[] aryData = Resources.Newtonsoft_Json; // 여기서 Newtonsoft_Json 대신에 리소스 디자이너에서 명명된 이름을 넣으면 된다.
-            //    FileStream fileStream = new FileStream(fileInfo.FullName, FileMode.CreateNew);
-            //    fileStream.Write(aryData, 0, aryData.Length);
-            //    fileStream.Close();
-            //}
         }
 
         private void OpenToolStripMenuItem_Click(object sender, EventArgs e)

@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Xml;
 
-namespace DolPicCrawler.XmlHashTag
+namespace DolPicCrawler.HashTag
 {
-    public class InstagramXmlMake : XmlMake
+    public class InstagramHashTag : OriginHashTag
     {
         /// <summary>
         /// 인스타그램 해쉬태그 xml문서가 있는 주소
