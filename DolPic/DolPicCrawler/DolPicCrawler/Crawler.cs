@@ -4,21 +4,15 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Net;
-using System.Net.Http;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace DolPicCrawler
 {
     public partial class Crawler : Form
     {
-        private const string TW_IMAGE_URL = "http://twitter.com/hashtag/{0}";
-        
         private int CHECK_TIME = 0;
         private ErrFrm errfrm;
         private List<string[]> _arrTxt;
-        private int _curNo = 0;
         private string _curTag = "";
 
         /// <summary>
@@ -35,10 +29,6 @@ namespace DolPicCrawler
         private List<string> _listInstagramHashTag;
 
         private Dictionary<int, List<string>> _dImage;
-
-        private const string MATCH_TAG = "data-resolved-url-small=\"(?<ImageSrc>.*?)\".*?";
-        //private const string MATCH_TAG = "<img src=\"(?<ImageSrc>.*?)\".*?>";
-        //private const string MATCH_TAG = "<span class=\"(?<cl>.*?)\".*? data-status-id=\"(?<sid>.*?)\".*? data-url=\"(?<url1>.*?)\".*? data-resolved-url-small=\"(?<url>.*?)\".*? data-resolved-url-large=\"(?<url333>.*?)\".*? data-width=\"(?<url22>.*?)\".*? data-height=\"(?<url11>.*?)\".*?></span>";
 
         private double dDay, dMod, dHour, dMin, dSec;
 
@@ -81,8 +71,6 @@ namespace DolPicCrawler
             lblChkTime.Text = "";
             _arrTxt = new List<string[]>();
             errfrm = new ErrFrm();
-            _dImage = new Dictionary<int, List<string>>();
-            comSite.SelectedIndex = 0;
             btnImageLoad.Enabled = false;
 
             if (timer2.Enabled)
@@ -120,109 +108,58 @@ namespace DolPicCrawler
         /// <summary>
         /// 이미지 정보 가져오기
         /// </summary>
-        //private async void ImageGet()
         private void ImageGet()
         {
             // 일단 XML 로딩
             XmlInfoInit();
 
-            //응답요청을 한다
-            WebRequest request = null;
-            WebResponse response = null;
-
-            //스트림으로 받아온다
-            Stream resStream = null;
-            StreamReader resReader = null;
-
-            var nLoopCnt = 0;
-
+            // 시간 측정 시작
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            // 해쉬 태그대로 검색
-            foreach (var tag in _listTwitterHashTag)
+            for (var nTagUrlType = 1; nTagUrlType < 3; nTagUrlType++)
             {
-                _curNo = _listNo[nLoopCnt++];
-                _curTag = tag;
-
-                try
-                {
-                    //URI로부터 요청을 생성한다
-                    request = WebRequest.Create(string.Format(TW_IMAGE_URL, tag));
-
-                    //요청을 보내고 응답을 받는다
-                    response = request.GetResponse();
-
-                    //응답을 스트림으로 얻어온다
-                    resStream = response.GetResponseStream();
-
-                    //var resString = "";
-                    using (resReader = new StreamReader(resStream, System.Text.Encoding.Default))
-                    {
-                        //resString = resReader.ReadToEnd();
-                        // 결과물에서 이미지 URL 추출
-                        ImageSearch(resReader.ReadToEnd(), _curNo);
-                    }
-
-                    ////using (HttpClient httpClient = new HttpClient())
-                    ////{
-                    //    httpClient.DefaultRequestHeaders.ExpectContinue = false;
-                    //    var res = httpClient.GetAsync(string.Format(TW_IMAGE_URL, tag)).Result;
-                    //    var responseText = res.Content.ReadAsStringAsync().Result;
-
-                    //    ImageSearch(responseText, _curNo);
-                    ////} 
-
-
-
-                    // 결과물에서 이미지 URL 추출
-                    //ImageSearch(resString, _curNo);
-                }
-                catch (Exception ex)
-                {
-                    // 에러 보여주기
-                    ShowError(ex);
-                }
-                finally
-                {
-                    if (resReader != null) resReader.Close();
-                    if (response != null) response.Close();
-                }
+                // 이미지 처리
+                ImageProc(nTagUrlType);
             }
-
-            // 해당 사이트로 부터 이미지정보를 가져오고 이미지 저장
-            ImageService.getInstance.ImageSend(_dImage);
             
-            // 로딩 시간 측정
+            // 시간 측정 끝
             sw.Stop();
             lblWatch.Text = (sw.ElapsedMilliseconds / 1000.0F).ToString() + " 초 로딩";
         }
 
         /// <summary>
-        /// 이미지 찾기
+        /// 각 사이트별 처리
         /// </summary>
-        /// <param name="resString">결과 스트링</param>
-        private void ImageSearch(string resString, int a_nTagNo)
+        /// <param name="a_nTagUrlType">사이트 타입 1:트위터 2:인스타그램 3:페이스북</param>
+        private void ImageProc(int a_nTagUrlType)
         {
-            // 이미지 찾기
-            Regex re = new Regex(MATCH_TAG, RegexOptions.IgnoreCase | RegexOptions.Singleline);
+            // Dictionary 초기화
+            _dImage = new Dictionary<int, List<string>>();
 
-            List<string> ltImg = new List<string>();
-
-            for (Match m = re.Match(resString); m.Success; m = m.NextMatch())
+            switch (a_nTagUrlType)
             {
-                string sImageSrc = m.Groups["ImageSrc"].Value;
+                case (int)OriginSiteType.twitter:
+                    // 트위터 이미지 긁어 오기
+                    OriginHashTag.XmlFactory(OriginSiteType.twitter).ImageSrcSearch(_listNo, _listInstagramHashTag, ref _dImage);
 
-                ltImg.Add(sImageSrc);
+                    break;
+
+                case (int)OriginSiteType.instagram:
+                    break;
+
+                case (int)OriginSiteType.facebook:
+                    break;
+
+                default:
+                    break;
             }
 
-            // Dictionary 저장
-            _dImage.Add(a_nTagNo, ltImg);
-
-            txtLog.Text += string.Format("태그 no == {0} / count == {1}", a_nTagNo, ltImg.Count) + Environment.NewLine;
-
             // 그리드 그리기
-            SetGridInfo(ltImg);
+            SetGridInfo();
+
+            // 해당 사이트로 부터 이미지정보를 가져오고 이미지 저장
+            ImageService.getInstance.ImageSend(_dImage, a_nTagUrlType);
         }
 
         /// <summary>
@@ -260,12 +197,21 @@ namespace DolPicCrawler
             // 초기화하고 시작하자
             FormInit();
 
-            ImageGet();
+            try
+            {
+                // 이미지 가져오기
+                ImageGet();
 
-            lblChkTime.Text = string.Format("{0} 에 체크 완료", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+                lblChkTime.Text = string.Format("{0} 에 체크 완료", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
 
-            // 파일 만들기
-            MakeFile();
+                // 파일 만들기
+                MakeFile();
+            }
+            catch (Exception ex)
+            {
+                // 에러 보여주기
+                ShowError(ex);
+            }
         }
 
         /// <summary>
@@ -294,19 +240,27 @@ namespace DolPicCrawler
         /// <summary>
         /// 그리드 셋팅
         /// </summary>
-        /// <param name="a_list">이미지 정보</param>
-        private void SetGridInfo(List<string> a_list)
+        private void SetGridInfo()
         {
-            foreach (var item in a_list)
+
+            foreach (KeyValuePair<int, List<string>> kvp in _dImage)
             {
-                string[] arrApp = new string[3];
+                Console.WriteLine("Key: " + kvp.Key);
+                Console.WriteLine("Value: " + kvp.Value);
 
-                arrApp[0] = _curNo.ToString();
-                arrApp[1] = item;
-                arrApp[2] = _curTag;
+                txtLog.Text += string.Format("태그 no == {0} / count == {1}", kvp.Key, kvp.Value.Count) + Environment.NewLine;
 
-                dataGridView1.Rows.Add(arrApp);
-                _arrTxt.Add(arrApp);
+                foreach (var item in kvp.Value)
+                {
+                    string[] arrApp = new string[3];
+
+                    arrApp[0] = kvp.Key.ToString();
+                    arrApp[1] = item;
+                    arrApp[2] = _curTag;
+
+                    dataGridView1.Rows.Add(arrApp);
+                    _arrTxt.Add(arrApp);
+                }
             }
         }
 
@@ -423,7 +377,6 @@ namespace DolPicCrawler
                 label2.Visible = false;
                 txtTime.ReadOnly = false;
                 lblRemainTime.Visible = false;
-                comSite.Enabled = true;
                 btnXmlLoad.Enabled = true;
 
                 timer1.Stop();
@@ -441,7 +394,6 @@ namespace DolPicCrawler
                     label2.Visible = true;
                     txtTime.ReadOnly = true;
                     lblRemainTime.Visible = true;
-                    comSite.Enabled = false;
 
                     timer1.Start();
                     timer2.Start();

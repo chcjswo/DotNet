@@ -7,7 +7,7 @@ namespace DolPicCrawler.HashTag
     /// </summary>
     public enum OriginSiteType
     {
-        twitter, 
+        twitter = 1, 
         instagram,
         facebook
     }
@@ -21,8 +21,13 @@ namespace DolPicCrawler.HashTag
         /// <param name="tag">해쉬태그</param>
         public abstract void XmlListMake(ref List<int> no, ref List<string> tag);
 
-
-        //public abstract void ImageSrcSearch(ref List<int> no, ref List<string> tag);
+        /// <summary>
+        /// 해당 사이트에서 이미지 경로 추출
+        /// </summary>
+        /// <param name="no">해쉬태그 고유번호</param>
+        /// <param name="tag">해쉬태그</param>
+        /// <param name="dic">정보를 담을 Dictionary</param>
+        public abstract void ImageSrcSearch(List<int> no, List<string> tag, ref Dictionary<int, List<string>> dic);
 
         /// <summary>
         /// 객체 생성 팩토리 클래스

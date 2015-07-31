@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace DolPicCrawler.Image
 {
@@ -36,13 +34,11 @@ namespace DolPicCrawler.Image
         /// 이미지 저장하기
         /// </summary>
         /// <param name="a_dImage">저장할 이미지 정보 Dictionary</param>
-        public void ImageSend(Dictionary<int, List<string>> a_dImage)
+        /// <param name="a_nTagUrlType">사이트 타입 1:트위터 2:인스타그램 3:페이스북</param>
+        public void ImageSend(Dictionary<int, List<string>> a_dImage, int a_nTagUrlType)
         {
-            var TagUrlType = 1;
             using (var client = new HttpClient())
             {
-                //client.DefaultRequestHeaders.ExpectContinue = false;
-
                 foreach (KeyValuePair<int, List<string>> kvp in a_dImage)
                 {
                     Console.WriteLine("Key: " + kvp.Key);
@@ -58,15 +54,11 @@ namespace DolPicCrawler.Image
                         {
                             TagNo = kvp.Key,
                             ImageSrc = sBase64,
-                            TagUrlType = TagUrlType,
+                            TagUrlType = a_nTagUrlType,
                             IsView = 1
                         }, new JsonMediaTypeFormatter()).Result;
 
-                        Console.WriteLine("url == " + string.Format(CON_IMAGE_SEND_URL, kvp.Key, sBase64, TagUrlType, 1));
-
-                        //요청을 보내고 응답을 받는다
-                        //response = request.GetResponse();
-
+                        Console.WriteLine("url == " + string.Format(CON_IMAGE_SEND_URL, kvp.Key, sBase64, a_nTagUrlType, 1));
                         Console.WriteLine("TagNo == " + kvp.Key);
                         Console.WriteLine("ImageSrc == " + sBase64);
                     }

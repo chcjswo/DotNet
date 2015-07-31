@@ -37,5 +37,15 @@ namespace DolPicCrawler.HashTag
                 _listTwitterHashTag.Add(xn.Attributes["tag"].Value);
             }
         }
+
+        /// <summary>
+        /// 해당 사이트에서 이미지 경로 추출
+        /// </summary>
+        /// <param name="no">해쉬태그 고유번호</param>
+        /// <param name="tag">해쉬태그</param>
+        /// <param name="dic">정보를 담을 Dictionary</param>
+        public override void ImageSrcSearch(List<int> no, List<string> tag, ref Dictionary<int, List<string>> a_dImage)
+        {
+        }
     }
 }

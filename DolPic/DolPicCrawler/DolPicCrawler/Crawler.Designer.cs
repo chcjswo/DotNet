@@ -44,7 +44,6 @@
             this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.lblWatch = new System.Windows.Forms.Label();
             this.btnXmlLoad = new System.Windows.Forms.Button();
-            this.comSite = new System.Windows.Forms.ComboBox();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.OpenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -122,7 +121,7 @@
             this.txtTime.Name = "txtTime";
             this.txtTime.Size = new System.Drawing.Size(45, 21);
             this.txtTime.TabIndex = 1;
-            this.txtTime.Text = "360";
+            this.txtTime.Text = "60";
             // 
             // lblCountdown
             // 
@@ -178,23 +177,6 @@
             this.btnXmlLoad.UseVisualStyleBackColor = true;
             this.btnXmlLoad.Click += new System.EventHandler(this.btnXmlLoad_Click);
             // 
-            // comSite
-            // 
-            this.comSite.AutoCompleteCustomSource.AddRange(new string[] {
-            "트위터",
-            "인스타그램",
-            "페이스북"});
-            this.comSite.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comSite.FormattingEnabled = true;
-            this.comSite.Items.AddRange(new object[] {
-            "트위터",
-            "인스타그램",
-            "페이스북"});
-            this.comSite.Location = new System.Drawing.Point(444, 12);
-            this.comSite.Name = "comSite";
-            this.comSite.Size = new System.Drawing.Size(121, 20);
-            this.comSite.TabIndex = 10;
-            // 
             // notifyIcon1
             // 
             this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
@@ -229,7 +211,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(841, 722);
-            this.Controls.Add(this.comSite);
             this.Controls.Add(this.btnXmlLoad);
             this.Controls.Add(this.lblWatch);
             this.Controls.Add(this.panel2);
@@ -266,7 +247,6 @@
         private System.Windows.Forms.Label lblChkTime;
         private System.Windows.Forms.Label lblWatch;
         private System.Windows.Forms.Button btnXmlLoad;
-        private System.Windows.Forms.ComboBox comSite;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem OpenToolStripMenuItem;
