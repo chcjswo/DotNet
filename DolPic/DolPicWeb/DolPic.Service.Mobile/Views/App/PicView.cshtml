@@ -101,6 +101,9 @@
             function () { $('.gbox_thumb', this).fadeOut(100); }
         );
 
+        // 웹뷰 통신
+        window.dolpic.navibtn(@Model.NextSeq, @Model.PrevSeq);
+
         $('.gbox_list li').live('click', function () {
             var nClickIdx = $(this).index();
 
@@ -243,7 +246,13 @@
     }
 
     function fnImageDownload() {
-        alert("fnImageDownload");
-        window.dolpic.toastShort( "JavscriptInterface Test" );;
+        window.dolpic.toastShort("@Model.ImageSrc");
+    }
+
+    function fnLeftView() {
+        fnImgViewGo(@Model.NextSeq);
+    }
+    function fnRightView() {
+        fnImgViewGo(@Model.PrevSeq);
     }
 </script>

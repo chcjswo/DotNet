@@ -27,11 +27,18 @@ namespace DolPicCrawler
         /// 인스타그램 해쉬태그 리스트
         /// </summary>
         private List<string> _listInstagramHashTag;
-
+        /// <summary>
+        /// 서버에 전송될 이미지 경로가 담길 Dictionary
+        /// </summary>
         private Dictionary<int, List<string>> _dImage;
-
+        /// <summary>
+        /// 카운트다운 변수
+        /// </summary>
         private double dDay, dMod, dHour, dMin, dSec;
 
+        /// <summary>
+        /// 생성자
+        /// </summary>
         public Crawler()
         {
             InitializeComponent();
@@ -51,14 +58,16 @@ namespace DolPicCrawler
         {
             dataGridView1.Rows.Clear();
 
-            dataGridView1.ColumnCount = 3;
+            dataGridView1.ColumnCount = 4;
             dataGridView1.Columns[0].Name = "번호";
             dataGridView1.Columns[1].Name = "이미지경로";
             dataGridView1.Columns[2].Name = "해쉬태그";
+            dataGridView1.Columns[3].Name = "사이트";
 
             dataGridView1.Columns[0].Width = 100;
             dataGridView1.Columns[1].Width = 400;
             dataGridView1.Columns[2].Width = 100;
+            dataGridView1.Columns[3].Width = 100;
             dataGridView1.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dataGridView1.Columns[0].ValueType = TypeCode.Int32.GetType();
         }
@@ -103,6 +112,7 @@ namespace DolPicCrawler
                 ShowError(ex);
             }
         }
+
         #endregion
 
         /// <summary>
@@ -142,7 +152,6 @@ namespace DolPicCrawler
                 case (int)OriginSiteType.twitter:
                     // 트위터 이미지 긁어 오기
                     OriginHashTag.XmlFactory(OriginSiteType.twitter).ImageSrcSearch(_listNo, _listInstagramHashTag, ref _dImage);
-
                     break;
 
                 case (int)OriginSiteType.instagram:
@@ -156,7 +165,7 @@ namespace DolPicCrawler
             }
 
             // 그리드 그리기
-            SetGridInfo();
+            SetGridInfo(a_nTagUrlType);
 
             // 해당 사이트로 부터 이미지정보를 가져오고 이미지 저장
             ImageService.getInstance.ImageSend(_dImage, a_nTagUrlType);
@@ -232,7 +241,7 @@ namespace DolPicCrawler
             {
                 foreach (string[] arrStr in _arrTxt)
                 {
-                    file.WriteLine(string.Format("{0}\t\t{1}\t\t{2}", arrStr[0], arrStr[1], arrStr[2]));
+                    file.WriteLine(string.Format("{0}\t\t{1}\t\t{2}\t\t{3}", arrStr[0], arrStr[1], arrStr[2], arrStr[3]));
                 }
             }
         }
@@ -240,9 +249,9 @@ namespace DolPicCrawler
         /// <summary>
         /// 그리드 셋팅
         /// </summary>
-        private void SetGridInfo()
+        /// <param name="a_nTagUrlType">사이트 타입 1:트위터 2:인스타그램 3:페이스북</param>
+        private void SetGridInfo(int a_nTagUrlType)
         {
-
             foreach (KeyValuePair<int, List<string>> kvp in _dImage)
             {
                 Console.WriteLine("Key: " + kvp.Key);
@@ -252,11 +261,30 @@ namespace DolPicCrawler
 
                 foreach (var item in kvp.Value)
                 {
-                    string[] arrApp = new string[3];
+                    string[] arrApp = new string[4];
 
                     arrApp[0] = kvp.Key.ToString();
                     arrApp[1] = item;
                     arrApp[2] = _curTag;
+
+                    switch (a_nTagUrlType)
+                    {
+                        case (int)OriginSiteType.twitter:
+                            arrApp[3] = "트위터";
+                            break;
+
+                        case (int)OriginSiteType.instagram:
+                            arrApp[3] = "인스타그램";
+                            break;
+
+                        case (int)OriginSiteType.facebook:
+                            arrApp[3] = "페이스북";
+                            break;
+
+                        default:
+                            arrApp[3] = "어디야?";
+                            break;
+                    }
 
                     dataGridView1.Rows.Add(arrApp);
                     _arrTxt.Add(arrApp);

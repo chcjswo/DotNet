@@ -17,6 +17,7 @@
     <link rel="shortcut icon" href="http://www.dolpic.kr/favicon.ico" />
     <link rel="stylesheet" type="text/css" href="/Css/common.m.css">    </head>
 <body>
+<div><br /></div>
 <!-- 구글 광고 -->
 @Html.Partial("_GoogleAdTop")
 <!-- 하단 리스트 -->
@@ -104,6 +105,10 @@
             alert("실행중 에러가 발생했습니다.");
             bExec = false;
         });
+    }
+
+    function fnImageDownload() {
+        alert("이미지 보기 화면에서 다운로드가 가능합니다.");
     }
 </script>
 </body>
