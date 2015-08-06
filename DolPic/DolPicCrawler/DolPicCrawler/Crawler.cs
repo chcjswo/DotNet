@@ -172,6 +172,69 @@ namespace DolPicCrawler
         }
 
         /// <summary>
+        /// 그리드 셋팅
+        /// </summary>
+        /// <param name="a_nTagUrlType">사이트 타입 1:트위터 2:인스타그램 3:페이스북</param>
+        private void SetGridInfo(int a_nTagUrlType)
+        {
+            foreach (KeyValuePair<int, List<string>> kvp in _dImage)
+            {
+                Console.WriteLine("Key: " + kvp.Key);
+                Console.WriteLine("Value: " + kvp.Value);
+
+                txtLog.Text += string.Format("태그 no == {0} / count == {1}", kvp.Key, kvp.Value.Count) + Environment.NewLine;
+
+                foreach (var item in kvp.Value)
+                {
+                    string[] arrApp = new string[4];
+
+                    arrApp[0] = kvp.Key.ToString();
+                    arrApp[1] = item;
+                    arrApp[2] = _curTag;
+
+                    switch (a_nTagUrlType)
+                    {
+                        case (int)OriginSiteType.twitter:
+                            arrApp[3] = "트위터";
+                            break;
+
+                        case (int)OriginSiteType.instagram:
+                            arrApp[3] = "인스타그램";
+                            break;
+
+                        case (int)OriginSiteType.facebook:
+                            arrApp[3] = "페이스북";
+                            break;
+
+                        default:
+                            arrApp[3] = "어디야?";
+                            break;
+                    }
+
+                    dataGridView1.Rows.Add(arrApp);
+                    _arrTxt.Add(arrApp);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 에러 보여주기
+        /// </summary>
+        /// <param name="ex">에러 정보</param>
+        private void ShowError(Exception ex)
+        {
+            errfrm.Owner = this;
+            errfrm.textBox1.Text = ex.ToString();
+            errfrm.Show();
+
+            txtLog.Text = ex.ToString() + Environment.NewLine;
+
+            Console.WriteLine(ex.ToString());
+        }
+
+        #region  자동체크
+
+        /// <summary>
         /// 시간 입력 체크
         /// </summary>
         /// <returns>체크값</returns>
@@ -246,66 +309,7 @@ namespace DolPicCrawler
             }
         }
 
-        /// <summary>
-        /// 그리드 셋팅
-        /// </summary>
-        /// <param name="a_nTagUrlType">사이트 타입 1:트위터 2:인스타그램 3:페이스북</param>
-        private void SetGridInfo(int a_nTagUrlType)
-        {
-            foreach (KeyValuePair<int, List<string>> kvp in _dImage)
-            {
-                Console.WriteLine("Key: " + kvp.Key);
-                Console.WriteLine("Value: " + kvp.Value);
-
-                txtLog.Text += string.Format("태그 no == {0} / count == {1}", kvp.Key, kvp.Value.Count) + Environment.NewLine;
-
-                foreach (var item in kvp.Value)
-                {
-                    string[] arrApp = new string[4];
-
-                    arrApp[0] = kvp.Key.ToString();
-                    arrApp[1] = item;
-                    arrApp[2] = _curTag;
-
-                    switch (a_nTagUrlType)
-                    {
-                        case (int)OriginSiteType.twitter:
-                            arrApp[3] = "트위터";
-                            break;
-
-                        case (int)OriginSiteType.instagram:
-                            arrApp[3] = "인스타그램";
-                            break;
-
-                        case (int)OriginSiteType.facebook:
-                            arrApp[3] = "페이스북";
-                            break;
-
-                        default:
-                            arrApp[3] = "어디야?";
-                            break;
-                    }
-
-                    dataGridView1.Rows.Add(arrApp);
-                    _arrTxt.Add(arrApp);
-                }
-            }
-        }
-
-        /// <summary>
-        /// 에러 보여주기
-        /// </summary>
-        /// <param name="ex">에러 정보</param>
-        private void ShowError(Exception ex)
-        {
-            errfrm.Owner = this;
-            errfrm.textBox1.Text = ex.ToString();
-            errfrm.Show();
-
-            txtLog.Text = ex.ToString() + Environment.NewLine;
-
-            Console.WriteLine(ex.ToString());
-        }
+        #endregion
 
         #region 남은시간 카운트다운
 

@@ -82,15 +82,6 @@
 <script type="text/javascript">
     var bExec = false;
     $(function () {
-        var swipe = $('.vbox');
-        // Swipes:
-        swipe.swipeleft(function () {
-            fnImgViewGo($('.gbox_list li').eq(2).attr("seq"));
-        });
-        swipe.swiperight(function () {
-            fnImgViewGo($('.gbox_list li').eq(1).attr("seq"));
-        });
-
         $('.vbox').dblclick(function () {
             fnPicLike();
         });
