@@ -8,11 +8,18 @@ namespace DolPicCrawler.HashTag
         /// <summary>
         /// 인스타그램 해쉬태그 xml문서가 있는 주소
         /// </summary>
-        private const string CON_XML_URL = "http://www.dolpic.kr/twitter_image.xml";
+        private const string CON_XML_URL = "http://www.dolpic.kr/instagram_image.xml";
         /// <summary>
         /// XML 노드
         /// </summary>
-        private const string CON_XML_NODE = "/twitter/images";
+        private const string CON_XML_NODE = "/instagram/images";
+
+        private const string CON_IMAGE_URL = "https://instagram.com/{0}";
+
+        private const string CON_MATCH_TAG = "data-resolved-url-small=\"(?<ImageSrc>.*?)\".*?";
+        //private const string CON_MATCH_TAG = "<img src=\"(?<ImageSrc>.*?)\".*?>";
+        //private const string CON_MATCH_TAG = "<span class=\"(?<cl>.*?)\".*? data-status-id=\"(?<sid>.*?)\".*? data-url=\"(?<url1>.*?)\".*? data-resolved-url-small=\"(?<url>.*?)\".*? data-resolved-url-large=\"(?<url333>.*?)\".*? data-width=\"(?<url22>.*?)\".*? data-height=\"(?<url11>.*?)\".*?></span>";
+
 
         public override void XmlListMake(ref List<int> _listNo, ref List<string> _listInstagramHashTag)
         {

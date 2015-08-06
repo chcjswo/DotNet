@@ -151,7 +151,7 @@ namespace DolPicCrawler
             {
                 case (int)OriginSiteType.twitter:
                     // 트위터 이미지 긁어 오기
-                    OriginHashTag.XmlFactory(OriginSiteType.twitter).ImageSrcSearch(_listNo, _listInstagramHashTag, ref _dImage);
+                    OriginHashTag.XmlFactory(OriginSiteType.twitter).ImageSrcSearch(_listNo, _listTwitterHashTag, ref _dImage);
                     break;
 
                 case (int)OriginSiteType.instagram:

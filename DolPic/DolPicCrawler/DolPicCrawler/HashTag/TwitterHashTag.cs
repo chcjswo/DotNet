@@ -17,15 +17,11 @@ namespace DolPicCrawler.HashTag
         /// </summary>
         private const string CON_XML_NODE = "/twitter/images";
 
+        private const string CON_IMAGE_URL = "http://twitter.com/hashtag/{0}";
+
         private const string CON_MATCH_TAG = "data-resolved-url-small=\"(?<ImageSrc>.*?)\".*?";
         //private const string CON_MATCH_TAG = "<img src=\"(?<ImageSrc>.*?)\".*?>";
         //private const string CON_MATCH_TAG = "<span class=\"(?<cl>.*?)\".*? data-status-id=\"(?<sid>.*?)\".*? data-url=\"(?<url1>.*?)\".*? data-resolved-url-small=\"(?<url>.*?)\".*? data-resolved-url-large=\"(?<url333>.*?)\".*? data-width=\"(?<url22>.*?)\".*? data-height=\"(?<url11>.*?)\".*?></span>";
-
-        private const string CON_TW_IMAGE_URL = "http://twitter.com/hashtag/{0}";
-
-        private const string MATCH_TAG = "data-resolved-url-small=\"(?<ImageSrc>.*?)\".*?";
-        //private const string MATCH_TAG = "<img src=\"(?<ImageSrc>.*?)\".*?>";
-        //private const string MATCH_TAG = "<span class=\"(?<cl>.*?)\".*? data-status-id=\"(?<sid>.*?)\".*? data-url=\"(?<url1>.*?)\".*? data-resolved-url-small=\"(?<url>.*?)\".*? data-resolved-url-large=\"(?<url333>.*?)\".*? data-width=\"(?<url22>.*?)\".*? data-height=\"(?<url11>.*?)\".*?></span>";
 
         /// <summary>
         /// xml 해쉬태그 리스트 만들기
@@ -75,7 +71,7 @@ namespace DolPicCrawler.HashTag
                 var nHashTagNo = a_listNo[nLoopCnt++];
 
                 //URI로부터 요청을 생성한다
-                request = WebRequest.Create(string.Format(CON_TW_IMAGE_URL, tag));
+                request = WebRequest.Create(string.Format(CON_IMAGE_URL, tag));
 
                 //요청을 보내고 응답을 받는다
                 response = request.GetResponse();
@@ -102,7 +98,7 @@ namespace DolPicCrawler.HashTag
         private void ImageSearch(string resString, int a_nTagNo, ref Dictionary<int, List<string>> a_dImage)
         {
             // 이미지 찾기
-            Regex re = new Regex(MATCH_TAG, RegexOptions.IgnoreCase | RegexOptions.Singleline);
+            Regex re = new Regex(CON_MATCH_TAG, RegexOptions.IgnoreCase | RegexOptions.Singleline);
 
             List<string> ltImg = new List<string>();
 
