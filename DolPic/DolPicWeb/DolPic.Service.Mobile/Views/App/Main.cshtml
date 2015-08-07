@@ -12,6 +12,7 @@
         top: 300px; 
     } 
 </style>
+@Html.Partial("_AppTopBar")
 @Html.Action("FavoriteBar", "App")
 <!-- 구글 광고 -->
 @Html.Partial("_GoogleAdTop")
@@ -31,7 +32,7 @@
     <div class="clear"></div>
 	</div>
 	<div class="gbox_side">
-        @Html.Action("HotDolPicList", "Pics")
+        @Html.Action("HotDolPicList", "App")
 		<!-- 구글 광고 -->
 		@Html.Partial("_GoogleAd2")
 		<!-- 공지사항 -->

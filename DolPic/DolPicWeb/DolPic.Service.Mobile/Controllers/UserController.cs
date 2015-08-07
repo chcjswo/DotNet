@@ -43,7 +43,10 @@ namespace DolPic.Service.Mobile.Controllers
             // 쿠키 삭제
             DolPicCookie.CookieDelete(this.HttpContext, CommonVariable.COOKIE_NAME);
 
-            return Redirect("/");
+            if (Request.UrlReferrer.ToString().IndexOf("App") > 0)
+                return Redirect("/App/Main");
+            else
+                return Redirect("/");
         }
 
         /// <summary>
