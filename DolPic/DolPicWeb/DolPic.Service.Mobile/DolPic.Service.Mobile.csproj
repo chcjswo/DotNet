@@ -245,6 +245,7 @@
     <Content Include="Views\App\FavoriteBar.cshtml" />
     <Content Include="Views\App\PicView.cshtml" />
     <Content Include="Views\App\HotDolPicList.cshtml" />
+    <Content Include="Views\App\LogIn.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

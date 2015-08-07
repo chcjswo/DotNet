@@ -119,6 +119,20 @@ namespace DolPic.Service.Mobile.Controllers
             return View();
         }
 
+        /// <summary>
+        /// 로그인폼
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult LogIn(UserPo model)
+        {
+            if (Request.UrlReferrer == null)
+                model.ReferUrl = "/";
+            else
+                model.ReferUrl = Request.UrlReferrer.ToString();
+
+            return View(model);
+        }
+
         #endregion
     }
 

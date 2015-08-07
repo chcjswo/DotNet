@@ -82,7 +82,6 @@
         });
     });
 </script>
-
 <script type="text/javascript">
     var bExec = false;
     $(function () {
@@ -145,7 +144,8 @@
                 }                div = "<div class='goto_list'>" + retData.PageGotoList + "</div>";
                 $(".gbox_list").append(div);
 
-                $('html,body').animate({ scrollTop: 0 }, 500);            })
+                $('html,body').animate({ scrollTop: 0 }, 500);
+            })
             .fail(function () {
                 alert("실행중 에러가 발생했습니다.");
             })
@@ -154,6 +154,9 @@
                 $("#loading").hide();
             });
         });
+
+        // 웹뷰 통신
+        window.dolpic.navibtn(0, 0);
     });
 
     function fnImageDownload() {

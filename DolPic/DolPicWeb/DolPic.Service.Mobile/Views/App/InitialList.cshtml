@@ -70,6 +70,11 @@
 
 <script type="text/javascript">
     var bExec = false;
+    
+    $(function () {
+        // 웹뷰 통신
+        window.dolpic.navibtn(0, 0);
+    });
 
     function fnFavoriteInsert(seq, tag) {
         if ("@ViewBag.User" == "") {
