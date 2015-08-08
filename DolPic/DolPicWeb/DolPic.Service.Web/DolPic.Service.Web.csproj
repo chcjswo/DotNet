@@ -302,6 +302,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\PublishProfiles\웹.pubxml" />
+    <Content Include="Views\Shared\_FacebookComment.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

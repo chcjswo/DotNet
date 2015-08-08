@@ -22,8 +22,8 @@
         @Html.Action("RecommPicList", "Pics", new { ImgNo = Model.CurSeq, HashTag = Model.HashTag, CurPage = ViewBag.CurPage })
 		<!-- 구글 광고 -->
 		@Html.Partial("_GoogleAd1")
-        <!-- Disqus -->
-		@Html.Partial("_Disqus")	</div>
+        <!-- 소셜 댓글 -->
+		@Html.Partial("_FacebookComment")	</div>
 	<div class="gbox_side">
         @Html.Action("HotDolPicList", "Pics")
 		<!-- 구글 광고 -->

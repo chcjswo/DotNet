@@ -20,10 +20,10 @@
 		</ul>
 		<div id="like" class="@(Model.IsLike == 0 ? "btn_good" : "btn_good on")">좋아요 @string.Format("{0:N0}", Model.LikeCnt)</div>
 		<div class="clear"></div>
-        <!-- Disqus -->
-		@Html.Partial("_Disqus")	</div>
+        <!-- 소셜 댓글 -->
+		@Html.Partial("_FacebookComment")	</div>
 	<div class="gbox_side">
-        @Html.Action("HotDolPicList", "Pics")
+        @Html.Action("HotDolPicList", "App")
 		<!-- 구글 광고 -->
 		@Html.Partial("_GoogleAd2")
 		<!-- 공지사항 -->
