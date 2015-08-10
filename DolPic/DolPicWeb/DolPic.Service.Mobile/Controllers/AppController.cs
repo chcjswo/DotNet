@@ -54,7 +54,7 @@ namespace DolPic.Service.Mobile.Controllers
             ViewBag.HashTag = id;
             ViewBag.CurPage = nCurPage;
             ViewBag.PageGotoList = CommonUtil.GetGotoPageList(nCurPage, entity.TotalCnt, _nImageListSize, _nGotoListSize);
-            ViewBag.FbImg = "../../images/icon.png";
+            ViewBag.FbImg = CommonVariable.FB_DEFAULT_IMG;
 
             return View();
         }
@@ -92,6 +92,7 @@ namespace DolPic.Service.Mobile.Controllers
             DolPicPo po = _service.GetPicView(ImgNo, UserId, HashTag);
 
             ViewBag.FbImg = po.ImageSrc;
+            ViewBag.FbUrl = string.Format("{0}/Pics/PicView/{1}/{2}/{3}", Domains.WebDomain, ImgNo, HashTag, Page);
 
             return View(po);
         }
