@@ -35,7 +35,8 @@ body{background:url(../images/bg.png) #EDEFF4;color:#282828}
 .fbar .tbox a,.dolpic_box .tbox a{text-decoration:none;color:#D2D4D6;font-size:9px;padding-left:4px}
 .fbar .tbox a:hover,.dolpic_box .tbox a:hover{color:#FFFFFF}
 .fbar .tbox a.tbox_a,.dolpic_box .tbox a.tbox_a{font-size:12px;color:#EDEFF4}
-.fbar .tbox.on,.dolpic_box .tbox.on{background-color:#EDEFF4;color:#2E4979}
+.fbar .tbox.on{background-color:#EDEFF4;color:#2E4979}
+.dolpic_box .tbox.on{width:238px;background-color:#1A3462;color:#C3C8D4;border-radius:0;cursor:default}
 
 /* 갤러리 */
 .gbox_gallery{width:748px;padding:12px 0;float:left}
@@ -85,7 +86,7 @@ body{background:url(../images/bg.png) #EDEFF4;color:#282828}
 
 /* 하단 리스트 */
 .dolpic_warp{position:relative;padding:40px 18px 36px;background-color:#2E4979;color:#EDEFF4}
-.dolpic_box{width:258px;min-height:150px;padding:0 4px 4px 0;float:left}
+.dolpic_box{width:254px;min-height:150px;padding:0 8px 4px 0;float:left}
 .go_top{position:absolute;top:-16px;left:50%;margin-left:480px;width:32px;height:32px;background:url(../images/icon_top.png) no-repeat center center #2E4979;border-radius:16px;cursor:pointer}
 
 .sponsor{text-align:center;font-size:10px;color:#4F6998}

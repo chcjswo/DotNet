@@ -19,7 +19,7 @@ namespace DolPicCrawler.HashTag
         /// </summary>
         /// <param name="_listNo">해쉬태그 고유번호</param>
         /// <param name="_listTwitterHashTag">해쉬태그</param>
-        public override void XmlListMake(ref List<int> _listNo, ref List<string> _listTwitterHashTag)
+        public override void XmlListMake(ref List<int> _listNo, ref List<string> _listTwitterHashTag, ref Dictionary<int, string> _dHashTag)
         {
             XmlDocument xml = new XmlDocument();
             xml.Load(CON_XML_URL);

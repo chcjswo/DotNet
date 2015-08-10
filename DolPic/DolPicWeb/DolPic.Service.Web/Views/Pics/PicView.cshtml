@@ -6,8 +6,23 @@
 	<div class="gbox_gallery">
 		<div class="vbox">
 			<div class="like_box" style="display:none"></div>
-			<img src="@Model.ImageSrc:large">
-		    <div class="wrong_pic">해당 이미지가 잘못되었으면 <a href="javascript:void(0)" class="report">여기</a>를 눌러주세요. 출처:Twitter</div>
+            @{   
+                var sUrl = "";
+                var sSiteName = "";
+
+                if (Model.TagUrlType == (int)e_TagUrlType.twitter)
+                {
+                    sUrl = Model.ImageSrc + ":large";
+                    sSiteName = "Twitter";
+                }
+                else if (Model.TagUrlType == (int)e_TagUrlType.instagram)
+                {
+                    sUrl = Model.ImageSrc;
+                    sSiteName = "Instagram";
+                }
+            }
+			<img src="@sUrl">
+		    <div class="wrong_pic">해당 이미지가 잘못되었으면 <a href="javascript:void(0)" class="report">여기</a>를 눌러주세요. 출처:@sSiteName</div>
 		</div>
 		<div class="clear"></div>
 		<!-- 갤러리 네비게이션 -->
@@ -23,7 +38,7 @@
 		<!-- 구글 광고 -->
 		@Html.Partial("_GoogleAd1")
         <!-- 소셜 댓글 -->
-		@Html.Partial("_FacebookComment")	</div>
+		@Html.Partial("_FacebookComment", ViewData)	</div>
 	<div class="gbox_side">
         @Html.Action("HotDolPicList", "Pics")
 		<!-- 구글 광고 -->

@@ -75,6 +75,7 @@ namespace DolPic.Biz.DolPicService
             po.CurSeq = a_nSeq;
             po.IsLike = entity.IsLike;
             po.LikeCnt = entity.LikeCnt;
+            po.TagUrlType = entity.TagUrlType;
 
             return po;
         }

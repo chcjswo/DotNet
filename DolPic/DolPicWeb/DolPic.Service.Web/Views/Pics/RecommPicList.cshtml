@@ -3,13 +3,26 @@
     
     var list = ViewBag.DataList;
 }
+@using DolPic.Common
 
 <div class="vbox_stitle"><img src="/Images/icon_like_b.png" width="30" height="20">@ViewBag.HashTag 추천 이미지</div>
 <div class="gbox_recommend">
 @foreach (var item in list)
 {
     <div seq="@item.Seq" class="gbox" style="background:url(@item.ImageSrc) center center no-repeat;background-size:cover">
-        <div class="gbox_thumb g_t_twitter"><div class="gbox_t_title">@ViewBag.HashTag</div>
+    @{
+        var sClassName = "";
+
+        if (item.TagUrlType == (int)e_TagUrlType.twitter)
+        {
+            sClassName = "g_t_twitter";
+        }
+        else if (item.TagUrlType == (int)e_TagUrlType.instagram)
+        {
+            sClassName = "g_t_instagram";
+        }
+    }
+        <div class="gbox_thumb @sClassName"><div class="gbox_t_title">@ViewBag.HashTag</div>
         <div class="gbox_t_text"><img src="/Images/icon_like.png" height="9">@string.Format("{0:N0}", item.LikeCnt)</div></div>
     </div>
 }

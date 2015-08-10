@@ -56,6 +56,7 @@ namespace DolPic.Service.Mobile.Controllers
             ViewBag.HashTag = id;
             ViewBag.CurPage = nCurPage;
             ViewBag.PageGotoList = CommonUtil.GetGotoPageList(nCurPage, entity.TotalCnt, _nImageListSize, _nGotoListSize);
+            ViewBag.FbImg = "../../images/icon.png";
 
             return View();
         }
@@ -87,9 +88,12 @@ namespace DolPic.Service.Mobile.Controllers
             ViewBag.User = UserId;
             ViewBag.HashTag = HashTag;
             ViewBag.CurPage = Page;
+            ViewBag.ImgNo = ImgNo;
 
             // 이미지 조회
             DolPicPo po = _service.GetPicView(ImgNo, UserId, HashTag);
+
+            ViewBag.FbImg = po.ImageSrc;
 
             return View(po);
         }
@@ -141,6 +145,7 @@ namespace DolPic.Service.Mobile.Controllers
         #endregion
 
         #region Ajax 관련
+
         /// <summary>
         /// 메인 이미지 리스트 Ajax
         /// </summary>
@@ -341,6 +346,7 @@ namespace DolPic.Service.Mobile.Controllers
 
             return Json(JsonConvert.SerializeObject(po));
         }
+
         #endregion
     }
 }

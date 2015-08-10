@@ -13,5 +13,6 @@ namespace DolPic.Data.Pos
         public string RetMsg { get; set; }
         public short IsLike { get; set; }
         public int LikeCnt { get; set; }
+        public int TagUrlType { get; set; }
     }
 }

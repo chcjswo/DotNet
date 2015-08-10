@@ -19,14 +19,14 @@ namespace DolPicCrawler.HashTag
         /// </summary>
         /// <param name="no">해쉬태그 고유번호</param>
         /// <param name="tag">해쉬태그</param>
-        public abstract void XmlListMake(ref List<int> no, ref List<string> tag);
+        public abstract void XmlListMake(ref List<int> no, ref List<string> tag, ref Dictionary<int, string> HashTag);
 
         /// <summary>
         /// 해당 사이트에서 이미지 경로 추출
         /// </summary>
         /// <param name="no">해쉬태그 고유번호</param>
         /// <param name="tag">해쉬태그</param>
-        /// <param name="dic">정보를 담을 Dictionary</param>
+        /// <param name="a_dImage">이미지 정보 Dictionary</param>
         public abstract void ImageSrcSearch(List<int> no, List<string> tag, ref Dictionary<int, List<string>> dic);
 
         /// <summary>

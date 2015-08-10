@@ -13,12 +13,12 @@ namespace DolPicCrawler
         private int CHECK_TIME = 0;
         private ErrFrm errfrm;
         private List<string[]> _arrTxt;
-        private string _curTag = "";
 
         /// <summary>
         /// 해쉬태그 고유 번호
         /// </summary>
-        private List<int> _listNo;
+        private List<int> _listTwitterNo;
+        private List<int> _listInstagramNo;
         /// <summary>
         /// 트위터 해쉬태그 리스트
         /// </summary>
@@ -35,6 +35,8 @@ namespace DolPicCrawler
         /// 카운트다운 변수
         /// </summary>
         private double dDay, dMod, dHour, dMin, dSec;
+
+        private Dictionary<int, string> _dHashTag;
 
         /// <summary>
         /// 생성자
@@ -99,11 +101,11 @@ namespace DolPicCrawler
             try
             {
                 // 트위터용 리스트 만들기
-                OriginHashTag.XmlFactory(OriginSiteType.twitter).XmlListMake(ref _listNo, ref _listTwitterHashTag);
+                OriginHashTag.XmlFactory(OriginSiteType.twitter).XmlListMake(ref _listTwitterNo, ref _listTwitterHashTag, ref _dHashTag);
                 txtLog.Text += "트위터 XML 로딩 완료" + Environment.NewLine;
 
                 // 인스타그램용 리스트 만들기
-                OriginHashTag.XmlFactory(OriginSiteType.instagram).XmlListMake(ref _listNo, ref _listInstagramHashTag);
+                OriginHashTag.XmlFactory(OriginSiteType.instagram).XmlListMake(ref _listInstagramNo, ref _listInstagramHashTag, ref _dHashTag);
                 txtLog.Text += "인스타그램 XML 로딩 완료" + Environment.NewLine;
             }
             catch (Exception ex)
@@ -151,10 +153,12 @@ namespace DolPicCrawler
             {
                 case (int)OriginSiteType.twitter:
                     // 트위터 이미지 긁어 오기
-                    OriginHashTag.XmlFactory(OriginSiteType.twitter).ImageSrcSearch(_listNo, _listTwitterHashTag, ref _dImage);
+                    //OriginHashTag.XmlFactory(OriginSiteType.twitter).ImageSrcSearch(_listTwitterNo, _listTwitterHashTag, ref _dImage);
                     break;
 
                 case (int)OriginSiteType.instagram:
+                    // 인스타그램 이미지 긁어 오기
+                    OriginHashTag.XmlFactory(OriginSiteType.instagram).ImageSrcSearch(_listInstagramNo, _listInstagramHashTag, ref _dImage);
                     break;
 
                 case (int)OriginSiteType.facebook:
@@ -179,10 +183,7 @@ namespace DolPicCrawler
         {
             foreach (KeyValuePair<int, List<string>> kvp in _dImage)
             {
-                Console.WriteLine("Key: " + kvp.Key);
-                Console.WriteLine("Value: " + kvp.Value);
-
-                txtLog.Text += string.Format("태그 no == {0} / count == {1}", kvp.Key, kvp.Value.Count) + Environment.NewLine;
+                txtLog.Text += string.Format("태그 no == {0} / 태그 이름 == {2} / count == {1}", kvp.Key, kvp.Value.Count, _dHashTag[kvp.Key]) + Environment.NewLine;
 
                 foreach (var item in kvp.Value)
                 {
@@ -190,7 +191,7 @@ namespace DolPicCrawler
 
                     arrApp[0] = kvp.Key.ToString();
                     arrApp[1] = item;
-                    arrApp[2] = _curTag;
+                    arrApp[2] = _dHashTag[kvp.Key];
 
                     switch (a_nTagUrlType)
                     {

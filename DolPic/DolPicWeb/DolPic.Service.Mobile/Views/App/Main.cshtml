@@ -22,7 +22,17 @@
 	<!-- 갤러리 리스트 -->
     @foreach (var item in list)
     {
-		<div seq="@item.Seq" class="gbox" style="background:url(@item.ImageSrc:thumb) center center no-repeat;background-size:cover">
+        var sImgSrc = "";
+
+        if (item.TagUrlType == (int)e_TagUrlType.twitter)
+        {
+            sImgSrc = item.ImageSrc + ":thumb";
+        }
+        else if (item.TagUrlType == (int)e_TagUrlType.instagram)
+        {
+            sImgSrc = item.ImageSrc;
+        }
+		<div seq="@item.Seq" class="gbox" style="background:url(@sImgSrc) center center no-repeat;background-size:cover">
 		</div>
     }
     <div class="clear"></div>
@@ -86,16 +96,6 @@
 <script type="text/javascript">
     var bExec = false;
     $(function () {
-
-        var swipe = $('.gbox_gallery');
-        // Swipes:
-        swipe.swipeleft(function () {
-            location.href = "/App/Main/@((string.IsNullOrEmpty(ViewBag.HashTag) ? CommonVariable.ALL_IMAGE : ViewBag.HashTag))" + "/" + parseInt(parseInt($("#CurPage").val()) + 1);
-        });
-        swipe.swiperight(function () {
-            if ($("#CurPage").val() == 1) return;
-            location.href = "/App/Main/@((string.IsNullOrEmpty(ViewBag.HashTag) ? CommonVariable.ALL_IMAGE : ViewBag.HashTag))" + "/" + parseInt(parseInt($("#CurPage").val()) - 1);
-        });
 
         $('.gbox').live({
             mouseenter: function () { $('.gbox_thumb', this).fadeIn(300); $('.gbox_thumb', this).parent("div").addClass('transition'); },

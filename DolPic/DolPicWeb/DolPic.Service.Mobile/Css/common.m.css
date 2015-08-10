@@ -1,4 +1,4 @@
-﻿@charset "utf-8";
+@charset "utf-8";
 
 /* Reset CSS - YUI 3.12.0 (build 8655935) */ body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0}table{border-collapse:collapse;border-spacing:0}fieldset,img{border:0}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal}ol,ul{list-style:none}caption,th{text-align:left}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal}q:before,q:after{content:''}abbr,acronym{border:0;font-variant:normal}sup{vertical-align:text-top}sub{vertical-align:text-bottom}input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit}input,textarea,select{*font-size:100%}legend{color:#000}#yui3-css-stamp.cssreset{display:none}
 /* HTML5 display-role reset for older browsers */ article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}
@@ -37,7 +37,8 @@ body{background:url(../images/bg.png) #EDEFF4;color:#282828}
 .fbar .tbox a,.dolpic_box .tbox a{text-decoration:none;color:#D2D4D6;font-size:9px;padding-left:4px}
 .fbar .tbox a:active,.dolpic_box .tbox a:active{color:#FFFFFF}
 .fbar .tbox a.tbox_a,.dolpic_box .tbox a.tbox_a{font-size:12px;color:#EDEFF4}
-.fbar .tbox.on,.dolpic_box .tbox.on{background-color:#EDEFF4;color:#2E4979}
+.fbar .tbox.on{background-color:#EDEFF4;color:#2E4979}
+.dolpic_box .tbox.on{width:calc(100% - 20px);background-color:#1A3462;color:#C3C8D4;border-radius:0;cursor:default}
 
 /* 갤러리 */
 .gbox_gallery{min-width:300px;padding:10px 0}
@@ -101,7 +102,3 @@ body{background:url(../images/bg.png) #EDEFF4;color:#282828}
 
 /* Disqus */
 #disqus_thread{}
-
-.dolPicMoTop{width:320px;height:50px;}
-@media (min-width:500px) {.dolPicMoTop{width:468px;height:60px;}}
-@media (min-width:800px) {.dolPicMoTop{width:728px;height:90px;}}

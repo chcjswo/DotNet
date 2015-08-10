@@ -90,6 +90,7 @@
       <parameter property="NextSeq" column="NextSeq" direction="Output" />
       <parameter property="IsLike" column="IsLike" direction="Output" />
       <parameter property="LikeCnt" column="LikeCnt" direction="Output" />
+      <parameter property="TagUrlType" column="TagUrlType" direction="Output" />
     </parameterMap>
     
     <parameterMap id="p_user" class="dolpic">

@@ -28,7 +28,7 @@ namespace DolPicCrawler.HashTag
         /// </summary>
         /// <param name="_listNo">해쉬태그 고유번호</param>
         /// <param name="_listTwitterHashTag">해쉬태그</param>
-        public override void XmlListMake(ref List<int> _listNo, ref List<string> _listTwitterHashTag)
+        public override void XmlListMake(ref List<int> _listNo, ref List<string> _listTwitterHashTag, ref Dictionary<int, string> _dHashTag)
         {
             XmlDocument xml = new XmlDocument();
             xml.Load(CON_XML_URL);
@@ -39,11 +39,16 @@ namespace DolPicCrawler.HashTag
             // 리스트 초기화
             _listNo = new List<int>(xnList.Count);
             _listTwitterHashTag = new List<string>(xnList.Count);
+            _dHashTag = new Dictionary<int, string>(xnList.Count);
 
             foreach (XmlNode xn in xnList)
             {
-                _listNo.Add(int.Parse(xn.Attributes["no"].Value));
-                _listTwitterHashTag.Add(xn.Attributes["tag"].Value);
+                var nNo = int.Parse(xn.Attributes["no"].Value);
+                var sTag = xn.Attributes["tag"].Value;
+
+                _listNo.Add(nNo);
+                _listTwitterHashTag.Add(sTag);
+                _dHashTag.Add(nNo, sTag);
             }
         }
 
@@ -52,7 +57,7 @@ namespace DolPicCrawler.HashTag
         /// </summary>
         /// <param name="no">해쉬태그 고유번호</param>
         /// <param name="tag">해쉬태그</param>
-        /// <param name="dic">정보를 담을 Dictionary</param>
+        /// <param name="a_dImage">이미지 정보 Dictionary</param>
         public override void ImageSrcSearch(List<int> a_listNo, List<string> a_listTwitterHashTag, ref Dictionary<int, List<string>> a_dImage)
         {
             //응답요청을 한다
@@ -79,7 +84,6 @@ namespace DolPicCrawler.HashTag
                 //응답을 스트림으로 얻어온다
                 resStream = response.GetResponseStream();
 
-                //var resString = "";
                 using (resReader = new StreamReader(resStream, System.Text.Encoding.Default))
                 {
                     // 결과물에서 이미지 URL 추출

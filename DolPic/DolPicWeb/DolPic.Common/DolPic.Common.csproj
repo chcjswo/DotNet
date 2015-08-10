@@ -53,6 +53,7 @@
     <Compile Include="UserStates.cs" />
     <Compile Include="UserRole.cs" />
     <Compile Include="CommonVariable.cs" />
+    <Compile Include="TagUrlType.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
