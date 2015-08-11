@@ -102,3 +102,7 @@ body{background:url(../images/bg.png) #EDEFF4;color:#282828}
 
 /* Disqus */
 #disqus_thread{}
+
+.dolPicMoTop{width:320px;height:50px;}
+@media (min-width:500px) {.dolPicMoTop{width:468px;height:60px;}}
+@media (min-width:800px) {.dolPicMoTop{width:728px;height:90px;}}

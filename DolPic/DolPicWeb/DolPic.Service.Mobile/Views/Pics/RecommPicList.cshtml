@@ -1,0 +1,24 @@
+﻿@{
+    Layout = null;
+    
+    var list = ViewBag.DataList;
+}
+@using DolPic.Common
+
+<div class="vbox_stitle"><img src="/Images/icon_like_b.png" width="30" height="20">@ViewBag.HashTag 추천 이미지</div>
+<div class="gbox_recommend">
+@foreach (var item in list)
+{
+    <div id="gboxRecmd" seq="@item.Seq" class="gbox" style="background:url(@item.ImageSrc) center center no-repeat;background-size:cover"></div>
+}
+</div>
+<div class="clear"></div>
+
+<script type="text/javascript">
+    var bExec = false;
+    $(function () {
+        $('.gbox').live('click', function () {
+            location.href = '/Pics/PicView/' + $(this).attr("seq") + "/@ViewBag.HashTag" + "/" + @ViewBag.CurPage;
+        });
+    });
+</script>

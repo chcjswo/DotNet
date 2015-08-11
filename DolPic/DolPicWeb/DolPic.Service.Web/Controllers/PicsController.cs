@@ -40,6 +40,7 @@ namespace DolPic.Service.Web.Controllers
         }
 
         #region 화면 관련
+
         /// <summary>
         /// 돌픽 메인 화면
         /// </summary>
@@ -143,7 +144,8 @@ namespace DolPic.Service.Web.Controllers
             ViewBag.CurPage = CurPage;
 
             return View();
-        } 
+        }
+
         #endregion
 
         #region Ajax 관련

@@ -248,6 +248,8 @@
     <Content Include="Views\App\LogIn.cshtml" />
     <Content Include="Views\Shared\_AppTopBar.cshtml" />
     <Content Include="Views\Shared\_FacebookComment.cshtml" />
+    <Content Include="Views\Pics\RecommPicList.cshtml" />
+    <Content Include="Views\App\RecommPicList.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -9,8 +9,8 @@ namespace DolPicCrawler.Image
     public class ImageService
     {
         private static readonly ImageService _imageService;
-        //private const string CON_IMAGE_SEND_URL = "http://localhost:3281/api/DolPicImg/";
-        private const string CON_IMAGE_SEND_URL = "http://www.dolpic.kr/api/DolPicImg/";
+        private const string CON_IMAGE_SEND_URL = "http://localhost:3281/api/DolPicImg/";
+        //private const string CON_IMAGE_SEND_URL = "http://www.dolpic.kr/api/DolPicImg/";
 
         /// <summary>
         /// static 초기화

@@ -138,6 +138,23 @@ namespace DolPic.Service.Mobile.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// 추천 이미지 리스트
+        /// </summary>
+        /// <param name="ImgNo">고유번호</param>
+        /// <param name="HahTag">해쉬 태그</param>
+        /// <param name="CurPage">현재 페이지</param>
+        /// <returns></returns>
+        public ActionResult RecommPicList(int ImgNo, string HashTag, int CurPage)
+        {
+            // 추천 이미지 리스트 조회
+            ViewBag.DataList = _service.RecommImgList(ImgNo);
+            ViewBag.HashTag = HashTag;
+            ViewBag.CurPage = CurPage;
+
+            return View();
+        }
+
         #endregion
     }
 
