@@ -105,7 +105,7 @@ namespace DolPicCrawler
                 txtLog.Text += "트위터 XML 로딩 완료" + Environment.NewLine;
 
                 // 인스타그램용 리스트 만들기
-                //OriginHashTag.XmlFactory(OriginSiteType.instagram).XmlListMake(ref _listInstagramNo, ref _listInstagramHashTag, ref _dHashTag);
+                OriginHashTag.XmlFactory(OriginSiteType.instagram).XmlListMake(ref _listInstagramNo, ref _listInstagramHashTag, ref _dHashTag);
                 txtLog.Text += "인스타그램 XML 로딩 완료" + Environment.NewLine;
             }
             catch (Exception ex)

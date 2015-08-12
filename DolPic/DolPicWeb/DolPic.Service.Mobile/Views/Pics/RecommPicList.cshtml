@@ -2,6 +2,7 @@
     Layout = null;
     
     var list = ViewBag.DataList;
+    var nLoopCnt = 1;
 }
 @using DolPic.Common
 
@@ -9,7 +10,7 @@
 <div class="gbox_recommend">
 @foreach (var item in list)
 {
-    <div id="gboxRecmd" seq="@item.Seq" class="gbox" style="background:url(@item.ImageSrc) center center no-repeat;background-size:cover"></div>
+    <div id="@string.Format("gboxRecmd{0}", nLoopCnt++)" seq="@item.Seq" class="gbox" style="background:url(@item.ImageSrc) center center no-repeat;background-size:cover"></div>
 }
 </div>
 <div class="clear"></div>

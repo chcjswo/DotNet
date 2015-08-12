@@ -47,7 +47,7 @@ namespace DolPic.Service.Web.Controllers
         /// <returns></returns>
         public ActionResult Main(string id, int? page)
         {
-            ViewBag.User = DolPicCookie.CookieRead(this.HttpContext, CommonVariable.COOKIE_NAME);
+            ViewBag.User = DolPicCookie.CookieRead(this.Request, CommonVariable.COOKIE_NAME);
             var nCurPage = page ?? 1;
 
             DolPicVo entity = new DolPicVo();
@@ -70,7 +70,7 @@ namespace DolPic.Service.Web.Controllers
         /// <returns></returns>
         public ActionResult FavoriteBar()
         {
-            var UserId = DolPicCookie.CookieRead(this.HttpContext, CommonVariable.COOKIE_NAME);
+            var UserId = DolPicCookie.CookieRead(this.Request, CommonVariable.COOKIE_NAME);
             ViewBag.User = UserId;
             ViewBag.DataList = _service.GetFavoriteList(UserId);
 
@@ -87,7 +87,7 @@ namespace DolPic.Service.Web.Controllers
         public ActionResult PicView(int ImgNo, string HashTag, int Page)
         {
             HashTag = CommonVariable.ALL_IMAGE.Equals(HashTag) ? "" : HashTag;
-            var UserId = DolPicCookie.CookieRead(this.HttpContext, CommonVariable.COOKIE_NAME);
+            var UserId = DolPicCookie.CookieRead(this.Request, CommonVariable.COOKIE_NAME);
             ViewBag.User = UserId;
             ViewBag.HashTag = HashTag;
             ViewBag.CurPage = Page;
@@ -108,7 +108,7 @@ namespace DolPic.Service.Web.Controllers
         /// <returns></returns>
         public ActionResult InitialList()
         {
-            var UserId = DolPicCookie.CookieRead(this.HttpContext, CommonVariable.COOKIE_NAME);
+            var UserId = DolPicCookie.CookieRead(this.Request, CommonVariable.COOKIE_NAME);
             ViewBag.User = UserId;
 
             // 초성 리스트 조회
@@ -184,7 +184,7 @@ namespace DolPic.Service.Web.Controllers
             ViewBag.HashTag = HashTag;
 
             // 이미지 조회
-            DolPicPo po = _service.GetPicView(ImgNo, DolPicCookie.CookieRead(this.HttpContext, CommonVariable.COOKIE_NAME), HashTag);
+            DolPicPo po = _service.GetPicView(ImgNo, DolPicCookie.CookieRead(this.Request, CommonVariable.COOKIE_NAME), HashTag);
 
             return Json(JsonConvert.SerializeObject(po));
         }
@@ -197,7 +197,7 @@ namespace DolPic.Service.Web.Controllers
         [HttpPost]
         public ActionResult PicLikeInsert(int Seq)
         {
-            var UserId = DolPicCookie.CookieRead(this.HttpContext, CommonVariable.COOKIE_NAME);
+            var UserId = DolPicCookie.CookieRead(this.Request, CommonVariable.COOKIE_NAME);
             DolPicPo po = new DolPicPo();
 
             // Ajax Call 체크
@@ -245,7 +245,7 @@ namespace DolPic.Service.Web.Controllers
         [HttpPost]
         public ActionResult FavoriteInsert(int TagNo)
         {
-            var UserId = DolPicCookie.CookieRead(this.HttpContext, CommonVariable.COOKIE_NAME);
+            var UserId = DolPicCookie.CookieRead(this.Request, CommonVariable.COOKIE_NAME);
             DolPicPo po = new DolPicPo();
 
             // 로그인 체크
@@ -284,7 +284,7 @@ namespace DolPic.Service.Web.Controllers
         [HttpPost]
         public ActionResult FavoriteDelete(int TagNo)
         {
-            var UserId = DolPicCookie.CookieRead(this.HttpContext, CommonVariable.COOKIE_NAME);
+            var UserId = DolPicCookie.CookieRead(this.Request, CommonVariable.COOKIE_NAME);
             DolPicPo po = new DolPicPo();
 
             // 로그인 체크
@@ -323,7 +323,7 @@ namespace DolPic.Service.Web.Controllers
         [HttpPost]
         public ActionResult ImgReportInsert(int ImgNo)
         {
-            var UserId = DolPicCookie.CookieRead(this.HttpContext, CommonVariable.COOKIE_NAME);
+            var UserId = DolPicCookie.CookieRead(this.Request, CommonVariable.COOKIE_NAME);
             DolPicPo po = new DolPicPo();
 
             // 로그인 체크

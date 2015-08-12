@@ -70,7 +70,7 @@ namespace DolPic.Service.Mobile.Controllers
                             "".Equals(model.ReferUrl))
                             model.ReferUrl = Domains.WebDomain;
 
-                        DolPicCookie.CookieWrite(this.HttpContext, CommonVariable.COOKIE_NAME, model.UserId);
+                        DolPicCookie.CookieWrite(this.Response, CommonVariable.COOKIE_NAME, model.UserId);
                         Session["UserRole"] = UserRole.normal;
                         model.RetMsg = "회원 가입을 하셨습니다.";
                         break;
@@ -101,7 +101,7 @@ namespace DolPic.Service.Mobile.Controllers
                 switch (po.RetCode)
                 {
                     case (int)e_RetCode.success:
-                        DolPicCookie.CookieWrite(this.HttpContext, CommonVariable.COOKIE_NAME, model.UserId);
+                        DolPicCookie.CookieWrite(this.Response, CommonVariable.COOKIE_NAME, model.UserId);
 
                         if (CommonUtil.CheckReferrer(model.ReferUrl, string.Format("{0}/User/SignUp", Domains.WebDomain)) ||
                             CommonUtil.CheckReferrer(model.ReferUrl, string.Format("{0}/User/LogInProc", Domains.WebDomain)) ||

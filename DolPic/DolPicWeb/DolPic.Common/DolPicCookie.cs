@@ -16,22 +16,24 @@ namespace DolPic.Common
         /// <param name="a_context"></param>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        public static void CookieWrite(HttpContextBase a_context, string key, string value)
+        public static void CookieWrite(HttpResponseBase a_context, string key, string value)
         {
-            if (string.IsNullOrEmpty(value))
-            {
-                CookieDelete(a_context, key);
-                return;
-            }
+            //if (string.IsNullOrEmpty(value))
+            //{
+            //    CookieDelete(a_context, key);
+            //    return;
+            //}
 
-            HttpCookie cookie = a_context.Request.Cookies[COOKIES_KEY];
-            if (cookie == null)
-                cookie = new HttpCookie(COOKIES_KEY);
+            //HttpCookie cookie = a_context.Request.Cookies[COOKIES_KEY];
+            //if (cookie == null)
+            //    cookie = new HttpCookie(COOKIES_KEY);
+
+            HttpCookie cookie = new HttpCookie(COOKIES_KEY);
 
             cookie.Values[key] = (value);
             cookie.Path = "/";
-            a_context.Response.SetCookie(cookie);
-            a_context.Response.Cookies.Add(cookie);
+            a_context.SetCookie(cookie);
+            a_context.Cookies.Add(cookie);
         }
 
         /// <summary>
@@ -55,9 +57,9 @@ namespace DolPic.Common
         /// <param name="a_context"></param>
         /// <param name="key"></param>
         /// <returns></returns>
-        public static string CookieRead(HttpContextBase a_context, string key)
+        public static string CookieRead(HttpRequestBase a_context, string key)
         {
-            HttpCookie cookie = a_context.Request.Cookies[COOKIES_KEY];
+            HttpCookie cookie = a_context.Cookies[COOKIES_KEY];
             if (cookie == null)
                 return null;
 
