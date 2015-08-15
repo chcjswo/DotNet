@@ -96,7 +96,6 @@
 <script type="text/javascript">
     var bExec = false;
     $(function () {
-
         $('.gbox').live({
             mouseenter: function () { $('.gbox_thumb', this).fadeIn(300); $('.gbox_thumb', this).parent("div").addClass('transition'); },
             mouseleave: function () { $('.gbox_thumb', this).fadeOut(100); $('.gbox_thumb', this).parent("div").removeClass('transition'); }
@@ -155,13 +154,15 @@
                 $("#loading").hide();
             });
         });
-
-        // 웹뷰 통신
-        window.dolpic.navibtn(0, 0, 0);
     });
 
     function fnImageDownload() {
         alert("이미지 보기 화면에서 다운로드가 가능합니다.");
     }
+    
+    $(function () {
+        // 웹뷰 통신
+        window.dolpic.navibtn(0, 0, 0);
+    });
 
 </script>

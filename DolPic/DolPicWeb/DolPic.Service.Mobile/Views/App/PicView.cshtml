@@ -100,18 +100,12 @@
 <script type="text/javascript">
     var bExec = false;
     $(function () {
-        $('.vbox').dblclick(function () {
-            fnPicLike();
-        });
         $('.btn_good').live('click', function () { fnPicLike(); });
         $('.report').live('click', function () { fnImgReport(); });
         $('.gbox').hover(
             function () { $('.gbox_thumb', this).fadeIn(300); },
             function () { $('.gbox_thumb', this).fadeOut(100); }
         );
-
-        // 웹뷰 통신
-        window.dolpic.navibtn(@Model.NextSeq, @Model.PrevSeq, 1);
 
         $('.gbox_list li').live('click', function () {
             var nClickIdx = $(this).index();
@@ -132,7 +126,7 @@
             bExec = true;
 
             $.ajax({
-                url: "/App/ImageView",
+                url: "/Pics/ImageView",
                 type: "POST",
                 dataType: "json",
                 data: {
@@ -196,7 +190,7 @@
         bExec = true;
 
         $.ajax({
-            url: "/App/PicLikeInsert",
+            url: "/Pics/PicLikeInsert",
             type: "POST",
             dataType: "json",
             data: {
@@ -235,7 +229,7 @@
         bExec = true;
 
         $.ajax({
-            url: "/App/ImgReportInsert",
+            url: "/Pics/ImgReportInsert",
             type: "POST",
             dataType: "json",
             data: {
@@ -265,4 +259,9 @@
     function fnRightView() {
         fnImgViewGo(@Model.PrevSeq);
     }
+    
+    $(function () {
+        // 웹뷰 통신
+        window.dolpic.navibtn(@Model.NextSeq, @Model.PrevSeq, 1);
+    });
 </script>

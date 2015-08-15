@@ -3,7 +3,6 @@
 
     var list = ViewBag.DataList;
 }
-
 <!doctype html>
 <html>
 <head>
@@ -15,7 +14,9 @@
     <meta name="keywords" content="짤빵, 이미지, 아이돌, 유명 연예인, SNS,트위터, 인스타그램, 페이스북">
     <title>돌픽 | 아이돌, 유명 연예인 SNS 이미지 모음</title>
     <link rel="shortcut icon" href="http://www.dolpic.kr/favicon.ico" />
-    <link rel="stylesheet" type="text/css" href="/Css/common.m.css">    </head>
+    <link rel="stylesheet" type="text/css" href="/Css/common.m.css">
+    <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+    <script src="/Js/jquery.mobile-events.min.js"></script>    </head>
 <body>
 <div><br /></div>
 <!-- 구글 광고 -->
@@ -70,11 +71,6 @@
 
 <script type="text/javascript">
     var bExec = false;
-    
-    $(function () {
-        // 웹뷰 통신
-        window.dolpic.navibtn(0, 0);
-    });
 
     function fnFavoriteInsert(seq, tag) {
         if ("@ViewBag.User" == "") {
@@ -115,6 +111,11 @@
     function fnImageDownload() {
         alert("이미지 보기 화면에서 다운로드가 가능합니다.");
     }
+    
+    $(function () {
+        // 웹뷰 통신
+        window.dolpic.navibtn(0, 0, 0);
+    });
 </script>
 </body>
 </html>
