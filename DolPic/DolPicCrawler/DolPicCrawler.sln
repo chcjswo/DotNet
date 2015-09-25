@@ -3,16 +3,37 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DolPicCrawler", "DolPicCrawler\DolPicCrawler.csproj", "{6ECC2A6A-0E74-4FD0-BF16-0FE65CD6053C}"
 EndProject
+Project("{6141683F-8A12-4E36-9623-2EB02B2C2303}") = "DolPicCrawlerSetup", "DolPicCrawlerSetup\DolPicCrawlerSetup.isproj", "{A8B8A3E6-3A82-4F65-9BED-4FADFC5C1DB8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		CD_ROM|Any CPU = CD_ROM|Any CPU
 		Debug|Any CPU = Debug|Any CPU
+		DVD-5|Any CPU = DVD-5|Any CPU
 		Release|Any CPU = Release|Any CPU
+		SingleImage|Any CPU = SingleImage|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6ECC2A6A-0E74-4FD0-BF16-0FE65CD6053C}.CD_ROM|Any CPU.ActiveCfg = Release|Any CPU
+		{6ECC2A6A-0E74-4FD0-BF16-0FE65CD6053C}.CD_ROM|Any CPU.Build.0 = Release|Any CPU
 		{6ECC2A6A-0E74-4FD0-BF16-0FE65CD6053C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6ECC2A6A-0E74-4FD0-BF16-0FE65CD6053C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6ECC2A6A-0E74-4FD0-BF16-0FE65CD6053C}.DVD-5|Any CPU.ActiveCfg = Debug|Any CPU
+		{6ECC2A6A-0E74-4FD0-BF16-0FE65CD6053C}.DVD-5|Any CPU.Build.0 = Debug|Any CPU
 		{6ECC2A6A-0E74-4FD0-BF16-0FE65CD6053C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6ECC2A6A-0E74-4FD0-BF16-0FE65CD6053C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6ECC2A6A-0E74-4FD0-BF16-0FE65CD6053C}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
+		{6ECC2A6A-0E74-4FD0-BF16-0FE65CD6053C}.SingleImage|Any CPU.Build.0 = Release|Any CPU
+		{A8B8A3E6-3A82-4F65-9BED-4FADFC5C1DB8}.CD_ROM|Any CPU.ActiveCfg = CD_ROM
+		{A8B8A3E6-3A82-4F65-9BED-4FADFC5C1DB8}.CD_ROM|Any CPU.Build.0 = CD_ROM
+		{A8B8A3E6-3A82-4F65-9BED-4FADFC5C1DB8}.Debug|Any CPU.ActiveCfg = DVD-5
+		{A8B8A3E6-3A82-4F65-9BED-4FADFC5C1DB8}.Debug|Any CPU.Build.0 = DVD-5
+		{A8B8A3E6-3A82-4F65-9BED-4FADFC5C1DB8}.DVD-5|Any CPU.ActiveCfg = DVD-5
+		{A8B8A3E6-3A82-4F65-9BED-4FADFC5C1DB8}.DVD-5|Any CPU.Build.0 = DVD-5
+		{A8B8A3E6-3A82-4F65-9BED-4FADFC5C1DB8}.Release|Any CPU.ActiveCfg = SingleImage
+		{A8B8A3E6-3A82-4F65-9BED-4FADFC5C1DB8}.Release|Any CPU.Build.0 = SingleImage
+		{A8B8A3E6-3A82-4F65-9BED-4FADFC5C1DB8}.SingleImage|Any CPU.ActiveCfg = SingleImage
+		{A8B8A3E6-3A82-4F65-9BED-4FADFC5C1DB8}.SingleImage|Any CPU.Build.0 = SingleImage
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

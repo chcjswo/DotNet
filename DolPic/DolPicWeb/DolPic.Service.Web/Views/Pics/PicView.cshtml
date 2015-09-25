@@ -29,7 +29,7 @@
 		<ul class="gbox_list">
 			<li>메인</li>
 			<li seq="@Model.NextSeq" class="@(Model.NextSeq == 0 ? "on" : "")">&lt; 이전 페이지</li>
-			<li class="on"><span id="hashtag">@Model.HashTag</span></li>			<li seq="@Model.PrevSeq" class="@(Model.PrevSeq == 0 ? "on" : "")">다음 페이지 &gt;</li>
+			<li class="on"><span id="hashtag" class="htag" style="cursor:pointer">@Model.HashTag</span></li>			<li seq="@Model.PrevSeq" class="@(Model.PrevSeq == 0 ? "on" : "")">다음 페이지 &gt;</li>
 		</ul>
 		<div id="like" class="@(Model.IsLike == 0 ? "btn_good" : "btn_good on")">좋아요 @string.Format("{0:N0}", Model.LikeCnt)</div>
 		<div class="clear"></div>
@@ -43,6 +43,7 @@
         @Html.Action("HotDolPicList", "Pics")
 		<!-- 구글 광고 -->
 		@Html.Partial("_GoogleAd2")
+        <a href="https://play.google.com/store/apps/details?id=com.tony.mocadev.dolpicapp" target="_blank"><img src="/images/banner_300_150923.jpg" width="300" height="250"></a>
 		<!-- 공지사항 -->
 		@Html.Partial("_Notice")
 	</div>
@@ -63,6 +64,10 @@
             function () { $('.gbox_thumb', this).fadeIn(300); },
             function () { $('.gbox_thumb', this).fadeOut(100); }
         );
+        
+        $('.htag').live('click', function () {
+            location.href = "/Pics/Main/@((string.IsNullOrEmpty(ViewBag.HashTag) ? CommonVariable.ALL_IMAGE : ViewBag.HashTag))/@ViewBag.CurPage";
+        });
 
         $('.gbox_list li').live('click', function () {
             var nClickIdx = $(this).index();

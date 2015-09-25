@@ -94,7 +94,7 @@ namespace DolPic.Service.Mobile.Controllers
             DolPicPo po = _service.GetPicView(ImgNo, UserId, HashTag);
 
             ViewBag.FbImg = po.ImageSrc;
-            ViewBag.FbUrl = string.Format("{0}/Pics/PicView/{1}/{2}/{3}", Domains.WebDomain, ImgNo, HashTag, Page);
+            ViewBag.FbUrl = string.Format("{0}/Pics/PicView/{1}/{2}/{3}", Domains.WebDomain, ImgNo, po.HashTag, Page);
 
             return View(po);
         }
