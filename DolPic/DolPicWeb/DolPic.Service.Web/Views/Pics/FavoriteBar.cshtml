@@ -9,7 +9,13 @@
     <div class="fbar_wrap">
         @if (string.IsNullOrEmpty(ViewBag.User))
         {
-		    @:<span class="tbox on">로그인 후 사용가능</span>
+            @:<span class="tbox on"><strong>즐겨찾기</strong> 로그인 후 사용가능</span>
+            @*@:<span class="tbox"><a href="#" class="tbox_a">즐찾 모아보기</a></span>*@
+        }
+        else
+        {
+            @:<span class="tbox on"><strong>즐겨찾기</strong></span>
+            @*@:<span class="tbox"><a href="#" class="tbox_a">즐찾 모아보기</a></span>*@
         }
 	    <span class="tbox"><a href="/" class="tbox_a">최신 업로드 이미지</a></span>
         <span class="flist">
