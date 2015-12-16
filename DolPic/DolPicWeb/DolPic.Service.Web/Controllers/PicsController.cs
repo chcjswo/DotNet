@@ -33,7 +33,7 @@ namespace DolPic.Service.Web.Controllers
 
             _service = new DolPicService();
         }
-        
+
         public ActionResult Index()
         {
             return RedirectToAction("Main");
@@ -65,7 +65,7 @@ namespace DolPic.Service.Web.Controllers
         }
 
         /// <summary>
-        /// 즐겨찾기 리스트 
+        /// 즐겨찾기 리스트
         /// </summary>
         /// <returns></returns>
         public ActionResult FavoriteBar()
@@ -359,6 +359,6 @@ namespace DolPic.Service.Web.Controllers
             return Json(JsonConvert.SerializeObject(po));
         }
         #endregion
-        
+
     }
 }

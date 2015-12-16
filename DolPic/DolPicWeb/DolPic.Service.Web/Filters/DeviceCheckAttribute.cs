@@ -7,6 +7,8 @@ namespace DolPic.Service.Web.Filters
 {
     public class DeviceCheckAttribute : FilterAttribute, IAuthorizationFilter
     {
+        //protected static ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         public void OnAuthorization(AuthorizationContext filterContext)
         {
             filterContext.HttpContext.Response.Cache.SetMaxAge(new TimeSpan(0));
@@ -14,9 +16,11 @@ namespace DolPic.Service.Web.Filters
             if (HttpContext.Current.Request.Browser.IsMobileDevice)
             {
                 //log.ErrorFormat("Domains.MobileDomain == {0}", Domains.MobileDomain);
-                //log.ErrorFormat("sReUrl == {0}", filterContext.HttpContext.Request.QueryString);
-                filterContext.Result = new RedirectResult(string.Format("{2}/{0}/{1}",
-                    filterContext.RouteData.Values["controller"].ToString(), filterContext.RouteData.Values["action"].ToString(), Domains.MobileDomain));
+                //log.ErrorFormat("sReUrl == {0}", filterContext.HttpContext.Request.Url.PathAndQuery);
+
+                filterContext.Result = new RedirectResult(string.Format("{0}/{1}",
+                                                                        Domains.MobileDomain,
+                                                                        filterContext.HttpContext.Request.Url.PathAndQuery));
             }
         }
     }
