@@ -28,6 +28,16 @@ namespace DolPic.Biz.DolPicService
         }
 
         /// <summary>
+        /// 즐겨찾기 이미지 리스트 조회
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public IList<DolPicVo> GetBookmarkImageList(DolPicVo entity)
+        {
+            return _dao.BookmarkImageList(entity);
+        }
+
+        /// <summary>
         /// 초성 리스트 조회
         /// </summary>
         /// <param name="a_sUserId">유저 아이디</param>

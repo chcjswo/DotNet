@@ -16,6 +16,15 @@ namespace DolPic.Data.Daos
         }
 
         /// <summary>
+        /// 즐겨찾기 이미지 리스트
+        /// </summary>
+        /// <returns></returns>
+        public IList<DolPicVo> BookmarkImageList(DolPicVo entity)
+        {
+            return DolPicServiceDataMapper.Instance().QueryForList<DolPicVo>(SqlMaps.DolPic.UP_BookmarkImage_List, entity);
+        }
+
+        /// <summary>
         /// 이미지 조회
         /// </summary>
         /// <returns></returns>
@@ -102,7 +111,7 @@ namespace DolPic.Data.Daos
         /// <returns></returns>
         public void DolPicImageReportInsert(DolPicVo entity)
         {
-            DolPicServiceDataMapper.Instance().QueryForObject<DolPicVo>("UP_DolPicImageReport_Insert", entity);
+            DolPicServiceDataMapper.Instance().QueryForObject<DolPicVo>(SqlMaps.DolPic.UP_DolPicImageReport_Insert, entity);
         }
 
         /// <summary>
@@ -111,7 +120,7 @@ namespace DolPic.Data.Daos
         /// <returns></returns>
         public IList<DolPicVo> DolPicRecommImageList(DolPicVo entity)
         {
-            return DolPicServiceDataMapper.Instance().QueryForList<DolPicVo>("UP_DolPicRecommImage_List", entity);
+            return DolPicServiceDataMapper.Instance().QueryForList<DolPicVo>(SqlMaps.DolPic.UP_DolPicRecommImage_List, entity);
         }
     }
 }

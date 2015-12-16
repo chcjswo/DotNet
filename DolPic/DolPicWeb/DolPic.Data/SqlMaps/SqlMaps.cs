@@ -1,4 +1,4 @@
-﻿/// 2015-06-21 04:31:12
+﻿/// 2015-12-16 05:28:24
 namespace DolPic.Data.SqlMaps
 {
 	public class Admin
@@ -27,7 +27,23 @@ namespace DolPic.Data.SqlMaps
         /// 이미지 리스트
 		/// </summary>
 		public const string UPA_DolPicImage_List = "UPA_DolPicImage_List";
-    }
+
+		/// <summary>
+        /// 이미지 삭제
+		/// </summary>
+		public const string UPA_DolPicImage_Delete = "UPA_DolPicImage_Delete";
+
+		/// <summary>
+        /// 회원 리스트
+		/// </summary>
+		public const string UPA_User_List = "UPA_User_List";
+
+		/// <summary>
+        /// 회원 즐겨찾기 리스트
+		/// </summary>
+		public const string UPA_UserFavorite_List = "UPA_UserFavorite_List";
+
+	}
 
 	public class DolPic
 	{
@@ -35,6 +51,11 @@ namespace DolPic.Data.SqlMaps
         /// 메인 이미지 리스트
 		/// </summary>
 		public const string UP_MainImage_List = "UP_MainImage_List";
+
+		/// <summary>
+        /// 즐겨찾기 이미지 리스트
+		/// </summary>
+		public const string UP_BookmarkImage_List = "UP_BookmarkImage_List";
 
 		/// <summary>
         /// 해당 이미지 조회
@@ -80,6 +101,16 @@ namespace DolPic.Data.SqlMaps
         /// 즐겨찾기 삭제
 		/// </summary>
 		public const string UP_Favorite_Delete = "UP_Favorite_Delete";
+
+		/// <summary>
+        /// 신고하기 입력
+		/// </summary>
+		public const string UP_DolPicImageReport_Insert = "UP_DolPicImageReport_Insert";
+
+		/// <summary>
+        /// 추천 이미지 리스트
+		/// </summary>
+		public const string UP_DolPicRecommImage_List = "UP_DolPicRecommImage_List";
 
 	}
 

@@ -20,38 +20,38 @@
 <div id="loading" style="display:none"><img src="/Images/loader.gif" /><br /><br />로딩하는 중입니다...</div>
 <!-- 갤러리 -->
 <div class="wrapper">
-	<div class="gbox_gallery">
-	<!-- 갤러리 리스트 -->
-    @foreach (var item in list)
-    {
-        var sImgSrc = "";
+    <div class="gbox_gallery">
+        <!-- 갤러리 리스트 -->
+        @foreach (var item in list)
+        {
+            var sImgSrc = "";
 
-        if (item.TagUrlType == (int)e_TagUrlType.twitter)
-        {
-            sImgSrc = item.ImageSrc + ":thumb";
+            if (item.TagUrlType == (int)e_TagUrlType.twitter)
+            {
+                sImgSrc = item.ImageSrc + ":thumb";
+            }
+            else if (item.TagUrlType == (int)e_TagUrlType.instagram)
+            {
+                sImgSrc = item.ImageSrc;
+            }
+            <div seq="@item.Seq" class="gbox" style="background:url(@sImgSrc) center center no-repeat;background-size:cover">
+            </div>
         }
-        else if (item.TagUrlType == (int)e_TagUrlType.instagram)
-        {
-            sImgSrc = item.ImageSrc;
-        }
-		<div seq="@item.Seq" class="gbox" style="background:url(@sImgSrc) center center no-repeat;background-size:cover">
-		</div>
-    }
-    <div class="clear"></div>
-	<ul class="gbox_list">
-		@Html.Raw(ViewBag.PageGotoList)
-	</ul>
-    <div class="clear"></div>
-	</div>
+        <div class="clear"></div>
+        <ul class="gbox_list">
+            @Html.Raw(ViewBag.PageGotoList)
+        </ul>
+        <div class="clear"></div>
+    </div>
     <center><a href="https://play.google.com/store/apps/details?id=com.tony.mocadev.dolpicapp" target="_blank"><img src="/images/banner_640_150923.jpg" width="300"></a></center>
-	<div class="gbox_side">
+    <div class="gbox_side">
         @Html.Action("HotDolPicList", "Pics")
-		<!-- 구글 광고 -->
-		@Html.Partial("_GoogleAd2")
-		<!-- 공지사항 -->
-		@Html.Partial("_Notice")
-	</div>
-	<div class="clear"></div>
+        <!-- 구글 광고 -->
+        @Html.Partial("_GoogleAd2")
+        <!-- 공지사항 -->
+        @Html.Partial("_Notice")
+    </div>
+    <div class="clear"></div>
 </div>
 <input type="hidden" id="CurPage" value="@ViewBag.CurPage" />
 @Html.Action("InitialList", "Pics")
@@ -133,7 +133,7 @@
             $("#CurPage").val($(this).attr("page"));
 
             $.ajax({
-                url: "/Pics/ImageList",
+                url: "/Pics/BookmarkImageList",
                 type: "POST",
                 dataType: "json",
                 data: {

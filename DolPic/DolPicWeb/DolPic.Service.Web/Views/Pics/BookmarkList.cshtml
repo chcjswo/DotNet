@@ -17,49 +17,49 @@
 <div id="loading" style="display:none"><img src="/Images/loader.gif" /><br /><br />로딩하는 중입니다...</div>
 <!-- 갤러리 -->
 <div class="wrapper">
-	<div class="gbox_gallery">
+    <div class="gbox_gallery">
         <div class="img_list">
-		<!-- 갤러리 리스트 -->
-        @foreach (var item in list)
-        {
-		    <div seq="@item.Seq" class="gbox" style="background:url(@item.ImageSrc) center center no-repeat;background-size:cover">
-                @{
-                    var sClassName = "";
+            <!-- 갤러리 리스트 -->
+            @foreach (var item in list)
+            {
+                <div seq="@item.Seq" class="gbox" style="background:url(@item.ImageSrc) center center no-repeat;background-size:cover">
+                    @{
+                        var sClassName = "";
 
-                    if (item.TagUrlType == (int)e_TagUrlType.twitter)
-                    {
-                        sClassName = "g_t_twitter";
+                        if (item.TagUrlType == (int)e_TagUrlType.twitter)
+                        {
+                            sClassName = "g_t_twitter";
+                        }
+                        else if (item.TagUrlType == (int)e_TagUrlType.instagram)
+                        {
+                            sClassName = "g_t_instagram";
+                        }
                     }
-                    else if (item.TagUrlType == (int)e_TagUrlType.instagram)
-                    {
-                        sClassName = "g_t_instagram";
-                    }
-                }
-                <div class="gbox_thumb @sClassName">
-                    <div class="gbox_t_title">#@item.HashTag</div>
-                    <div class="gbox_t_text"><img src="/images/icon_like.png" height="9">@string.Format("{0:N0}", item.LikeCnt)</div>
+                    <div class="gbox_thumb @sClassName">
+                        <div class="gbox_t_title">#@item.HashTag</div>
+                        <div class="gbox_t_text"><img src="/images/icon_like.png" height="9">@string.Format("{0:N0}", item.LikeCnt)</div>
+                    </div>
                 </div>
-		    </div>
-        }
+                        }
         </div>
         <div class="clear"></div>
-		<ul class="gbox_list">
+        <ul class="gbox_list">
             <div class="goto_list">
-			@Html.Raw(ViewBag.PageGotoList)
+                @Html.Raw(ViewBag.PageGotoList)
             </div>
-		</ul>
-		<!-- 구글 광고 -->
-		@Html.Partial("_GoogleAd1")
-	</div>
-	<div class="gbox_side">
+        </ul>
+        <!-- 구글 광고 -->
+        @Html.Partial("_GoogleAd1")
+    </div>
+    <div class="gbox_side">
         @Html.Action("HotDolPicList", "Pics")
-		<!-- 구글 광고 -->
-		@Html.Partial("_GoogleAd3")
+        <!-- 구글 광고 -->
+        @Html.Partial("_GoogleAd3")
         <a href="https://play.google.com/store/apps/details?id=com.tony.mocadev.dolpicapp" target="_blank"><img src="/images/banner_300_150923.jpg" width="300" height="250"></a>
-		<!-- 공지사항 -->
-		@Html.Partial("_Notice")
-	</div>
-	<div class="clear"></div>
+        <!-- 공지사항 -->
+        @Html.Partial("_Notice")
+    </div>
+    <div class="clear"></div>
 </div>
 <input type="hidden" id="CurPage" value="@ViewBag.CurPage" />
 @Html.Action("InitialList", "Pics")
@@ -75,8 +75,8 @@
             location.href = '/Pics/PicView/' + $(this).attr("seq") + "/@((string.IsNullOrEmpty(ViewBag.HashTag) ? CommonVariable.ALL_IMAGE : ViewBag.HashTag))" + "/" + $("#CurPage").val();
         });
         $('.gbox_list li').live('click', function (event) {
-            @*location.href = "/Pics/Main/@((string.IsNullOrEmpty(ViewBag.HashTag) ? CommonVariable.ALL_IMAGE : ViewBag.HashTag))" + "/" + $(this).attr("page");
-            return;*@
+            //location.href = "/Pics/BookmarkList/@((string.IsNullOrEmpty(ViewBag.HashTag) ? CommonVariable.ALL_IMAGE : ViewBag.HashTag))" + "/" + $(this).attr("page");
+            //return;
             if (bExec) {
                 alert("요청을 처리중입니다.잠시만 기다려주세요.");
                 return;
@@ -88,7 +88,7 @@
             $("#CurPage").val($(this).attr("page"));
 
             $.ajax({
-                url: "/Pics/ImageList",
+                url: "/Pics/BookmarkImageList",
                 type: "POST",
                 dataType: "json",
                 data: {

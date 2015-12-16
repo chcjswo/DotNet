@@ -15,6 +15,11 @@
       UP_MainImage_List
     </procedure>
 
+    <!-- 즐겨찾기 이미지 리스트 -->
+    <procedure id="UP_BookmarkImage_List" parameterMap="p_bookmark_image_list" resultClass="dolpic" description="즐겨찾기 이미지 리스트">
+      UP_BookmarkImage_List
+    </procedure>
+
     <!-- 해당 이미지 조회 -->
     <procedure id="UP_Image_Select" parameterMap="p_image_select" description="해당 이미지 조회">
       UP_Image_Select
@@ -80,6 +85,14 @@
       <parameter property="TotalCnt" column="TotalCnt" direction="Output" />
     </parameterMap>
 
+    <parameterMap id="p_bookmark_image_list" class="dolpic">
+      <parameter property="UserId" column="UserId" />
+      <parameter property="HashTag" column="HashTag" />
+      <parameter property="CurPage" column="CurPage" />
+      <parameter property="PageListSize" column="PageListSize" />
+      <parameter property="TotalCnt" column="TotalCnt" direction="Output" />
+    </parameterMap>
+
     <parameterMap id="p_image_select" class="dolpic">
       <parameter property="Seq" column="Seq" />
       <parameter property="UserId" column="UserId" />
@@ -92,14 +105,14 @@
       <parameter property="LikeCnt" column="LikeCnt" direction="Output" />
       <parameter property="TagUrlType" column="TagUrlType" direction="Output" />
     </parameterMap>
-    
+
     <parameterMap id="p_user" class="dolpic">
       <parameter property="UserId" column="UserId" />
       <parameter property="UserPwd" column="UserPwd" />
       <parameter property="UserRole" column="UserRole" direction="Output" />
       <parameter property="RetCode" column="RetCode" direction="Output" />
     </parameterMap>
-    
+
     <parameterMap id="p_seq_userid" class="dolpic">
       <parameter property="Seq" column="Seq" />
       <parameter property="UserId" column="UserId" />

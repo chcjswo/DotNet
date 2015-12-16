@@ -30,7 +30,7 @@ namespace DolPic.Service.Mobile.Controllers
 
             _service = new DolPicService();
         }
-        
+
         public ActionResult Index()
         {
             return RedirectToAction("Main");
@@ -62,7 +62,32 @@ namespace DolPic.Service.Mobile.Controllers
         }
 
         /// <summary>
-        /// 즐겨찾기 리스트 
+        /// 유저 즐겨찾기 리스트 화면
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult BookmarkList(string id, int? page)
+        {
+            var UserId = DolPicCookie.CookieRead(this.Request, CommonVariable.COOKIE_NAME);
+            ViewBag.User = UserId;
+            var nCurPage = page ?? 1;
+
+            DolPicVo entity = new DolPicVo();
+            entity.HashTag = string.IsNullOrEmpty(id) || CommonVariable.ALL_IMAGE.Equals(id) ? "" : id;
+            entity.CurPage = nCurPage;
+            entity.PageListSize = _nImageListSize;
+            entity.UserId = UserId;
+
+            ViewBag.DataList = _service.GetBookmarkImageList(entity);
+            ViewBag.HashTag = id;
+            ViewBag.CurPage = nCurPage;
+            ViewBag.PageGotoList = CommonUtil.GetGotoPageList(nCurPage, entity.TotalCnt, _nImageListSize, _nGotoListSize);
+            ViewBag.FbImg = CommonVariable.FB_DEFAULT_IMG;
+
+            return View();
+        }
+
+        /// <summary>
+        /// 즐겨찾기 리스트
         /// </summary>
         /// <returns></returns>
         public ActionResult FavoriteBar()
@@ -162,6 +187,30 @@ namespace DolPic.Service.Mobile.Controllers
 
             PageList pageList = new PageList();
             pageList.ImageList = _service.GetMainImageList(entity);
+            pageList.PageGotoList = CommonUtil.GetGotoPageList(CurPage, entity.TotalCnt, _nImageListSize, _nGotoListSize);
+            ViewBag.CurPage = CurPage;
+
+            return Json(JsonConvert.SerializeObject(pageList));
+        }
+
+        /// <summary>
+        /// 즐겨찾기 이미지 리스트 Ajax
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult BookmarkImageList(int CurPage, string HashTag)
+        {
+            var UserId = DolPicCookie.CookieRead(this.Request, CommonVariable.COOKIE_NAME);
+
+            HashTag = CommonVariable.ALL_IMAGE.Equals(HashTag) ? "" : HashTag;
+            DolPicVo entity = new DolPicVo();
+            entity.HashTag = HashTag ?? "";
+            entity.CurPage = CurPage;
+            entity.PageListSize = _nImageListSize;
+            entity.UserId = UserId;
+
+            PageList pageList = new PageList();
+            pageList.ImageList = _service.GetBookmarkImageList(entity);
             pageList.PageGotoList = CommonUtil.GetGotoPageList(CurPage, entity.TotalCnt, _nImageListSize, _nGotoListSize);
             ViewBag.CurPage = CurPage;
 

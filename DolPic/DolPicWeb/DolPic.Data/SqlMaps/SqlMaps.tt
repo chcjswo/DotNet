@@ -20,7 +20,6 @@ namespace <#= System.Runtime.Remoting.Messaging.CallContext.LogicalGetData("Name
 <#
 	foreach(FileInfo file in files)
 	{
-		
 			fileName = file.FullName;
 			using (XmlReader reader = XmlReader.Create(file.FullName))
 			{
