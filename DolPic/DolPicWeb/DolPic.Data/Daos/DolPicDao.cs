@@ -34,6 +34,15 @@ namespace DolPic.Data.Daos
         }
 
         /// <summary>
+        /// 즐겨찾기 이미지 조회
+        /// </summary>
+        /// <returns></returns>
+        public void DolPicBookmarkImageSelect(DolPicVo entity)
+        {
+            DolPicServiceDataMapper.Instance().QueryForObject<DolPicVo>(SqlMaps.DolPic.UP_BookmarkImage_Select, entity);
+        }
+
+        /// <summary>
         /// 초성 리스트
         /// </summary>
         /// <returns></returns>

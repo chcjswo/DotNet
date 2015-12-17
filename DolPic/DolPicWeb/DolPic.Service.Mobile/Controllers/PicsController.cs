@@ -125,6 +125,31 @@ namespace DolPic.Service.Mobile.Controllers
         }
 
         /// <summary>
+        /// 즐겨찾기 이미지 보기 화면
+        /// </summary>
+        /// <param name="ImgNo">고유번호</param>
+        /// <param name="HahTag">해쉬 태그</param>
+        /// <param name="Page">현재 페이지</param>
+        /// <returns></returns>
+        public ActionResult BookmarkPicView(int ImgNo, string HashTag, int Page)
+        {
+            HashTag = CommonVariable.ALL_IMAGE.Equals(HashTag) ? "" : HashTag;
+            var UserId = DolPicCookie.CookieRead(this.Request, CommonVariable.COOKIE_NAME);
+            ViewBag.User = UserId;
+            ViewBag.HashTag = HashTag;
+            ViewBag.CurPage = Page;
+            ViewBag.ImgNo = ImgNo;
+
+            // 이미지 조회
+            DolPicPo po = _service.GetBookmarkPicView(ImgNo, UserId, HashTag);
+
+            ViewBag.FbImg = po.ImageSrc;
+            ViewBag.FbUrl = string.Format("{0}/Pics/PicView/{1}/{2}/{3}", Domains.WebDomain, ImgNo, po.HashTag, Page);
+
+            return View(po);
+        }
+
+        /// <summary>
         /// 초성 리스트
         /// </summary>
         /// <returns></returns>

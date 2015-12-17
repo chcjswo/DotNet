@@ -43,6 +43,15 @@ namespace DolPic.Biz.DolPicService
         DolPicPo GetPicView(int a_nSeq, string a_sUserId, string a_sHahTag);
 
         /// <summary>
+        /// 북마크 이미지 조회
+        /// </summary>
+        /// <param name="a_nSeq">고유번호</param>
+        /// <param name="a_sUserId">유저 아이디</param>
+        /// <param name="a_sHahTag">해쉬 태그</param>
+        /// <returns></returns>
+        DolPicPo GetBookmarkPicView(int a_nSeq, string a_sUserId, string a_sHahTag);
+
+        /// <summary>
         /// 이미지 좋아요
         /// </summary>
         /// <param name="a_nSeq">고유번호</param>

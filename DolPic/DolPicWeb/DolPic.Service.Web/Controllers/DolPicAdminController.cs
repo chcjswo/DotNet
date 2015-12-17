@@ -33,7 +33,7 @@ namespace DolPic.Service.Web.Controllers
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public ActionResult MenuList()
@@ -116,7 +116,7 @@ namespace DolPic.Service.Web.Controllers
             ViewBag.CurPage = page ?? 1;
 
             return View();
-        } 
+        }
         #endregion
 
         #region 어드민 동작
@@ -195,7 +195,7 @@ namespace DolPic.Service.Web.Controllers
             _service.HashTagDelete(Seq);
 
             return RedirectToAction("HashTagList");
-        } 
+        }
 
         [HttpPost]
         public ActionResult DolPicImageDelete(int HashTagNo, int ImgNo)
@@ -256,7 +256,7 @@ namespace DolPic.Service.Web.Controllers
                 // 지정된 XML문서로 만들고 저장한다.
                 doc.Save(Server.MapPath("~/" + XML_FILE_NAME));
             }
-        } 
+        }
         #endregion
 
     }

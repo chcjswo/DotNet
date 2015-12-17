@@ -91,6 +91,35 @@ namespace DolPic.Biz.DolPicService
         }
 
         /// <summary>
+        /// 이미지 조회
+        /// </summary>
+        /// <param name="a_nSeq">고유번호</param>
+        /// <param name="a_sUserId">유저 아이디</param>
+        /// <param name="a_sHahTag">해쉬 태그</param>
+        /// <returns></returns>
+        public DolPicPo GetBookmarkPicView(int a_nSeq, string a_sUserId, string a_sHahTag)
+        {
+            DolPicVo entity = new DolPicVo();
+            entity.Seq = a_nSeq;
+            entity.UserId = a_sUserId;
+            entity.SearchHashTag = a_sHahTag ?? "";
+
+            _dao.DolPicBookmarkImageSelect(entity);
+
+            DolPicPo po = new DolPicPo();
+            po.ImageSrc = entity.ImageSrc;
+            po.HashTag = entity.HashTag;
+            po.PrevSeq = entity.PrevSeq;
+            po.NextSeq = entity.NextSeq;
+            po.CurSeq = a_nSeq;
+            po.IsLike = entity.IsLike;
+            po.LikeCnt = entity.LikeCnt;
+            po.TagUrlType = entity.TagUrlType;
+
+            return po;
+        }
+
+        /// <summary>
         /// 이미지 좋아요
         /// </summary>
         /// <param name="a_nSeq">고유번호</param>

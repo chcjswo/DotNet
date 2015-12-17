@@ -252,6 +252,9 @@
     <Content Include="Views\Pics\RecommPicList.cshtml" />
     <Content Include="Views\App\RecommPicList.cshtml" />
     <Content Include="Views\Pics\BookmarkList.cshtml" />
+    <Content Include="Views\Pics\BookmarkPicView.cshtml" />
+    <Content Include="Views\App\BookmarkList.cshtml" />
+    <Content Include="Views\App\BookmarkPicView.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

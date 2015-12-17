@@ -305,6 +305,7 @@
     <None Include="Properties\PublishProfiles\웹.pubxml" />
     <Content Include="Views\Shared\_FacebookComment.cshtml" />
     <Content Include="Views\Pics\BookmarkList.cshtml" />
+    <Content Include="Views\Pics\BookmarkPicView.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

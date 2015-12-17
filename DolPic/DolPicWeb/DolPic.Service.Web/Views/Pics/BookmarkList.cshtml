@@ -72,7 +72,7 @@
             mouseleave: function () { $('.gbox_thumb', this).fadeOut(100); $('.gbox_thumb', this).parent("div").removeClass('transition'); }
         });
         $('.gbox').live('click', function () {
-            location.href = '/Pics/PicView/' + $(this).attr("seq") + "/@((string.IsNullOrEmpty(ViewBag.HashTag) ? CommonVariable.ALL_IMAGE : ViewBag.HashTag))" + "/" + $("#CurPage").val();
+            location.href = '/Pics/BookmarkPicView/' + $(this).attr("seq") + "/@((string.IsNullOrEmpty(ViewBag.HashTag) ? CommonVariable.ALL_IMAGE : ViewBag.HashTag))" + "/" + $("#CurPage").val();
         });
         $('.gbox_list li').live('click', function (event) {
             //location.href = "/Pics/BookmarkList/@((string.IsNullOrEmpty(ViewBag.HashTag) ? CommonVariable.ALL_IMAGE : ViewBag.HashTag))" + "/" + $(this).attr("page");

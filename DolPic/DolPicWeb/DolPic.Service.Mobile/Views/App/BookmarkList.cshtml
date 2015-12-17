@@ -13,48 +13,46 @@
     }
 </style>
 
-@Html.Partial("_TopBar")
-@Html.Action("FavoriteBar", "Pics")
+@Html.Partial("_AppTopBar")
+@Html.Action("FavoriteBar", "App")
 <!-- 구글 광고 -->
 @Html.Partial("_GoogleAdTop")
 <div id="loading" style="display:none"><img src="/Images/loader.gif" /><br /><br />로딩하는 중입니다...</div>
 <!-- 갤러리 -->
 <div class="wrapper">
-    <div class="gbox_gallery">
-        <!-- 갤러리 리스트 -->
-        @foreach (var item in list)
-        {
-            var sImgSrc = "";
+	<div class="gbox_gallery">
+	<!-- 갤러리 리스트 -->
+    @foreach (var item in list)
+    {
+        var sImgSrc = "";
 
-            if (item.TagUrlType == (int)e_TagUrlType.twitter)
-            {
-                sImgSrc = item.ImageSrc + ":thumb";
-            }
-            else if (item.TagUrlType == (int)e_TagUrlType.instagram)
-            {
-                sImgSrc = item.ImageSrc;
-            }
-            <div seq="@item.Seq" class="gbox" style="background:url(@sImgSrc) center center no-repeat;background-size:cover">
-            </div>
+        if (item.TagUrlType == (int)e_TagUrlType.twitter)
+        {
+            sImgSrc = item.ImageSrc + ":thumb";
         }
-        <div class="clear"></div>
-        <ul class="gbox_list">
-            @Html.Raw(ViewBag.PageGotoList)
-        </ul>
-        <div class="clear"></div>
-    </div>
-    <center><a href="https://play.google.com/store/apps/details?id=com.tony.mocadev.dolpicapp" target="_blank"><img src="/images/banner_640_150923.jpg" width="300"></a></center>
-    <div class="gbox_side">
-        @Html.Action("HotDolPicList", "Pics")
-        <!-- 구글 광고 -->
-        @Html.Partial("_GoogleAd2")
-        <!-- 공지사항 -->
-        @Html.Partial("_Notice")
-    </div>
+        else if (item.TagUrlType == (int)e_TagUrlType.instagram)
+        {
+            sImgSrc = item.ImageSrc;
+        }
+		<div seq="@item.Seq" class="gbox" style="background:url(@sImgSrc) center center no-repeat;background-size:cover">
+		</div>
+    }
     <div class="clear"></div>
+	<ul class="gbox_list">
+		@Html.Raw(ViewBag.PageGotoList)
+	</ul>
+    <div class="clear"></div>
+	</div>
+	<div class="gbox_side">
+        @Html.Action("HotDolPicList", "App")
+		<!-- 구글 광고 -->
+		@Html.Partial("_GoogleAd2")
+		<!-- 공지사항 -->
+		@Html.Partial("_Notice")
+	</div>
+	<div class="clear"></div>
 </div>
 <input type="hidden" id="CurPage" value="@ViewBag.CurPage" />
-@Html.Action("InitialList", "Pics")
 
 <script>
     $(document).ready(function () {
@@ -97,30 +95,18 @@
         });
     });
 </script>
-
 <script type="text/javascript">
     var bExec = false;
     $(function () {
-
-        var swipe = $('.gbox_gallery');
-        // Swipes:
-        swipe.swipeleft(function () {
-            //location.href = "/Pics/Main/@((string.IsNullOrEmpty(ViewBag.HashTag) ? CommonVariable.ALL_IMAGE : ViewBag.HashTag))" + "/" + parseInt(parseInt($("#CurPage").val()) + 1);
-        });
-        swipe.swiperight(function () {
-            if ($("#CurPage").val() == 1) return;
-            //location.href = "/Pics/Main/@((string.IsNullOrEmpty(ViewBag.HashTag) ? CommonVariable.ALL_IMAGE : ViewBag.HashTag))" + "/" + parseInt(parseInt($("#CurPage").val()) - 1);
-        });
-
         $('.gbox').live({
             mouseenter: function () { $('.gbox_thumb', this).fadeIn(300); $('.gbox_thumb', this).parent("div").addClass('transition'); },
             mouseleave: function () { $('.gbox_thumb', this).fadeOut(100); $('.gbox_thumb', this).parent("div").removeClass('transition'); }
         });
         $('.gbox').live('click', function () {
-            location.href = '/Pics/BookmarkPicView/' + $(this).attr("seq") + "/@((string.IsNullOrEmpty(ViewBag.HashTag) ? CommonVariable.ALL_IMAGE : ViewBag.HashTag))" + "/" + $("#CurPage").val();
+            location.href = '/App/BookmarkPicView/' + $(this).attr("seq") + "/@((string.IsNullOrEmpty(ViewBag.HashTag) ? CommonVariable.ALL_IMAGE : ViewBag.HashTag))" + "/" + $("#CurPage").val();
         });
         $('.gbox_list li').live('click', function (event) {
-            location.href = "/Pics/BookmarkList/@((string.IsNullOrEmpty(ViewBag.HashTag) ? CommonVariable.ALL_IMAGE : ViewBag.HashTag))" + "/" + $(this).attr("page");
+            location.href = "/App/BookmarkList/@((string.IsNullOrEmpty(ViewBag.HashTag) ? CommonVariable.ALL_IMAGE : ViewBag.HashTag))" + "/" + $(this).attr("page");
             return;
             if (bExec) {
                 alert("요청을 처리중입니다.잠시만 기다려주세요.");
@@ -133,7 +119,7 @@
             $("#CurPage").val($(this).attr("page"));
 
             $.ajax({
-                url: "/Pics/BookmarkImageList",
+                url: "/App/BookmarkImageList",
                 type: "POST",
                 dataType: "json",
                 data: {
@@ -172,6 +158,15 @@
                 $("#loading").hide();
             });
         });
+    });
+
+    function fnImageDownload() {
+        alert("이미지 보기 화면에서 다운로드가 가능합니다.");
+    }
+
+    $(function () {
+        // 웹뷰 통신
+        window.dolpic.navibtn(0, 0, 0);
     });
 
 </script>

@@ -21,28 +21,31 @@
 <!-- 갤러리 -->
 <div class="wrapper">
 	<div class="gbox_gallery">
-	<!-- 갤러리 리스트 -->
-    @foreach (var item in list)
-    {
-        var sImgSrc = "";
+        <div class="img_list">
+            <!-- 갤러리 리스트 -->
+            @foreach (var item in list)
+            {
+                var sImgSrc = "";
 
-        if (item.TagUrlType == (int)e_TagUrlType.twitter)
-        {
-            sImgSrc = item.ImageSrc + ":thumb";
-        }
-        else if (item.TagUrlType == (int)e_TagUrlType.instagram)
-        {
-            sImgSrc = item.ImageSrc;
-        }
-		<div seq="@item.Seq" class="gbox" style="background:url(@sImgSrc) center center no-repeat;background-size:cover">
-		</div>
-    }
-    <div class="clear"></div>
-	<ul class="gbox_list">
-		@Html.Raw(ViewBag.PageGotoList)
-	</ul>
-    <div class="clear"></div>
-	</div>
+                if (item.TagUrlType == (int)e_TagUrlType.twitter)
+                {
+                    sImgSrc = item.ImageSrc + ":thumb";
+                }
+                else if (item.TagUrlType == (int)e_TagUrlType.instagram)
+                {
+                    sImgSrc = item.ImageSrc;
+                }
+                <div seq="@item.Seq" class="gbox" style="background:url(@sImgSrc) center center no-repeat;background-size:cover"></div>
+            }
+        </div>
+            <div class="clear"></div>
+            <ul class="gbox_list">
+                <div class="goto_list">
+                    @Html.Raw(ViewBag.PageGotoList)
+                </div>
+            </ul>
+            <div class="clear"></div>
+        </div>
     <center><a href="https://play.google.com/store/apps/details?id=com.tony.mocadev.dolpicapp" target="_blank"><img src="/images/banner_640_150923.jpg" width="300"></a></center>
 	<div class="gbox_side">
         @Html.Action("HotDolPicList", "Pics")
@@ -120,8 +123,8 @@
             location.href = '/Pics/PicView/' + $(this).attr("seq") + "/@((string.IsNullOrEmpty(ViewBag.HashTag) ? CommonVariable.ALL_IMAGE : ViewBag.HashTag))" + "/" + $("#CurPage").val();
         });
         $('.gbox_list li').live('click', function (event) {
-            @*location.href = "/Pics/Main/@((string.IsNullOrEmpty(ViewBag.HashTag) ? CommonVariable.ALL_IMAGE : ViewBag.HashTag))" + "/" + $(this).attr("page");
-            return;*@
+            location.href = "/Pics/Main/@((string.IsNullOrEmpty(ViewBag.HashTag) ? CommonVariable.ALL_IMAGE : ViewBag.HashTag))" + "/" + $(this).attr("page");
+            return;
             if (bExec) {
                 alert("요청을 처리중입니다.잠시만 기다려주세요.");
                 return;
@@ -150,11 +153,18 @@
                 var div = "";
 
                 for (var i = 0; i < imgList.length; i++) {
-                    div = "<div seq='" + imgList[i].Seq + "' class='gbox' style='background:url(" + imgList[i].ImageSrc + ") center center no-repeat;background-size:cover'>";
-                    div += "<div class='gbox_thumb g_t_twitter'>";
-                    div += "<div class='gbox_t_title'>#" + imgList[i].HashTag + "</div>";
-                    div += "<div class='gbox_t_text'><img src='../../images/icon_like.png' height='9'>" + imgList[i].LikeCnt + "</div>";
-                    div += "</div>";
+                    var sImgSrc = "";
+
+                    if (imgList[i].TagUrlType == @((int)e_TagUrlType.twitter))
+                    {
+                        sImgSrc = imgList[i].ImageSrc + ":thumb";
+                    }
+                    else if (imgList[i].TagUrlType == @((int)e_TagUrlType.instagram))
+                    {
+                        sImgSrc = imgList[i].ImageSrc;
+                    }
+
+                    div = "<div seq='" + imgList[i].Seq + "' class='gbox' style='background:url(" + sImgSrc + ") center center no-repeat;background-size:cover'>";
                     div += "</div>";
                     $(".img_list").append(div);
                 }

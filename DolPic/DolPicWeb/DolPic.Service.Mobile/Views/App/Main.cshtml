@@ -4,19 +4,21 @@
 @using DolPic.Common
 
 <style media="screen,projection" type="text/css">
-    #loading {  
-        text-align: center;  
-        color: #67a;  
-        position: absolute;  
-        left: 300px;      
-        top: 300px; 
-    } 
-</style>
+    #loading {
+        text-align: center;
+        color: #67a;
+        position: absolute;
+        left: 300px;
+        top: 300px;
+    }
+</style>
+
 @Html.Partial("_AppTopBar")
 @Html.Action("FavoriteBar", "App")
 <!-- 구글 광고 -->
 @Html.Partial("_GoogleAdTop")
-<div id="loading" style="display:none"><img src="/Images/loader.gif" /><br /><br />로딩하는 중입니다...</div><!-- 갤러리 -->
+<div id="loading" style="display:none"><img src="/Images/loader.gif" /><br /><br />로딩하는 중입니다...</div>
+<!-- 갤러리 -->
 <div class="wrapper">
 	<div class="gbox_gallery">
 	<!-- 갤러리 리스트 -->
@@ -40,7 +42,8 @@
 		@Html.Raw(ViewBag.PageGotoList)
 	</ul>
     <div class="clear"></div>
-	</div>	<div class="gbox_side">
+	</div>
+	<div class="gbox_side">
         @Html.Action("HotDolPicList", "App")
 		<!-- 구글 광고 -->
 		@Html.Partial("_GoogleAd2")
@@ -140,7 +143,9 @@
                     div += "</div>";
                     div += "</div>";
                     $(".img_list").append(div);
-                }                div = "<div class='goto_list'>" + retData.PageGotoList + "</div>";
+                }
+
+                div = "<div class='goto_list'>" + retData.PageGotoList + "</div>";
                 $(".gbox_list").append(div);
 
                 $('html,body').animate({ scrollTop: 0 }, 500);
@@ -158,7 +163,7 @@
     function fnImageDownload() {
         alert("이미지 보기 화면에서 다운로드가 가능합니다.");
     }
-    
+
     $(function () {
         // 웹뷰 통신
         window.dolpic.navibtn(0, 0, 0);

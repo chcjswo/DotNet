@@ -25,6 +25,11 @@
       UP_Image_Select
     </procedure>
 
+    <!-- 즐겨찾기 이미지 조회 -->
+    <procedure id="UP_BookmarkImage_Select" parameterMap="p_image_select" description="즐겨찾기 이미지 조회">
+      UP_BookmarkImage_Select
+    </procedure>
+
     <!-- 초성 리스트 -->
     <procedure id="UP_Initial_List" parameterMap="p_favorite_list" resultClass="dolpic" description="초성 리스트">
       UP_Initial_List

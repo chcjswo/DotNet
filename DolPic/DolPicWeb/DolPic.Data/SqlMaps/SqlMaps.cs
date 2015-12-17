@@ -1,4 +1,4 @@
-﻿/// 2015-12-16 05:28:24
+﻿/// 2015-12-17 11:08:47
 namespace DolPic.Data.SqlMaps
 {
 	public class Admin
@@ -61,6 +61,11 @@ namespace DolPic.Data.SqlMaps
         /// 해당 이미지 조회
 		/// </summary>
 		public const string UP_Image_Select = "UP_Image_Select";
+
+		/// <summary>
+        /// 즐겨찾기 이미지 조회
+		/// </summary>
+		public const string UP_BookmarkImage_Select = "UP_BookmarkImage_Select";
 
 		/// <summary>
         /// 초성 리스트
