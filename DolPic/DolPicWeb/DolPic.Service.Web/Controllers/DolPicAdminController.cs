@@ -15,7 +15,8 @@ namespace DolPic.Service.Web.Controllers
     [AdminAuth(Roles = UserRole.admin)]
     public class DolPicAdminController : CustomController
     {
-        private const string XML_FILE_NAME = "twitter_image.xml";
+        private const string TW_XML_FILE_NAME = "twitter_image.xml";
+        private const string INS_XML_FILE_NAME = "insta_image.xml";
         // DAO
         private readonly IDolPicAdmin _service;
 
@@ -254,7 +255,7 @@ namespace DolPic.Service.Web.Controllers
             if (list.Count > 0)
             {
                 // 지정된 XML문서로 만들고 저장한다.
-                doc.Save(Server.MapPath("~/" + XML_FILE_NAME));
+                doc.Save(Server.MapPath("~/" + TW_XML_FILE_NAME));
             }
         }
         #endregion

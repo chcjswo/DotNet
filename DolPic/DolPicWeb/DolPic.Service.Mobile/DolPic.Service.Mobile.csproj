@@ -46,8 +46,9 @@
     <Reference Include="IBatisNet.DataMapper">
       <HintPath>..\..\Dlls\Ibatis.DataMapper\IBatisNet.DataMapper.dll</HintPath>
     </Reference>
-    <Reference Include="log4net">
-      <HintPath>..\..\Dlls\Ibatis.DataMapper\log4net.dll</HintPath>
+    <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.5\lib\net40-full\log4net.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">

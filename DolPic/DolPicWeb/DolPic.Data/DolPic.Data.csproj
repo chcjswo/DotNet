@@ -31,11 +31,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="IBatisNet.Common">
-      <HintPath>..\..\Dlls\Ibatis.DataMapper\IBatisNet.Common.dll</HintPath>
+    <Reference Include="Castle.DynamicProxy, Version=1.1.5.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\IBatisNet.1.0.0\lib\net20\Castle.DynamicProxy.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="IBatisNet.DataMapper">
-      <HintPath>..\..\Dlls\Ibatis.DataMapper\IBatisNet.DataMapper.dll</HintPath>
+    <Reference Include="IBatisNet.Common, Version=1.6.2.0, Culture=neutral, PublicKeyToken=ed781d9fc396c6ca, processorArchitecture=MSIL">
+      <HintPath>..\packages\IBatisNet.1.0.0\lib\net20\IBatisNet.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IBatisNet.DataMapper, Version=1.6.2.0, Culture=neutral, PublicKeyToken=ed781d9fc396c6ca, processorArchitecture=MSIL">
+      <HintPath>..\packages\IBatisNet.1.0.0\lib\net20\IBatisNet.DataMapper.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -68,6 +74,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Configs\DolPic.Service.SqlMap.config" />
     <EmbeddedResource Include="Configs\providers.config" />
+    <None Include="packages.config" />
     <None Include="SqlMaps\SqlMaps.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>SqlMaps.cs</LastGenOutput>
