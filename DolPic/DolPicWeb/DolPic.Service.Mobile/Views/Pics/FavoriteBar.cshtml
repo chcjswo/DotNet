@@ -56,7 +56,7 @@
             var retData = $.parseJSON(data);
             if (retData.RetCode == 0) {
                 $(".fbar" + seq).remove();
-                $(".in" + seq).text('+');
+                $("#in" + seq).attr('class', 'dolpic_fbtn off');
             } else {
                 alert(retData.RetMsg);
             }

@@ -1,51 +1,27 @@
 ﻿@{
     Layout = null;
-    
+
     var list = ViewBag.DataList;
 }
-
 <!-- 하단 리스트 -->
 <div class="dolpic_warp">
 	<div class="go_top" onClick="location.href='#top'"></div>
 	<div class="wrapper">
-        @{
-            var sPrevInitial = "";
-            var sCurInitial = "";
-            var nLoopCnt = 1;
-            var nCurInitialCnt = 0;
-            
-        }
+        <!-- 리스트 박스 -->
         @foreach (var item in list)
         {
-            sCurInitial = item.Initial;
-            nCurInitialCnt = item.InitialCnt;
-            
-            var sIcon = "+";
-
-            if (item.Seq == item.FavoriteSeq)
-            {
-                sIcon = "♡";
-            }
-            
-            var bEqual = sCurInitial.Equals(sPrevInitial);
-            if (!sCurInitial.Equals(sPrevInitial))
-            {
-                @:<div class="dolpic_box">
-			    @:<span class="tbox on">@sCurInitial</span>
-            }
-			    <span class="tbox"><a href="/Pics/Main/@item.HashTag" class="tbox_a">@item.HashTag</a>
-                    <a href="javascript:void(0);" class="@string.Format("in{0}", item.Seq)" onclick="fnFavoriteInsert('@item.Seq', '@item.HashTag');">@sIcon</a></span>
-            if (nCurInitialCnt == nLoopCnt)
-            {
-                @:<div class="clear"></div></div>
-                nLoopCnt = 1;
-            }
-            else
-            {
-                nLoopCnt++;
-            }
-
-            sPrevInitial = sCurInitial;
+            <div class="dolpic_lbox">
+                <div class="dolpic_ltag">
+                    <!--
+                <img src="../../images/sns_facebook.png" width="12" height="12" alt="Facebook">
+                -->
+                    <img src="../../images/sns_instagram.png" width="12" height="12" alt="Instagram">
+                    <img src="../../images/sns_twitter.png" width="12" height="12" alt="Twitter">
+                </div>
+                <div class="dolpic_limg" style="background:url('@item.ImageSrc') center center no-repeat;background-size:cover"></div>
+                <div class="dolpic_lname" onclick="location.href='/Pics/Main/@item.HashTag';" style="cursor:pointer">@item.HashTag</div>
+                <div id="@string.Format("in{0}", item.Seq)" class="dolpic_fbtn @((item.Seq == item.FavoriteSeq) ? Html.Raw("on") : Html.Raw("off"))" onclick="fnFavoriteInsert('@item.Seq', '@item.HashTag');"></div>
+            </div>
         }
 		<div class="clear"></div>
 	</div>
@@ -79,7 +55,7 @@
         .done(function (data) {
             var retData = $.parseJSON(data);
             if (retData.RetCode == 0) {
-                $(".in" + seq).text('♡');
+                $("#in" + seq).toggleClass('on');
 
                 var div;
                 div = "<span class='fbar" + seq + " tbox'>";

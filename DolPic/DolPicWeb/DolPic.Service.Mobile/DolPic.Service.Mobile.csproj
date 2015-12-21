@@ -157,6 +157,8 @@
     <Content Include="Css\Site.css" />
     <Content Include="Global.asax" />
     <Content Include="Images\ajax-loader.gif" />
+    <Content Include="Images\banner_300_150923.jpg" />
+    <Content Include="Images\banner_640_150923.jpg" />
     <Content Include="Images\bg.png" />
     <Content Include="Images\icon.png" />
     <Content Include="Images\icon_favorite.png" />
