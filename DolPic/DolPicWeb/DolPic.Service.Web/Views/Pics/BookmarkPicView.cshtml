@@ -62,10 +62,15 @@
         });
         $('.btn_good').live('click', function () { fnPicLike(); });
         $('.report').live('click', function () { fnImgReport(); });
-        $('.gbox').hover(
-            function () { $('.gbox_thumb', this).fadeIn(300); },
-            function () { $('.gbox_thumb', this).fadeOut(100); }
-        );
+        $('.gbox').live({
+            mouseenter: function () { $('.gbox_thumb', this).fadeIn(300); $('.gbox_thumb', this).parent("div").addClass('transition'); },
+            mouseleave: function () { $('.gbox_thumb', this).fadeOut(100); $('.gbox_thumb', this).parent("div").removeClass('transition'); }
+        });
+        $('.dolpic_lbox').live({
+            mouseenter: function () { $(this).children('.dolpic_limg').addClass('ihover'); },
+            mouseleave: function () { $(this).children('.dolpic_limg').removeClass('ihover'); }
+        });
+
 
         $('.htag').live('click', function () {
             location.href = "/Pics/BookmarkList/@((string.IsNullOrEmpty(ViewBag.HashTag) ? CommonVariable.ALL_IMAGE : ViewBag.HashTag))/@ViewBag.CurPage";

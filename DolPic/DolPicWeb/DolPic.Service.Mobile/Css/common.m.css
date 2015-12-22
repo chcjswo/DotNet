@@ -1,4 +1,4 @@
-@charset "utf-8";
+﻿@charset "utf-8";
 
 /* Reset CSS - YUI 3.12.0 (build 8655935) */ body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0}table{border-collapse:collapse;border-spacing:0}fieldset,img{border:0}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal}ol,ul{list-style:none}caption,th{text-align:left}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal}q:before,q:after{content:''}abbr,acronym{border:0;font-variant:normal}sup{vertical-align:text-top}sub{vertical-align:text-bottom}input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit}input,textarea,select{*font-size:100%}legend{color:#000}#yui3-css-stamp.cssreset{display:none}
 /* HTML5 display-role reset for older browsers */ article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}
@@ -89,9 +89,9 @@ body{background:url(../images/bg.png) #EDEFF4;color:#282828}
 .dolpic_warp{position:relative;padding:20px 0 16px;background-color:#2E4979;color:#EDEFF4}
 .search_box{width:300px;height:30px;margin:0 auto 20px}
 .search_box input[type=text]{width:300px;height:30px;line-height:30px;border:none;text-indent:10px;border-radius:15px}
-.dolpic_lbox{position:relative;float:left;height:76px;margin:0 2px 12px;background-color:#627AAD;box-shadow:1px 1px 1px #1B396C;cursor:pointer}
+.dolpic_lbox{position:relative;float:left;height:100px;margin:0 2px 12px;background-color:#627AAD;box-shadow:1px 1px 1px #1B396C;cursor:pointer}
 .dolpic_ltag{position:absolute;right:0;top:0;padding:2px 6px;background-color:rgba(0,0,0,.3);z-index:1;border-bottom-left-radius:6px}
-.dolpic_limg{height:50px}
+.dolpic_limg{height:74px}
 .dolpic_lname{height:26px;line-height:26px;padding:0 26px 0 10px;font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;word-wrap:normal}
 .dolpic_fbtn{position:absolute;right:8px;bottom:5px;width:16px;height:16px;background:url(../images/icon_favorite.png) no-repeat center center}
 .dolpic_fbtn.off{-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";filter:alpha(opacity=30);-moz-opacity:0.3;-khtml-opacity:0.3;opacity:0.3}

@@ -6,7 +6,7 @@
 	<div class="gbox_gallery">
 		<div class="vbox">
 			<div class="like_box" style="display:none"></div>
-            @{   
+            @{
                 var sUrl = "";
                 var sSiteName = "";
 
@@ -29,7 +29,8 @@
 		<ul class="gbox_list">
 			<li>메인</li>
 			<li seq="@Model.NextSeq" class="@(Model.NextSeq == 0 ? "on" : "")">&lt; 이전 페이지</li>
-			<li class="on"><span id="hashtag" class="htag" style="cursor:pointer">@Model.HashTag</span></li>			<li seq="@Model.PrevSeq" class="@(Model.PrevSeq == 0 ? "on" : "")">다음 페이지 &gt;</li>
+			<li class="on"><span id="hashtag" class="htag" style="cursor:pointer">@Model.HashTag</span></li>
+			<li seq="@Model.PrevSeq" class="@(Model.PrevSeq == 0 ? "on" : "")">다음 페이지 &gt;</li>
 		</ul>
 		<div id="like" class="@(Model.IsLike == 0 ? "btn_good" : "btn_good on")">좋아요 @string.Format("{0:N0}", Model.LikeCnt)</div>
 		<div class="clear"></div>
@@ -38,7 +39,8 @@
 		<!-- 구글 광고 -->
 		@Html.Partial("_GoogleAd1")
         <!-- 소셜 댓글 -->
-		@Html.Partial("_FacebookComment", ViewData)	</div>
+		@Html.Partial("_FacebookComment", ViewData)
+	</div>
 	<div class="gbox_side">
         @Html.Action("HotDolPicList", "Pics")
 		<!-- 구글 광고 -->
@@ -60,11 +62,16 @@
         });
         $('.btn_good').live('click', function () { fnPicLike(); });
         $('.report').live('click', function () { fnImgReport(); });
-        $('.gbox').hover(
-            function () { $('.gbox_thumb', this).fadeIn(300); },
-            function () { $('.gbox_thumb', this).fadeOut(100); }
-        );
-        
+        $('.gbox').live({
+            mouseenter: function () { $('.gbox_thumb', this).fadeIn(300); $('.gbox_thumb', this).parent("div").addClass('transition'); },
+            mouseleave: function () { $('.gbox_thumb', this).fadeOut(100); $('.gbox_thumb', this).parent("div").removeClass('transition'); }
+        });
+        $('.dolpic_lbox').live({
+            mouseenter: function () { $(this).children('.dolpic_limg').addClass('ihover'); },
+            mouseleave: function () { $(this).children('.dolpic_limg').removeClass('ihover'); }
+        });
+
+
         $('.htag').live('click', function () {
             location.href = "/Pics/Main/@((string.IsNullOrEmpty(ViewBag.HashTag) ? CommonVariable.ALL_IMAGE : ViewBag.HashTag))/@ViewBag.CurPage";
         });

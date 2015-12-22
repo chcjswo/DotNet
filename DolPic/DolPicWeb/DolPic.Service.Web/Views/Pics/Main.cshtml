@@ -71,6 +71,11 @@
             mouseenter: function () { $('.gbox_thumb', this).fadeIn(300); $('.gbox_thumb', this).parent("div").addClass('transition'); },
             mouseleave: function () { $('.gbox_thumb', this).fadeOut(100); $('.gbox_thumb', this).parent("div").removeClass('transition'); }
         });
+        $('.dolpic_lbox').live({
+            mouseenter: function () { $(this).children('.dolpic_limg').addClass('ihover'); },
+            mouseleave: function () { $(this).children('.dolpic_limg').removeClass('ihover'); }
+        });
+
         $('.gbox').live('click', function () {
             location.href = '/Pics/PicView/' + $(this).attr("seq") + "/@((string.IsNullOrEmpty(ViewBag.HashTag) ? CommonVariable.ALL_IMAGE : ViewBag.HashTag))" + "/" + $("#CurPage").val();
         });
