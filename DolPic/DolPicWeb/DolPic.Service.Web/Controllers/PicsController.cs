@@ -92,12 +92,14 @@ namespace DolPic.Service.Web.Controllers
         /// <summary>
         /// 즐겨찾기 리스트
         /// </summary>
+        /// <param name="CurTag">현재 태그 이름</param>
         /// <returns></returns>
-        public ActionResult FavoriteBar()
+        public ActionResult FavoriteBar(string CurTag)
         {
             var UserId = DolPicCookie.CookieRead(this.Request, CommonVariable.COOKIE_NAME);
             ViewBag.User = UserId;
             ViewBag.DataList = _service.GetFavoriteList(UserId);
+            ViewBag.CurTag = CurTag;
 
             return View();
         }

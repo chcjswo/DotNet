@@ -32,12 +32,12 @@
             <div class="dolpic_lbox">
                 <div class="dolpic_ltag">
                     <!--
-                    <img src="../../images/sns_facebook.png" width="12" height="12" alt="Facebook">
+                    <img src="/images/sns_facebook.png" width="12" height="12" alt="Facebook">
                     -->
-                    <img src="../../images/sns_instagram.png" width="12" height="12" alt="Instagram">
-                    <img src="../../images/sns_twitter.png" width="12" height="12" alt="Twitter">
+                    <img src="/images/sns_instagram.png" width="12" height="12" alt="Instagram">
+                    <img src="/images/sns_twitter.png" width="12" height="12" alt="Twitter">
                 </div>
-                <div class="dolpic_limg" style="background:url('@item.ImageSrc') center center no-repeat;background-size:cover"></div>
+                <div class="dolpic_limg" style="background:url('@item.ImageSrc') center center no-repeat;background-size:cover" onclick="location.href='/App/Main/@item.HashTag';"></div>
                 <div class="dolpic_lname" onclick="location.href='/App/Main/@item.HashTag';" style="cursor:pointer">@item.HashTag</div>
                 <div id="@string.Format("in{0}", item.Seq)" class="dolpic_fbtn @((item.Seq == item.FavoriteSeq) ? Html.Raw("on") : Html.Raw("off"))" onclick="fnFavoriteInsert('@item.Seq', '@item.HashTag');"></div>
             </div>

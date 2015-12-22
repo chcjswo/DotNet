@@ -1,6 +1,6 @@
 ﻿@model DolPic.Data.Pos.DolPicPo
 @using DolPic.Common
-@Html.Action("FavoriteBar", "Pics")
+@Html.Action("FavoriteBar", "Pics", new { CurTag = Model.HashTag })
 <!-- 갤러리 -->
 <div class="wrapper">
     <div class="gbox_gallery">
@@ -73,7 +73,7 @@
 
 
         $('.htag').live('click', function () {
-            location.href = "/Pics/BookmarkList/@((string.IsNullOrEmpty(ViewBag.HashTag) ? CommonVariable.ALL_IMAGE : ViewBag.HashTag))/@ViewBag.CurPage";
+            location.href = "/Pics/BookmarkList/@Model.HashTag/@ViewBag.CurPage";
         });
 
         $('.gbox_list li').live('click', function () {

@@ -1,7 +1,7 @@
 ﻿@model DolPic.Data.Pos.DolPicPo
 @using DolPic.Common
 @Html.Partial("_TopBar")
-@Html.Action("FavoriteBar", "Pics")
+@Html.Action("FavoriteBar", "Pics", new { CurTag = Model.HashTag })
 <!-- 구글 광고 -->
 @Html.Partial("_GoogleAdTop")
 <!-- 갤러리 -->

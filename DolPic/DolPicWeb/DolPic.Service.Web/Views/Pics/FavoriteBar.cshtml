@@ -2,6 +2,7 @@
     Layout = null;
 
     var list = ViewBag.DataList;
+    var curTag = ViewBag.CurTag;
 }
 
 <!-- 즐겨찾기 -->
@@ -17,10 +18,17 @@
             @:<span class="tbox"><a href="/Pics/BookmarkList" class="tbox_a">즐찾 모아보기</a></span>
         }
 	    <span class="tbox"><a href="/" class="tbox_a">최신 업로드 이미지</a></span>
+        @if (!string.IsNullOrEmpty(curTag))
+        {
+            <span class="tbox" onclick="location.href='/Pics/Main/@curTag';">@curTag <span class="tbox_tag">♥</span></span>
+        }
         <span class="flist">
         @foreach (var item in list)
         {
-            @:<span class="@string.Format("fbar{0} tbox", item.Seq)">@Html.Raw(string.Format("<a href=\"/Pics/Main/{0}\" class=\"tbox_a\">{0}</a>", item.HashTag)) <a href="javascript:void(0);" onclick="fnFavoriteDelete('@item.Seq');" class="tbox_tag">X</a></span>
+            if (!item.HashTag.Equals(curTag))
+            {
+                @:<span class="@string.Format("fbar{0} tbox", item.Seq)">@Html.Raw(string.Format("<a href=\"/Pics/Main/{0}\" class=\"tbox_a\">{0}</a>", item.HashTag)) <a href="javascript:void(0);" onclick="fnFavoriteDelete('@item.Seq');" class="tbox_tag">X</a></span>
+            }
         }
         </span>
 	    <div class="clear"></div>

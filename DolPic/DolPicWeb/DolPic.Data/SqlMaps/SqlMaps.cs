@@ -1,4 +1,4 @@
-﻿/// 2015-12-17 11:08:47
+﻿/// 2015-12-22 05:37:24
 namespace DolPic.Data.SqlMaps
 {
 	public class Admin

@@ -1,7 +1,7 @@
 ﻿@model DolPic.Data.Pos.DolPicPo
 @using DolPic.Common
 @Html.Partial("_TopBar")
-@Html.Action("FavoriteBar", "Pics")
+@Html.Action("FavoriteBar", "Pics", new { CurTag = Model.HashTag })
 <!-- 구글 광고 -->
 @Html.Partial("_GoogleAdTop")
 <!-- 갤러리 -->
@@ -9,7 +9,7 @@
 	<div class="gbox_gallery">
 		<div class="vbox">
 			<div class="like_box" style="display:none"></div>
-            @{   
+            @{
                 var sImgSrc = "";
                 var sSiteName = "";
 
@@ -31,14 +31,16 @@
 		<!-- 갤러리 네비게이션 -->
 		<ul class="gbox_list">
 			<li>메인</li>
-			<li seq="@Model.NextSeq" class="@(Model.NextSeq == 0 ? "on" : "")">&lt; 이전 페이지</li>			<li seq="@Model.PrevSeq" class="@(Model.PrevSeq == 0 ? "on" : "")">다음 페이지 &gt;</li>
+			<li seq="@Model.NextSeq" class="@(Model.NextSeq == 0 ? "on" : "")">&lt; 이전 페이지</li>
+			<li seq="@Model.PrevSeq" class="@(Model.PrevSeq == 0 ? "on" : "")">다음 페이지 &gt;</li>
 		</ul>
 		<div id="like" class="@(Model.IsLike == 0 ? "btn_good" : "btn_good on")">좋아요 @string.Format("{0:N0}", Model.LikeCnt)</div>
 		<div class="clear"></div>
         <!-- 추천 이미지 리스트 -->
         @Html.Action("RecommPicList", "Pics", new { ImgNo = Model.CurSeq, HashTag = Model.HashTag, CurPage = ViewBag.CurPage })
         <!-- 소셜 댓글 -->
-		@Html.Partial("_FacebookComment")	</div>
+		@Html.Partial("_FacebookComment")
+	</div>
     <center><a href="https://play.google.com/store/apps/details?id=com.tony.mocadev.dolpicapp" target="_blank"><img src="/images/banner_640_150923.jpg" width="300"></a></center>
 	<div class="gbox_side">
         @Html.Action("HotDolPicList", "Pics")
