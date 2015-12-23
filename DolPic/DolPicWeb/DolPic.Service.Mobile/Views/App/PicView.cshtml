@@ -1,7 +1,7 @@
 ﻿@model DolPic.Data.Pos.DolPicPo
 @using DolPic.Common
 @Html.Partial("_AppTopBar")
-@Html.Action("FavoriteBar", "App")
+@Html.Action("FavoriteBar", "Pics", new { CurTag = Model.HashTag })
 <!-- 구글 광고 -->
 @Html.Partial("_GoogleAdTop")
 <!-- 갤러리 -->
@@ -9,7 +9,7 @@
 	<div class="gbox_gallery">
 		<div class="vbox">
 			<div class="like_box" style="display:none"></div>
-            @{   
+            @{
                 var sUrl = "";
                 var sSiteName = "";
 
@@ -31,14 +31,16 @@
 		<!-- 갤러리 네비게이션 -->
 		<ul class="gbox_list">
 			<li>메인</li>
-			<li seq="@Model.NextSeq" class="@(Model.NextSeq == 0 ? "on" : "")">&lt; 이전 페이지</li>			<li seq="@Model.PrevSeq" class="@(Model.PrevSeq == 0 ? "on" : "")">다음 페이지 &gt;</li>
+			<li seq="@Model.NextSeq" class="@(Model.NextSeq == 0 ? "on" : "")">&lt; 이전 페이지</li>
+			<li seq="@Model.PrevSeq" class="@(Model.PrevSeq == 0 ? "on" : "")">다음 페이지 &gt;</li>
 		</ul>
 		<div id="like" class="@(Model.IsLike == 0 ? "btn_good" : "btn_good on")">좋아요 @string.Format("{0:N0}", Model.LikeCnt)</div>
 		<div class="clear"></div>
         <!-- 추천 이미지 리스트 -->
         @Html.Action("RecommPicList", "App", new { ImgNo = Model.CurSeq, HashTag = Model.HashTag, CurPage = ViewBag.CurPage })
         <!-- 소셜 댓글 -->
-		@Html.Partial("_FacebookComment")	</div>
+		@Html.Partial("_FacebookComment")
+	</div>
 	<div class="gbox_side">
         @Html.Action("HotDolPicList", "App")
 		<!-- 구글 광고 -->
@@ -49,54 +51,61 @@
 	<div class="clear"></div>
 </div>
 @Html.HiddenFor(m => m.CurSeq, new { @Value = Model.CurSeq })
+
 <script>
-    $(document).ready(function () {
-        var gboxDefault = ($('.gbox_gallery').width() - 24) / 3;
-        var gboxWide = ($('.gbox_gallery').width() - 40) / 5;
-        if (window.innerHeight > window.innerWidth) {
-            $('.gbox').css({
-                width: gboxDefault,
-                height: gboxDefault
-            });
-            $('.hot_box').removeClass('wide');
-            $('.ad_wrap').removeClass('wide');
-            $('#gboxRecmd4, #gboxRecmd5').hide();
-        } else {
-            $('.gbox').css({
-                width: gboxWide,
-                height: gboxWide
-            });
-            $('.hot_box').addClass('wide');
-            $('.ad_wrap').addClass('wide');
-            $('#gboxRecmd4, #gboxRecmd5').show();
-        }
-        if ($('.fbar').height() < 75) {
-            $('.fbar_wrap').removeClass('more');
-            $('.btn_more').hide();
-        } else {
-            $('.fbar_wrap').addClass('more');
-            $('.btn_more').show();
-        }
-        $('.btn_more').live('click', function () {
-            $('.fbar_wrap').removeClass('more');
-            $('.btn_more').hide();
-        });
+$(document).ready(function() {
+	var gboxDefault = ($('.gbox_gallery').width() - 24) / 3;
+	var gboxWide = ($('.gbox_gallery').width() - 40) / 5;
+	var lboxDefault = ($('.dolpic_warp .wrapper').width() - 12) / 2;
+	var lboxWide = ($('.dolpic_warp .wrapper').width() - 12) / 3;
+	if(window.innerHeight > window.innerWidth){
+		$('.gbox').css({
+			width: gboxDefault,
+			height: gboxDefault
+		});
+		$('.dolpic_lbox').css({
+			width: lboxDefault
+		});
+		$('.hot_box').removeClass('wide');
+		$('.ad_wrap').removeClass('wide');
+		$('#gboxRecmd4, #gboxRecmd5').hide();
+	} else {
+		$('.gbox').css({
+			width: gboxWide,
+			height: gboxWide
+		});
+		$('.dolpic_lbox').css({
+			width: lboxWide
+		});
+		$('.hot_box').addClass('wide');
+		$('.ad_wrap').addClass('wide');
+		$('#gboxRecmd4, #gboxRecmd5').show();
+	}
+    if($('.fbar').height() < 75) {
+		$('.fbar_wrap').removeClass('more');
+		$('.btn_more').hide();
+	} else {
+		$('.fbar_wrap').addClass('more');
+		$('.btn_more').show();
+	}
+	$('.btn_more').live('click',function() {
+		$('.fbar_wrap').removeClass('more');
+		$('.btn_more').hide();
+	});
+	$('.vbox').live('doubletap', function () {
+	    fnPicLike();
+	});
 
-        $('.vbox').live('doubletap', function () {
-            fnPicLike();
-        });
-
-        // 화면 전환시 새로고침
-        var windowWidth = $(window).width();
-        $(window).resize(function () {
-            if (windowWidth != $(window).width()) {
-                location.reload();
-                return;
-            }
-        });
-    });
+	// 화면 전환시 새로고침
+	var windowWidth = $(window).width();
+	$(window).resize(function() {
+		if(windowWidth != $(window).width()){
+		location.reload();
+		return;
+		}
+	});
+});
 </script>
-
 <script type="text/javascript">
     var bExec = false;
     $(function () {
@@ -259,7 +268,7 @@
     function fnRightView() {
         fnImgViewGo(@Model.PrevSeq);
     }
-    
+
     $(function () {
         // 웹뷰 통신
         window.dolpic.navibtn(@Model.NextSeq, @Model.PrevSeq, 1);

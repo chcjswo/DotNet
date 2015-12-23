@@ -1,15 +1,13 @@
 ﻿using DolPic.Biz.DolPicService;
 using DolPic.Common;
-using DolPic.Data.Daos;
 using DolPic.Data.Pos;
 using DolPic.Data.Vos;
 using DolPic.Service.Web.Common;
 using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Text;
 using System.Web.Mvc;
 using DolPic.Service.Web.Filters;
 using DolPic.Service.Web.Models;
+using System;
 
 namespace DolPic.Service.Web.Controllers
 {

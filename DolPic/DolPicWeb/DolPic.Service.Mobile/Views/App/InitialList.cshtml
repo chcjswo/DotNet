@@ -19,12 +19,9 @@
     <script src="/Js/jquery.mobile-events.min.js"></script>
     </head>
 <body>
-<div><br /></div>
-<!-- 구글 광고 -->
-@Html.Partial("_GoogleAdTop")
+
 <!-- 하단 리스트 -->
 <div class="dolpic_warp">
-    <div class="go_top" onClick="location.href='#top'"></div>
     <div class="wrapper">
         <!-- 리스트 박스 -->
         @foreach (var item in list)
@@ -47,6 +44,56 @@
     <div class="sponsor">돌픽은 SNS 이미지를 모아주는 사이트입니다.</div>
     <div class="sponsor">Icons made by <a href="http://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>
 </div>
+
+<script>
+$(document).ready(function() {
+	var gboxDefault = ($('.gbox_gallery').width() - 24) / 3;
+	var gboxWide = ($('.gbox_gallery').width() - 40) / 5;
+	var lboxDefault = ($('.dolpic_warp .wrapper').width() - 12) / 2;
+	var lboxWide = ($('.dolpic_warp .wrapper').width() - 12) / 3;
+	if(window.innerHeight > window.innerWidth){
+		$('.gbox').css({
+			width: gboxDefault,
+			height: gboxDefault
+		});
+		$('.dolpic_lbox').css({
+			width: lboxDefault
+		});
+		$('.hot_box').removeClass('wide');
+		$('.ad_wrap').removeClass('wide');
+	} else {
+		$('.gbox').css({
+			width: gboxWide,
+			height: gboxWide
+		});
+		$('.dolpic_lbox').css({
+			width: lboxWide
+		});
+		$('.hot_box').addClass('wide');
+		$('.ad_wrap').addClass('wide');
+	}
+    if($('.fbar').height() < 75) {
+		$('.fbar_wrap').removeClass('more');
+		$('.btn_more').hide();
+	} else {
+		$('.fbar_wrap').addClass('more');
+		$('.btn_more').show();
+	}
+	$('.btn_more').live('click',function() {
+		$('.fbar_wrap').removeClass('more');
+		$('.btn_more').hide();
+	});
+
+	// 화면 전환시 새로고침
+	var windowWidth = $(window).width();
+	$(window).resize(function() {
+		if(windowWidth != $(window).width()){
+		location.reload();
+		return;
+		}
+	});
+});
+</script>
 
 <script type="text/javascript">
     var bExec = false;

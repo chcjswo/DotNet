@@ -147,6 +147,7 @@
     <Compile Include="Common\CustomController.cs" />
     <Compile Include="Common\CustomWebViewPage.cs" />
     <Compile Include="Common\CustomApiController.cs" />
+    <Compile Include="Common\ServerMgr.cs" />
     <Compile Include="Controllers\DolPicImgController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\DolPicAdminController.cs" />

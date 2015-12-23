@@ -10,5 +10,5 @@ namespace DolPic.Service.Mobile.Models
     {
         public IList<DolPicVo> ImageList;
         public string PageGotoList;
-    } 
+    }
 }

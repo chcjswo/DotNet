@@ -1,7 +1,7 @@
 ﻿@model DolPic.Data.Pos.DolPicPo
 @using DolPic.Common
 @Html.Partial("_AppTopBar")
-@Html.Action("FavoriteBar", "App")
+@Html.Action("FavoriteBar", "Pics", new { CurTag = Model.HashTag })
 <!-- 구글 광고 -->
 @Html.Partial("_GoogleAdTop")
 <!-- 갤러리 -->
@@ -51,52 +51,60 @@
 	<div class="clear"></div>
 </div>
 @Html.HiddenFor(m => m.CurSeq, new { @Value = Model.CurSeq })
+
 <script>
-    $(document).ready(function () {
-        var gboxDefault = ($('.gbox_gallery').width() - 24) / 3;
-        var gboxWide = ($('.gbox_gallery').width() - 40) / 5;
-        if (window.innerHeight > window.innerWidth) {
-            $('.gbox').css({
-                width: gboxDefault,
-                height: gboxDefault
-            });
-            $('.hot_box').removeClass('wide');
-            $('.ad_wrap').removeClass('wide');
-            $('#gboxRecmd4, #gboxRecmd5').hide();
-        } else {
-            $('.gbox').css({
-                width: gboxWide,
-                height: gboxWide
-            });
-            $('.hot_box').addClass('wide');
-            $('.ad_wrap').addClass('wide');
-            $('#gboxRecmd4, #gboxRecmd5').show();
-        }
-        if ($('.fbar').height() < 75) {
-            $('.fbar_wrap').removeClass('more');
-            $('.btn_more').hide();
-        } else {
-            $('.fbar_wrap').addClass('more');
-            $('.btn_more').show();
-        }
-        $('.btn_more').live('click', function () {
-            $('.fbar_wrap').removeClass('more');
-            $('.btn_more').hide();
-        });
+$(document).ready(function() {
+	var gboxDefault = ($('.gbox_gallery').width() - 24) / 3;
+	var gboxWide = ($('.gbox_gallery').width() - 40) / 5;
+	var lboxDefault = ($('.dolpic_warp .wrapper').width() - 12) / 2;
+	var lboxWide = ($('.dolpic_warp .wrapper').width() - 12) / 3;
+	if(window.innerHeight > window.innerWidth){
+		$('.gbox').css({
+			width: gboxDefault,
+			height: gboxDefault
+		});
+		$('.dolpic_lbox').css({
+			width: lboxDefault
+		});
+		$('.hot_box').removeClass('wide');
+		$('.ad_wrap').removeClass('wide');
+		$('#gboxRecmd4, #gboxRecmd5').hide();
+	} else {
+		$('.gbox').css({
+			width: gboxWide,
+			height: gboxWide
+		});
+		$('.dolpic_lbox').css({
+			width: lboxWide
+		});
+		$('.hot_box').addClass('wide');
+		$('.ad_wrap').addClass('wide');
+		$('#gboxRecmd4, #gboxRecmd5').show();
+	}
+    if($('.fbar').height() < 75) {
+		$('.fbar_wrap').removeClass('more');
+		$('.btn_more').hide();
+	} else {
+		$('.fbar_wrap').addClass('more');
+		$('.btn_more').show();
+	}
+	$('.btn_more').live('click',function() {
+		$('.fbar_wrap').removeClass('more');
+		$('.btn_more').hide();
+	});
+	$('.vbox').live('doubletap', function () {
+	    fnPicLike();
+	});
 
-        $('.vbox').live('doubletap', function () {
-            fnPicLike();
-        });
-
-        // 화면 전환시 새로고침
-        var windowWidth = $(window).width();
-        $(window).resize(function () {
-            if (windowWidth != $(window).width()) {
-                location.reload();
-                return;
-            }
-        });
-    });
+	// 화면 전환시 새로고침
+	var windowWidth = $(window).width();
+	$(window).resize(function() {
+		if(windowWidth != $(window).width()){
+		location.reload();
+		return;
+		}
+	});
+});
 </script>
 
 <script type="text/javascript">

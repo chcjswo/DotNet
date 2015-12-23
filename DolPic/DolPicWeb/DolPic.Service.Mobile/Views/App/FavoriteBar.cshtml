@@ -2,6 +2,7 @@
     Layout = null;
 
     var list = ViewBag.DataList;
+    var curTag = ViewBag.CurTag;
 }
 
 <!-- 즐겨찾기 -->
@@ -9,21 +10,28 @@
     <div class="fbar_wrap">
         @if (string.IsNullOrEmpty(ViewBag.User))
         {
-		    @:<span class="tbox on"><strong>즐겨찾기</strong> 로그인 후 사용가능</span>
+            @:<span class="tbox on"><strong>즐겨찾기</strong> 로그인 후 사용가능</span>
         }
         else
         {
             @:<span class="tbox on"><strong>즐겨찾기</strong></span>
             @:<span class="tbox"><a href="/App/BookmarkList" class="tbox_a">즐찾 모아보기</a></span>
         }
-	    <span class="tbox"><a href="/App/Main" class="tbox_a">최신 업로드 이미지</a></span>
-        <span class="flist">
-        @foreach (var item in list)
+        <span class="tbox"><a href="/App/Main" class="tbox_a">최신 업로드 이미지</a></span>
+        @if (!string.IsNullOrEmpty(curTag))
         {
-            @:<span class="@string.Format("fbar{0} tbox", item.Seq)">@Html.Raw(string.Format("<a href=\"/App/Main/{0}\" class=\"tbox_a\">{0}</a>", item.HashTag)) <a href="javascript:void(0);" onclick="fnFavoriteDelete('@item.Seq');">X</a></span>
+            <span class="tbox" onclick="location.href='/App/Main/@curTag';">@curTag <span class="tbox_tag">♥</span></span>
         }
+        <span class="flist">
+            @foreach (var item in list)
+            {
+                if (!item.HashTag.Equals(curTag))
+                {
+                    @:<span class="@string.Format("fbar{0} tbox", item.Seq)">@Html.Raw(string.Format("<a href=\"/App/Main/{0}\" class=\"tbox_a\">{0}</a>", item.HashTag)) <a href="javascript:void(0);" onclick="fnFavoriteDelete('@item.Seq');" class="tbox_tag">X</a></span>
+            }
+            }
         </span>
-	    <div class="clear"></div>
+        <div class="clear"></div>
         <div class="btn_more">▼ 즐겨찾기 펼치기</div>
     </div>
 </div>
