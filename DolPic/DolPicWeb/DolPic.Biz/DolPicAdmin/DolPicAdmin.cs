@@ -129,5 +129,27 @@ namespace DolPic.Biz.DolPicAdmin
 
             return _dao.DolPicUserFavoriteList(entity);
         }
+
+        /// <summary>
+        /// 모든 이미지 리스트 조회
+        /// </summary>
+        /// <returns></returns>
+        public IList<DolPicVo> GetDolPicAllImageList()
+        {
+            return _dao.DolPicAllImageList();
+        }
+
+        /// <summary>
+        /// 짤린 이미지 삭제
+        /// </summary>
+        /// <param name="a_nImgNo">이미지 고유번호</param>
+        /// <returns></returns>
+        public void DolPicNoImageDelete(int a_nImgNo)
+        {
+            DolPicVo entity = new DolPicVo();
+            entity.Seq = a_nImgNo;
+
+            _dao.DolPicNoImageDelete(entity);
+        }
     }
 }

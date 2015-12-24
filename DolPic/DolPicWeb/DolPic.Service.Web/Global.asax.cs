@@ -17,7 +17,7 @@ namespace DolPic.Service.Web
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-            //ServerMgr.Inst.Init();
+            ServerMgr.Inst.Init();
         }
     }
 }

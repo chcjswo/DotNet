@@ -1,4 +1,4 @@
-﻿/// 2015-12-22 05:37:24
+﻿/// 2015-12-24 06:11:51
 namespace DolPic.Data.SqlMaps
 {
 	public class Admin
@@ -42,6 +42,16 @@ namespace DolPic.Data.SqlMaps
         /// 회원 즐겨찾기 리스트
 		/// </summary>
 		public const string UPA_UserFavorite_List = "UPA_UserFavorite_List";
+
+		/// <summary>
+        /// 모든 이미지 리스트
+		/// </summary>
+		public const string UPA_DolPicAllImage_List = "UPA_DolPicAllImage_List";
+
+		/// <summary>
+        /// 짤리 이미지 삭제
+		/// </summary>
+		public const string UPA_DolPicNoImage_Delete = "UPA_DolPicNoImage_Delete";
 
 	}
 

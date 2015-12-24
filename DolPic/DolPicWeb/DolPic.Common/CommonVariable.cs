@@ -11,6 +11,6 @@ namespace DolPic.Common
 
         public const string ALL_IMAGE = "All";
 
-        public const string FB_DEFAULT_IMG = "/images/icon.png";
+        public const string FB_DEFAULT_IMG = "http://dolpic.kr/images/icon.png";
     }
 }

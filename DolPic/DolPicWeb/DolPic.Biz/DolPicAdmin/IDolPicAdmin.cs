@@ -62,5 +62,18 @@ namespace DolPic.Biz.DolPicAdmin
         /// <param name="a_sUserId">유저 아이디</param>
         /// <returns></returns>
         IList<UserVo> GetUserFavoriteList(string a_sUserId);
+
+        /// <summary>
+        /// 모든 이미지 리스트 조회
+        /// </summary>
+        /// <returns></returns>
+        IList<DolPicVo> GetDolPicAllImageList();
+
+        /// <summary>
+        /// 짤린 이미지 삭제
+        /// </summary>
+        /// <param name="a_nSeq">이미지 고유번호</param>
+        /// <returns></returns>
+        void DolPicNoImageDelete(int a_nHashTagNo);
     }
 }

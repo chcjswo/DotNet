@@ -39,7 +39,7 @@ namespace DolPic.Data.Daos
         /// <returns></returns>
         public void DolPicImageInsert(DolPicVo entity)
         {
-            DolPicServiceDataMapper.Instance().QueryForObject<DolPicVo>("UPA_DolPicImage_Insert", entity);
+            DolPicServiceDataMapper.Instance().QueryForObject<DolPicVo>(SqlMaps.Admin.UPA_DolPicImage_Insert, entity);
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace DolPic.Data.Daos
         /// <returns></returns>
         public void DolPicImageDelete(DolPicVo entity)
         {
-            DolPicServiceDataMapper.Instance().QueryForObject<DolPicVo>("UPA_DolPicImage_Delete", entity);
+            DolPicServiceDataMapper.Instance().QueryForObject<DolPicVo>(SqlMaps.Admin.UPA_DolPicImage_Delete, entity);
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace DolPic.Data.Daos
         /// <returns></returns>
         public IList<UserVo> DolPicUserList(UserVo entity)
         {
-            return DolPicServiceDataMapper.Instance().QueryForList<UserVo>("UPA_User_List", entity);
+            return DolPicServiceDataMapper.Instance().QueryForList<UserVo>(SqlMaps.Admin.UPA_User_List, entity);
         }
 
         /// <summary>
@@ -75,7 +75,25 @@ namespace DolPic.Data.Daos
         /// <returns></returns>
         public IList<UserVo> DolPicUserFavoriteList(UserVo entity)
         {
-            return DolPicServiceDataMapper.Instance().QueryForList<UserVo>("UPA_UserFavorite_List", entity);
+            return DolPicServiceDataMapper.Instance().QueryForList<UserVo>(SqlMaps.Admin.UPA_UserFavorite_List, entity);
+        }
+
+        /// <summary>
+        /// 모든 이미지 리스트
+        /// </summary>
+        /// <returns></returns>
+        public IList<DolPicVo> DolPicAllImageList()
+        {
+            return DolPicServiceDataMapper.Instance().QueryForList<DolPicVo>(SqlMaps.Admin.UPA_DolPicAllImage_List, null);
+        }
+
+        /// <summary>
+        /// 짤린 이미지 삭제
+        /// </summary>
+        /// <returns></returns>
+        public void DolPicNoImageDelete(DolPicVo entity)
+        {
+            DolPicServiceDataMapper.Instance().QueryForObject<DolPicVo>(SqlMaps.Admin.UPA_DolPicNoImage_Delete, entity);
         }
 
     }
