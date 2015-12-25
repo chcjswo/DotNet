@@ -24,19 +24,24 @@ namespace DolPic.Service.Web.Common
         {
         }
 
+        /// <summary>
+        /// 서버 시작시 실행
+        /// </summary>
         public void Init()
         {
             // create a delegate of MethodInvoker poiting to
             // our Foo function.
             MethodInvoker simpleDelegate = new MethodInvoker(DailyCheck);
 
-            // Calling Foo Async
+            // Calling DailyCheck Async
             simpleDelegate.BeginInvoke(null, null);
         }
 
+        /// <summary>
+        /// 서버 다운시 실행
+        /// </summary>
         public void Fin()
         {
-
         }
 
         public delegate void MethodInvoker();
@@ -102,7 +107,6 @@ namespace DolPic.Service.Web.Common
             {
                 img = item.ImageSrc;
                 seq = item.Seq;
-
 
                 log.DebugFormat("img == {0}", img);
                 log.DebugFormat("seq == {0}", seq);

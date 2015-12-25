@@ -1,7 +1,12 @@
-﻿using DolPic.Data.Daos;
+﻿using DolPic.Biz.DolPicAdmin;
+using DolPic.Data.Daos;
 using DolPic.Data.Vos;
 using DolPic.Service.Web.Common;
 using DolPic.Service.Web.Models;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net;
 
 namespace DolPic.Service.Web.Controllers
 {
@@ -27,5 +32,6 @@ namespace DolPic.Service.Web.Controllers
             AdminDao dao = new AdminDao();
             dao.DolPicImageInsert(entity);
         }
+
     }
 }

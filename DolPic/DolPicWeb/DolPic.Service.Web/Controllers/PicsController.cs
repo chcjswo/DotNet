@@ -8,6 +8,11 @@ using System.Web.Mvc;
 using DolPic.Service.Web.Filters;
 using DolPic.Service.Web.Models;
 using System;
+using DolPic.Biz.DolPicAdmin;
+using System.Collections.Generic;
+using System.Net;
+using System.IO;
+using DolPic.Data.Daos;
 
 namespace DolPic.Service.Web.Controllers
 {
@@ -434,5 +439,82 @@ namespace DolPic.Service.Web.Controllers
         }
         #endregion
 
+
+        public string DolPicNoImageDelete()
+        {
+            DeleteEmptyImage();
+            return "";
+        }
+
+        /// <summary>
+        /// 이미지 조회
+        /// </summary>
+        private void DeleteEmptyImage()
+        {
+            DolPicAdmin dao = new DolPicAdmin();
+            var list = dao.GetDolPicAllImageList();
+            // 짤린 이미지 검사
+            CheckServer(list);
+        }
+
+        /// <summary>
+        /// 이미지가 짤렸는지 검색하고 짤린 이미지라면 삭제
+        /// </summary>
+        /// <param name="a_list">이미지 리스트</param>
+        /// <returns></returns>
+        private string CheckServer(IList<DolPicVo> a_list)
+        {
+            string sResult = null;
+
+            HttpWebRequest HttpWReq = null;
+            HttpWebResponse HttpWRes = null;
+            Stream ResStream = null;
+            StreamReader SRResult = null;
+            var img = "";
+            var seq = 0;
+
+            DolPicVo entity = new DolPicVo();
+            AdminDao dao = new AdminDao();
+
+            foreach (var item in a_list)
+            {
+                img = item.ImageSrc;
+                seq = item.Seq;
+
+                log.DebugFormat("img == {0}", img);
+                log.DebugFormat("seq == {0}", seq);
+
+                try
+                {
+                    //WebRequest 객체를 세팅합니다.
+                    HttpWReq = (HttpWebRequest)WebRequest.Create(img);
+                    //호출 결과를 가져옵니다.
+                    HttpWRes = (HttpWebResponse)HttpWReq.GetResponse();
+
+                    //결과 스트림을 생성합니다.
+                    ResStream = HttpWRes.GetResponseStream();
+                    //스트림리더로 읽습니다.
+                    SRResult = new StreamReader(ResStream);
+                    //스트림에 있는 것을 문자열에 할당합니다.
+                    sResult = SRResult.ReadToEnd().Trim();
+
+                    //열린 모든 객체를 닫습니다.
+                    HttpWRes.Close();
+                    ResStream.Close();
+                    SRResult.Close();
+                }
+                catch (Exception ex)
+                {
+                    // 짤린 이미지 삭제
+                    entity.Seq = seq;
+                    dao.DolPicNoImageDelete(entity);
+
+                    log.DebugFormat("no img == {0}", img);
+                    log.DebugFormat("no seq == {0}", seq);
+                }
+            }
+
+            return sResult;
+        }
     }
 }
