@@ -134,10 +134,27 @@ namespace DolPicCrawler
                 // 이미지 처리
                 ImageProc(nTagUrlType);
             }
-            
+
             // 시간 측정 끝
             sw.Stop();
             lblWatch.Text = (sw.ElapsedMilliseconds / 1000.0F).ToString() + " 초 로딩";
+        }
+
+        /// <summary>
+        /// 이미지 삭제
+        /// </summary>
+        private void ImageDelete()
+        {
+            // 시간 측정 시작
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+
+            // 이미지 삭제 호출
+            ImageService.getInstance.ImageDelete();
+
+            // 시간 측정 끝
+            sw.Stop();
+            txtLog.Text += (sw.ElapsedMilliseconds / 1000.0F).ToString() + " 초 로딩";
         }
 
         /// <summary>
@@ -362,6 +379,7 @@ namespace DolPicCrawler
             try
             {
                 ImageGet();
+                //ImageDelete();
             }
             catch (Exception ex)
             {
@@ -369,6 +387,7 @@ namespace DolPicCrawler
                 ShowError(ex);
             }
         }
+
 
         /// <summary>
         /// XML 정보 읽기
@@ -447,7 +466,7 @@ namespace DolPicCrawler
         {
             this.Visible = true; // 폼의 표시
             if (this.WindowState == FormWindowState.Minimized)
-                this.WindowState = FormWindowState.Normal; // 최소화를 멈춘다 
+                this.WindowState = FormWindowState.Normal; // 최소화를 멈춘다
             this.Activate(); // 폼을 활성화 시킨다
             this.notifyIcon1.Visible = false;
         }

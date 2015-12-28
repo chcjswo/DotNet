@@ -9,8 +9,10 @@ namespace DolPicCrawler.Image
     public class ImageService
     {
         private static readonly ImageService _imageService;
-        //private const string CON_IMAGE_SEND_URL = "http://localhost:3281/api/DolPicImg/";
-        private const string CON_IMAGE_SEND_URL = "http://www.dolpic.kr/api/DolPicImg/";
+        private const string CON_IMAGE_SEND_URL = "http://localhost:3281/api/DolPicImg/";
+        //private const string CON_IMAGE_SEND_URL = "http://www.dolpic.kr/api/DolPicImg/";
+        //private const string CON_IMAGE_DELETE_URL = "http://www.dolpic.kr/api/DolPicNoImageDelete/";
+        private const string CON_IMAGE_DELETE_URL = "http://localhost:3281/api/DolPicImg/";
 
         /// <summary>
         /// static 초기화
@@ -29,7 +31,6 @@ namespace DolPicCrawler.Image
         }
 
         #region 이미지 저장하기
-
         /// <summary>
         /// 이미지 저장하기
         /// </summary>
@@ -65,7 +66,24 @@ namespace DolPicCrawler.Image
                 }
             }
         }
+        #endregion
 
+        #region 이미지 삭제하기
+        /// <summary>
+        /// 이미지 저장하고 바로 호출
+        /// </summary>
+        public void ImageDelete()
+        {
+            using (var client = new HttpClient())
+            {
+                var result = client.PostAsync(CON_IMAGE_DELETE_URL,
+                new
+                {
+                    Seq = 1
+                }
+                , new JsonMediaTypeFormatter()).Result;
+            }
+        }
         #endregion
 
         private ImageService() { }
