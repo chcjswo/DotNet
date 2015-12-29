@@ -20,6 +20,8 @@ $RECYCLE.BIN/
 # dir
 [Bb]in/
 [Oo]bj/
+LogFiles/
+Reports/
 
 # asp.net
 Web.Debug.config
@@ -55,3 +57,4 @@ Web.Release.config
 Network Trash Folder
 Temporary Items
 .apdisk
+LogFiles

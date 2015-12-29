@@ -291,6 +291,8 @@ namespace DolPicCrawler
             {
                 // 이미지 가져오기
                 ImageGet();
+                // 짤린 이미지 삭제
+                ImageDelete();
 
                 lblChkTime.Text = string.Format("{0} 에 체크 완료", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
 
@@ -378,8 +380,10 @@ namespace DolPicCrawler
 
             try
             {
+                // 이미지 가져오기
                 ImageGet();
-                //ImageDelete();
+                // 짤린 이미지 삭제
+                ImageDelete();
             }
             catch (Exception ex)
             {

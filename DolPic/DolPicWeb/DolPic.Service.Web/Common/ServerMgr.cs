@@ -1,12 +1,7 @@
-﻿
-using DolPic.Biz.DolPicAdmin;
-using DolPic.Data.Daos;
-using DolPic.Data.Vos;
+﻿using DolPic.Common;
 using log4net;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Net;
+using System.Net.Http;
+using System.Net.Http.Formatting;
 using System.Threading;
 
 namespace DolPic.Service.Web.Common
@@ -50,98 +45,27 @@ namespace DolPic.Service.Web.Common
         {
             while (true)
             {
-                int year = DateTime.Now.Year;
-                var month = DateTime.Now.Month;
-                var day = DateTime.Now.Date;
+                // 짤린 이미지 삭제
+                DolPicNoImageDelete();
 
-                //if (Convert.ToDateTime(string.Format("{0}-{1}-{2} 17:45:00")) <= DateTime.Now)
-                //{
-                //    log.DebugFormat("year == ", year);
-                //    log.DebugFormat("month == ", month);
-                //    log.DebugFormat("day == ", day);
-                //}
-
-                DeleteEmptyImage();
-
-                log.DebugFormat("DateTime3 == ", DateTime.Now);
-                log.DebugFormat("year == ", year);
-                log.DebugFormat("month == ", month);
-                log.DebugFormat("day == ", day);
-
-                // sleep for 10 seconds.
+                // sleep for 24 hours.
                 Thread.Sleep(1000 * 60 * 60 * 24);
             }
         }
 
         /// <summary>
-        /// 이미지 조회
+        /// 짤린 이미지 삭제 호출
         /// </summary>
-        private void DeleteEmptyImage()
+        private void DolPicNoImageDelete()
         {
-            DolPicAdmin dao = new DolPicAdmin();
-            var list = dao.GetDolPicAllImageList();
-            // 짤린 이미지 검사
-            CheckServer(list);
-        }
-
-        /// <summary>
-        /// 이미지가 짤렸는지 검색하고 짤린 이미지라면 삭제
-        /// </summary>
-        /// <param name="a_list">이미지 리스트</param>
-        /// <returns></returns>
-        private string CheckServer(IList<DolPicVo> a_list)
-        {
-            string sResult = null;
-
-            HttpWebRequest HttpWReq = null;
-            HttpWebResponse HttpWRes = null;
-            Stream ResStream = null;
-            StreamReader SRResult = null;
-            var img = "";
-            var seq = 0;
-
-            DolPicVo entity = new DolPicVo();
-            AdminDao dao = new AdminDao();
-
-            foreach (var item in a_list)
+            using (var client = new HttpClient())
             {
-                img = item.ImageSrc;
-                seq = item.Seq;
-
-                log.DebugFormat("img == {0}", img);
-                log.DebugFormat("seq == {0}", seq);
-
-                try
+                client.DefaultRequestHeaders.ExpectContinue = false;
+                var result = client.PostAsync(string.Format("{0}/Pics/DolPicNoImageDelete", Domains.WebDomain),
+                new
                 {
-                    //WebRequest 객체를 세팅합니다.
-                    HttpWReq = (HttpWebRequest)WebRequest.Create(img);
-                    //호출 결과를 가져옵니다.
-                    HttpWRes = (HttpWebResponse)HttpWReq.GetResponse();
-
-                    //결과 스트림을 생성합니다.
-                    ResStream = HttpWRes.GetResponseStream();
-                    //스트림리더로 읽습니다.
-                    SRResult = new StreamReader(ResStream);
-                    //스트림에 있는 것을 문자열에 할당합니다.
-                    sResult = SRResult.ReadToEnd().Trim();
-
-                    //열린 모든 객체를 닫습니다.
-                    HttpWRes.Close();
-                    ResStream.Close();
-                    SRResult.Close();
-                }
-                catch (Exception ex)
-                {
-                    // 짤린 이미지 삭제
-                    entity.Seq = seq;
-                    dao.DolPicNoImageDelete(entity);
-
-                    log.DebugFormat("no img == {0}", img);
-                    log.DebugFormat("no seq == {0}", seq);
-                }
+                }, new JsonMediaTypeFormatter()).Result;
             }
-
-            return sResult;
         }
     }
 }
