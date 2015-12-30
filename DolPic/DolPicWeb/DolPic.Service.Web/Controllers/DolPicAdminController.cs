@@ -16,7 +16,7 @@ namespace DolPic.Service.Web.Controllers
     public class DolPicAdminController : CustomController
     {
         private const string TW_XML_FILE_NAME = "twitter_image.xml";
-        private const string INS_XML_FILE_NAME = "instagram_image_tmp.xml";
+        private const string INS_XML_FILE_NAME = "instagram_image.xml";
 
         private const string TW_TAG_NAME = "twitter";
         private const string INS_TAG_NAME = "instagram";
