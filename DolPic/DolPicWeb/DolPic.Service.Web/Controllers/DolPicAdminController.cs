@@ -16,7 +16,10 @@ namespace DolPic.Service.Web.Controllers
     public class DolPicAdminController : CustomController
     {
         private const string TW_XML_FILE_NAME = "twitter_image.xml";
-        private const string INS_XML_FILE_NAME = "insta_image.xml";
+        private const string INS_XML_FILE_NAME = "instagram_image_tmp.xml";
+
+        private const string TW_TAG_NAME = "twitter";
+        private const string INS_TAG_NAME = "instagram";
         // DAO
         private readonly IDolPicAdmin _service;
 
@@ -66,6 +69,18 @@ namespace DolPic.Service.Web.Controllers
         public ActionResult HashTagMakeForm()
         {
             return View();
+        }
+
+        /// <summary>
+        /// 해쉬태그 수정 화면
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult HashTagUpdateForm(int seq)
+        {
+            var list = _service.HashTagSelect(seq);
+            DolPicVo vo = list[0];
+
+            return View(vo);
         }
 
         /// <summary>
@@ -122,10 +137,10 @@ namespace DolPic.Service.Web.Controllers
 
         #region 어드민 동작
         [HttpPost]
-        public ActionResult HashTagInsert(string HashTag, string Initial)
+        public ActionResult HashTagInsert(string HashTag, string Initial, string InstaHashTag)
         {
             // 해쉬태그 입력
-            var nRetCode = _service.HashTagInsert(HashTag, Initial);
+            var nRetCode = _service.HashTagInsert(HashTag, Initial, InstaHashTag);
             var result = new { RetCode = 99, RetMsg = "" };
 
             switch (nRetCode)
@@ -160,17 +175,64 @@ namespace DolPic.Service.Web.Controllers
 
             return Json(JsonConvert.SerializeObject(result));
         }
+        [HttpPost]
+        public ActionResult HashTagUpdate(int Seq, string HashTag, string Initial, string InstaHashTag)
+        {
+            // 해쉬태그 입력
+            var nRetCode = _service.HashTagUpdate(Seq, HashTag, Initial, InstaHashTag);
+            var result = new { RetCode = 99, RetMsg = "" };
+
+            switch (nRetCode)
+            {
+                // 등록 성공
+                case (int)e_RetCode.success:
+                    result = new
+                    {
+                        RetCode = nRetCode,
+                        RetMsg = "정상적으로 수정 했습니다."
+                    };
+                    break;
+
+                // 이미 등록된 경우
+                case (int)e_RetCode.has:
+                    result = new
+                    {
+                        RetCode = nRetCode,
+                        RetMsg = "이미 등록된 태그 입니다."
+                    };
+                    break;
+
+                // DB에러
+                case (int)e_RetCode.db_error:
+                    result = new
+                    {
+                        RetCode = nRetCode,
+                        RetMsg = "에러가 발생했습니다. 다시 한번 시도해주세요."
+                    };
+                    break;
+            }
+
+            return Json(JsonConvert.SerializeObject(result));
+        }
 
         [HttpPost]
         public ActionResult HashTagXmlMake()
         {
             // 해쉬태그 리스트 조회
             var list = _service.GetHashTagList();
+            // 인스타그램 리스트 조회
+            var instaList = _service.GetInstagramHashTagList();
+
             var result = new { RetCode = 0, RetMsg = "" };
 
             try
             {
-                MakeXml(list);
+                // 해쉬태그 xml  만들기
+                MakeXml(list, TW_TAG_NAME, TW_XML_FILE_NAME);
+
+                // 인스타그램 해쉬태그 xml  만들기
+                MakeXml(instaList, INS_TAG_NAME, INS_XML_FILE_NAME);
+
                 result = new
                 {
                     RetCode = 0,
@@ -228,14 +290,14 @@ namespace DolPic.Service.Web.Controllers
         /// 해쉬태그 XML문서 만들고 저장하기
         /// </summary>
         /// <param name="list">해쉬태그 리스트</param>
-        private void MakeXml(IList<DolPicVo> list)
+        private void MakeXml(IList<DolPicVo> list, string a_sTagName, string a_sFileName)
         {
             //DOM 문서 생성
             XmlDocument doc = new XmlDocument();
             //선언문
             XmlDeclaration dec = doc.CreateXmlDeclaration("1.0", "EUC-KR", "no");
             //주석
-            XmlElement root = doc.CreateElement("twitter");
+            XmlElement root = doc.CreateElement(a_sTagName);
             //결합
             doc.AppendChild(dec);
             doc.AppendChild(root);
@@ -255,7 +317,7 @@ namespace DolPic.Service.Web.Controllers
             if (list.Count > 0)
             {
                 // 지정된 XML문서로 만들고 저장한다.
-                doc.Save(Server.MapPath("~/" + TW_XML_FILE_NAME));
+                doc.Save(Server.MapPath("~/" + a_sFileName));
             }
         }
         #endregion

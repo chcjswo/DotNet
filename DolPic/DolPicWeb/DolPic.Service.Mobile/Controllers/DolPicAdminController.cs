@@ -33,7 +33,7 @@ namespace DolPic.Service.Mobile.Controllers
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public ActionResult MenuList()
@@ -116,15 +116,15 @@ namespace DolPic.Service.Mobile.Controllers
             ViewBag.CurPage = page ?? 1;
 
             return View();
-        } 
+        }
         #endregion
 
         #region 어드민 동작
         [HttpPost]
-        public ActionResult HashTagInsert(string HashTag, string Initial)
+        public ActionResult HashTagInsert(string HashTag, string Initial, string InstaHashTag)
         {
             // 해쉬태그 입력
-            var nRetCode = _service.HashTagInsert(HashTag, Initial);
+            var nRetCode = _service.HashTagInsert(HashTag, Initial, InstaHashTag);
             var result = new { RetCode = 99, RetMsg = "" };
 
             switch (nRetCode)
@@ -195,7 +195,7 @@ namespace DolPic.Service.Mobile.Controllers
             _service.HashTagDelete(Seq);
 
             return RedirectToAction("HashTagList");
-        } 
+        }
 
         [HttpPost]
         public ActionResult DolPicImageDelete(int HashTagNo, int ImgNo)
@@ -256,7 +256,7 @@ namespace DolPic.Service.Mobile.Controllers
                 // 지정된 XML문서로 만들고 저장한다.
                 doc.Save(Server.MapPath("~/" + XML_FILE_NAME));
             }
-        } 
+        }
         #endregion
 
     }

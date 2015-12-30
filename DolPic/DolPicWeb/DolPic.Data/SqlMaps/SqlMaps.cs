@@ -1,4 +1,4 @@
-﻿/// 2015-12-24 06:11:51
+﻿/// 2015-12-30 06:06:32
 namespace DolPic.Data.SqlMaps
 {
 	public class Admin
@@ -9,14 +9,29 @@ namespace DolPic.Data.SqlMaps
 		public const string UPA_HashTag_List = "UPA_HashTag_List";
 
 		/// <summary>
+        /// 인스타그램 해쉬태그 리스트 조회
+		/// </summary>
+		public const string UPA_InstagramHashTag_List = "UPA_InstagramHashTag_List";
+
+		/// <summary>
         /// 해쉬태그 입력
 		/// </summary>
 		public const string UPA_HashTag_Insert = "UPA_HashTag_Insert";
 
 		/// <summary>
+        /// 해쉬태그 수정
+		/// </summary>
+		public const string UPA_HashTag_Update = "UPA_HashTag_Update";
+
+		/// <summary>
         /// 해쉬태그 삭제
 		/// </summary>
 		public const string UPA_HashTag_Delete = "UPA_HashTag_Delete";
+
+		/// <summary>
+        /// 해쉬태그 조회
+		/// </summary>
+		public const string UPA_HashTag_Select = "UPA_HashTag_Select";
 
 		/// <summary>
         /// 이미지 입력

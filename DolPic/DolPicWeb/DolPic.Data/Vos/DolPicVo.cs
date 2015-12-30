@@ -25,6 +25,11 @@ namespace DolPic.Data.Vos
         public string Initial { get; set; }
 
         /// <summary>
+        /// 인스타그램 해쉬태그
+        /// </summary>
+        public string InstagramHashTag { get; set; }
+
+        /// <summary>
         /// 이미지 경로
         /// </summary>
         public string ImageSrc { get; set; }

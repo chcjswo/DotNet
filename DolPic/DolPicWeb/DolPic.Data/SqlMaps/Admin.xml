@@ -15,14 +15,29 @@
       UPA_HashTag_List
     </procedure>
 
+    <!-- 인스타그램 해쉬태그 리스트 조회 -->
+    <procedure id="UPA_InstagramHashTag_List" resultClass="dolpic" description="인스타그램 해쉬태그 리스트 조회">
+      UPA_InstagramHashTag_List
+    </procedure>
+
     <!-- 해쉬태그 입력 -->
     <procedure id="UPA_HashTag_Insert" parameterMap="p_hashtag_insert" description="해쉬태그 입력">
       UPA_HashTag_Insert
     </procedure>
 
+    <!-- 해쉬태그 수정 -->
+    <procedure id="UPA_HashTag_Update" parameterMap="p_hashtag_Update" description="해쉬태그 수정">
+      UPA_HashTag_Update
+    </procedure>
+
     <!-- 해쉬태그 삭제 -->
     <procedure id="UPA_HashTag_Delete" parameterMap="p_hashtag_delete" description="해쉬태그 삭제">
       UPA_HashTag_Delete
+    </procedure>
+
+    <!-- 해쉬태그 조회 -->
+    <procedure id="UPA_HashTag_Select" parameterMap="p_dolpic_seq" resultClass="dolpic" description="해쉬태그 조회">
+      UPA_HashTag_Select
     </procedure>
 
     <!-- 이미지 입력 -->
@@ -66,6 +81,15 @@
     <parameterMap id="p_hashtag_insert" class="dolpic">
       <parameter property="HashTag" column="HashTag" />
       <parameter property="Initial" column="Initial" />
+      <parameter property="InstagramHashTag" column="InstagramHashTag" />
+      <parameter property="RetCode" column="RetCode" direction="Output" />
+    </parameterMap>
+
+    <parameterMap id="p_hashtag_Update" class="dolpic">
+      <parameter property="Seq" column="Seq" />
+      <parameter property="HashTag" column="HashTag" />
+      <parameter property="Initial" column="Initial" />
+      <parameter property="InstagramHashTag" column="InstagramHashTag" />
       <parameter property="RetCode" column="RetCode" direction="Output" />
     </parameterMap>
 

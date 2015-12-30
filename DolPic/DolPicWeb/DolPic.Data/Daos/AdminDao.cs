@@ -16,6 +16,15 @@ namespace DolPic.Data.Daos
         }
 
         /// <summary>
+        /// 인스타그램 해쉬태그 리스트
+        /// </summary>
+        /// <returns></returns>
+        public IList<DolPicVo> InstagramHashTagList(DolPicVo entity)
+        {
+            return DolPicServiceDataMapper.Instance().QueryForList<DolPicVo>(SqlMaps.Admin.UPA_InstagramHashTag_List, entity);
+        }
+
+        /// <summary>
         /// 해쉬태그 입력
         /// </summary>
         /// <returns></returns>
@@ -25,12 +34,30 @@ namespace DolPic.Data.Daos
         }
 
         /// <summary>
+        /// 해쉬태그 수정
+        /// </summary>
+        /// <returns></returns>
+        public void HashTagUpdate(DolPicVo entity)
+        {
+            DolPicServiceDataMapper.Instance().QueryForObject<DolPicVo>(SqlMaps.Admin.UPA_HashTag_Update, entity);
+        }
+
+        /// <summary>
         /// 해쉬태그 삭제
         /// </summary>
         /// <returns></returns>
         public void HashTagDelete(DolPicVo entity)
         {
             DolPicServiceDataMapper.Instance().QueryForObject<DolPicVo>(SqlMaps.Admin.UPA_HashTag_Delete, entity);
+        }
+
+        /// <summary>
+        /// 해쉬태그 조회
+        /// </summary>
+        /// <returns></returns>
+        public IList<DolPicVo> HashTagSelect(DolPicVo entity)
+        {
+            return DolPicServiceDataMapper.Instance().QueryForList<DolPicVo>(SqlMaps.Admin.UPA_HashTag_Select, entity);
         }
 
         /// <summary>

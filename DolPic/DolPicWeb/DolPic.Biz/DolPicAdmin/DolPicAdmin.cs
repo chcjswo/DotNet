@@ -28,6 +28,17 @@ namespace DolPic.Biz.DolPicAdmin
         }
 
         /// <summary>
+        /// 인스타그램 해쉬태그 리스트 조회
+        /// </summary>
+        /// <returns></returns>
+        public IList<DolPicVo> GetInstagramHashTagList()
+        {
+            DolPicVo entity = new DolPicVo();
+
+            return _dao.InstagramHashTagList(entity);
+        }
+
+        /// <summary>
         /// 이미지 리스트 조회
         /// </summary>
         /// <param name="a_nSeq">해쉬태그 고유번호</param>
@@ -79,14 +90,37 @@ namespace DolPic.Biz.DolPicAdmin
         /// </summary>
         /// <param name="a_sHashTag">해쉬태그</param>
         /// <param name="a_sInitia">초성</param>
+        /// <param name="a_sInstaHashTag">인스타그램 해쉬태그</param>
         /// <returns></returns>
-        public int HashTagInsert(string a_sHashTag, string a_sInitia)
+        public int HashTagInsert(string a_sHashTag, string a_sInitia, string a_sInstaHashTag)
         {
             DolPicVo entity = new DolPicVo();
             entity.HashTag = a_sHashTag;
             entity.Initial = a_sInitia;
+            entity.InstagramHashTag = a_sInstaHashTag;
 
             _dao.HashTagInsert(entity);
+
+            return entity.RetCode;
+        }
+
+        /// <summary>
+        /// 해쉬태그 수정
+        /// </summary>
+        /// <param name="a_nHashTagNo">해쉬태그 고유번호</param>
+        /// <param name="a_sHashTag">해쉬태그</param>
+        /// <param name="a_sInitia">초성</param>
+        /// <param name="a_sInstaHashTag">인스타그램 해쉬태그</param>
+        /// <returns></returns>
+        public int HashTagUpdate(int a_nHashTagNo, string a_sHashTag, string a_sInitia, string a_sInstaHashTag)
+        {
+            DolPicVo entity = new DolPicVo();
+            entity.Seq = a_nHashTagNo;
+            entity.HashTag = a_sHashTag;
+            entity.Initial = a_sInitia;
+            entity.InstagramHashTag = a_sInstaHashTag;
+
+            _dao.HashTagUpdate(entity);
 
             return entity.RetCode;
         }
@@ -102,6 +136,19 @@ namespace DolPic.Biz.DolPicAdmin
             entity.Seq = a_nHashTagNo;
 
             _dao.HashTagDelete(entity);
+        }
+
+        /// <summary>
+        /// 해쉬태그 조회
+        /// </summary>
+        /// <param name="a_nHashTagNo">해쉬태그 고유번호</param>
+        /// <returns></returns>
+        public IList<DolPicVo> HashTagSelect(int a_nHashTagNo)
+        {
+            DolPicVo entity = new DolPicVo();
+            entity.Seq = a_nHashTagNo;
+
+            return _dao.HashTagSelect(entity);
         }
 
         /// <summary>

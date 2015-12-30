@@ -1,26 +1,27 @@
-﻿@{
-    ViewBag.Title = "해쉬태그 만들기";
+﻿@model DolPic.Data.Vos.DolPicVo
+@{
+    ViewBag.Title = "해쉬태그 수정하기";
     Layout = "~/Views/Shared/_Admin/_Layout.cshtml";
 }
 
-태그 : <input type="text" size="30" class="tag" />
+태그 : <input type="text" size="30" class="tag" value="@Model.HashTag" />
 <br />
-초성 : <input type="text" size="5" class="initial" maxlength="1" />
+초성 : <input type="text" size="5" class="initial" maxlength="1" value="@Model.Initial" />
 <br />
-인스타그램 태그 : <input type="text" size="30" class="instaTag" />
+인스타그램 태그 : <input type="text" size="30" class="instaTag" value="@Model.InstagramHashTag" />
 <br />
-<input type="button" value="만들어" class="make" />
+<input type="button" value="수정해" class="make" />
 <input type="button" value="닫기" onclick="self.close();" />
 @section scripts
 {
     <script type="text/javascript">
         var bExec = false;
         $(function () {
-            $('.make').click(function () { fnHashTagInsert(); });
+            $('.make').click(function () { fnHashTagUpdate(); });
             $('.tag').focus();
         });
 
-        function fnHashTagInsert() {
+        function fnHashTagUpdate() {
             if (bExec) {
                 alert("요청을 처리중입니다.잠시만 기다려주세요.");
                 return;
@@ -40,10 +41,11 @@
             bExec = true;
 
             $.ajax({
-                url: "/DolPicAdmin/HashTagInsert",
+                url: "/DolPicAdmin/HashTagUpdate",
                 type: "POST",
                 dataType: "json",
                 data: {
+                    "Seq": @Model.Seq,
                     "HashTag": $('.tag').val(),
                     "Initial": $('.initial').val(),
                     "InstaHashTag": $('.instaTag').val()

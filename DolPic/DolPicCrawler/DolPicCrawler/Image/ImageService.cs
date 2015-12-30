@@ -74,15 +74,13 @@ namespace DolPicCrawler.Image
         /// </summary>
         public void ImageDelete()
         {
-            Console.WriteLine("ImageDelete call ~~ ");
-
             using (var client = new HttpClient())
             {
+                client.DefaultRequestHeaders.ExpectContinue = false;
                 var result = client.PostAsync(CON_IMAGE_DELETE_URL,
                 new
                 {
-                }
-                , new JsonMediaTypeFormatter()).Result;
+                }, new JsonMediaTypeFormatter()).Result;
             }
         }
         #endregion

@@ -53,7 +53,7 @@
         var bExec = false;
         $(function () {
             $('.make').click(function () {
-                window.open("HashTagMakeForm", "popupWindow", "width=400,height=150,scrollbars=no");
+                window.open("HashTagMakeForm", "popupWindow", "width=400,height=200,scrollbars=no");
             });
             $('.xml_make').click(function () { fnXmlMake(); })
             $('.update').click(function () { fnHaghTagUpdate($(this).attr("seq")); })
@@ -90,8 +90,7 @@
         }
 
         function fnHaghTagUpdate(seq) {
-            $('#frm').attr('action', 'HashTagUpdate');
-            alert(seq);
+            window.open("HashTagUpdateForm?seq=" + seq, "popupWindow", "width=400,height=200,scrollbars=no");
         }
 
         function fnHaghTagDelete(seq) {
