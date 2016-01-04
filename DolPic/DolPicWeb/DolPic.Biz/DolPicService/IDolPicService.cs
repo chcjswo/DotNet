@@ -24,8 +24,9 @@ namespace DolPic.Biz.DolPicService
         /// 초성 리스트 조회
         /// </summary>
         /// <param name="a_sUserId">유저 아이디</param>
+        /// <param name="a_sSearchDol">검색할 아이돌</param>
         /// <returns></returns>
-        IList<DolPicVo> GetInitialList(string a_sUserId);
+        IList<DolPicVo> GetInitialList(string a_sUserId, string a_sSearchDol);
 
         /// <summary>
         /// 핫 돌픽 리스트 조회

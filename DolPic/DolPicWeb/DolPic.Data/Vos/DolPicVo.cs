@@ -75,6 +75,7 @@ namespace DolPic.Data.Vos
         public short IsLike { get; set; }
         public short UserRole { get; set; }
         public short IsView { get; set; }
+        public string SearchDol { get; set; }
 
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -19,7 +20,7 @@ namespace DolPicCrawler.HashTag
 
         private const string CON_IMAGE_URL = "https://instagram.com/{0}";
         //private const string CON_IMAGE_URL = "https://instagram.com/explore/tags/{0}";
-        
+
         private const string CON_MATCH_TAG = "\"display_src\":\"(?<ImageSrc>.*?)\".*?";
 
         /// <summary>
@@ -67,21 +68,28 @@ namespace DolPicCrawler.HashTag
             // 해쉬 태그대로 검색
             foreach (var tag in a_listInstagramHashTag)
             {
-                var nHashTagNo = a_listNo[nLoopCnt++];
-
-                //URI로부터 요청을 생성한다
-                request = WebRequest.Create(string.Format(CON_IMAGE_URL, tag));
-
-                //요청을 보내고 응답을 받는다
-                response = request.GetResponse();
-
-                //응답을 스트림으로 얻어온다
-                resStream = response.GetResponseStream();
-
-                using (resReader = new StreamReader(resStream, System.Text.Encoding.Default))
+                try
                 {
-                    // 결과물에서 이미지 URL 추출
-                    ImageSearch(resReader.ReadToEnd(), nHashTagNo, ref a_dImage);
+                    var nHashTagNo = a_listNo[nLoopCnt++];
+
+                    //URI로부터 요청을 생성한다
+                    request = WebRequest.Create(string.Format(CON_IMAGE_URL, tag));
+
+                    //요청을 보내고 응답을 받는다
+                    response = request.GetResponse();
+
+                    //응답을 스트림으로 얻어온다
+                    resStream = response.GetResponseStream();
+
+                    using (resReader = new StreamReader(resStream, System.Text.Encoding.Default))
+                    {
+                        // 결과물에서 이미지 URL 추출
+                        ImageSearch(resReader.ReadToEnd(), nHashTagNo, ref a_dImage);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
                 }
             }
 

@@ -7,6 +7,10 @@
 <div class="dolpic_warp">
     <div class="go_top" onClick="location.href='#top'"></div>
     <div class="wrapper">
+        <div class="search_box">
+            <input type="text" placeholder="검색" class="search">
+        </div>
+        <div class="list_box">
         <!-- 리스트 박스 -->
         @foreach (var item in list)
         {
@@ -23,6 +27,7 @@
                 <div id="@string.Format("in{0}", item.Seq)" class="dolpic_fbtn @((item.Seq == item.FavoriteSeq) ? Html.Raw("on") : Html.Raw("off"))" onclick="fnFavoriteInsert('@item.Seq', '@item.HashTag');"></div>
             </div>
         }
+        </div>
         <div class="clear"></div>
     </div>
     <div class="sponsor">돌픽은 SNS 이미지를 모아주는 사이트입니다.</div>
@@ -31,6 +36,42 @@
 
 <script type="text/javascript">
     var bExec = false;
+
+    $(function () {
+        $(".search").keydown(function (key) {
+            if (key.keyCode == 13) {
+                fnSearchDol();
+            }
+        });
+    });
+
+    function fnSearchDol() {
+        if (bExec) {
+            alert("요청을 처리중입니다.잠시만 기다려주세요.");
+            return;
+        }
+
+        bExec = true;
+
+        $.ajax({
+            url: "/Pics/InitialSearchList",
+            type: "POST",
+            dataType: "json",
+            data: {
+                "SearchDol": $(".search").val()
+            }
+        })
+        .done(function (data) {
+            var retData = $.parseJSON(data);
+            $('.list_box').empty();
+            $('.list_box').append(retData.list);
+            bExec = false;
+        })
+        .fail(function () {
+            alert("실행중 에러가 발생했습니다.");
+            bExec = false;
+        });
+    }
 
     function fnFavoriteInsert(seq, tag) {
         if ("@ViewBag.User" == "") {

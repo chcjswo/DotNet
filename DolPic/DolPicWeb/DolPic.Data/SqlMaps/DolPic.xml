@@ -31,7 +31,7 @@
     </procedure>
 
     <!-- 초성 리스트 -->
-    <procedure id="UP_Initial_List" parameterMap="p_favorite_list" resultClass="dolpic" description="초성 리스트">
+    <procedure id="UP_Initial_List" parameterMap="p_initial_list" resultClass="dolpic" description="초성 리스트">
       UP_Initial_List
     </procedure>
 
@@ -129,6 +129,11 @@
       <parameter property="UserId" column="UserId" />
       <parameter property="RetCode" column="RetCode" direction="Output" />
       <parameter property="LikeCnt" column="LikeCnt" direction="Output" />
+    </parameterMap>
+
+    <parameterMap id="p_initial_list" class="dolpic">
+      <parameter property="UserId" column="UserId" />
+      <parameter property="SearchDol" column="SearchDol" />
     </parameterMap>
 
     <parameterMap id="p_favorite_list" class="dolpic">

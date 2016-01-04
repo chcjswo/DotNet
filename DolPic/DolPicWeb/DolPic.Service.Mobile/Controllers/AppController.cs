@@ -159,7 +159,7 @@ namespace DolPic.Service.Mobile.Controllers
             ViewBag.User = UserId;
 
             // 초성 리스트 조회
-            ViewBag.DataList = _service.GetInitialList(UserId);
+            ViewBag.DataList = _service.GetInitialList(UserId, string.Empty);
 
             return View();
         }

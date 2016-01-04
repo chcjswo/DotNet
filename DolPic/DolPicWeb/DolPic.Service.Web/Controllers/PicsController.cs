@@ -15,6 +15,7 @@ using System.IO;
 using DolPic.Data.Daos;
 using System.Net.Http;
 using System.Net.Http.Formatting;
+using System.Text;
 
 namespace DolPic.Service.Web.Controllers
 {
@@ -169,7 +170,7 @@ namespace DolPic.Service.Web.Controllers
             ViewBag.User = UserId;
 
             // 초성 리스트 조회
-            ViewBag.DataList = _service.GetInitialList(UserId);
+            ViewBag.DataList = _service.GetInitialList(UserId, string.Empty);
 
             return View();
         }
@@ -438,6 +439,40 @@ namespace DolPic.Service.Web.Controllers
             }
 
             return Json(JsonConvert.SerializeObject(po));
+        }
+
+        /// <summary>
+        /// 검색 아이돌 리스트 Ajax
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult InitialSearchList(string SearchDol)
+        {
+            var UserId = DolPicCookie.CookieRead(this.Request, CommonVariable.COOKIE_NAME);
+
+            // 초성 리스트 조회
+            var list = _service.GetInitialList(UserId, SearchDol);
+
+            StringBuilder sb = new StringBuilder();
+
+            foreach (var item in list)
+            {
+                sb.Append("<div class='dolpic_lbox'>");
+                sb.Append("<div class='dolpic_ltag'>");
+                sb.Append("<img src = '/images/sns_instagram.png' width='12' height='12' alt='Instagram'>");
+                sb.Append("<img src = '/images/sns_twitter.png' width='12' height='12' alt='Twitter'>");
+                sb.Append("</div>");
+                sb.AppendFormat("<div class='dolpic_limg' style='background:url({0}) center center no-repeat;background-size:cover' onclick=\'location.href='//Pics//Main//{1}';\'></div>",
+                    item.ImageSrc, item.HashTag);
+                sb.AppendFormat("<div class='dolpic_lname' onclick='location.href='/Pics/Main/{0}';' style='cursor:pointer'>{0}</div>", item.HashTag);
+                if (item.Seq == item.FavoriteSeq)
+                    sb.AppendFormat("<div id = 'in{0}' class='dolpic_fbtn on' onclick=\'fnFavoriteInsert('{0}', '{1}');\'></div>", item.Seq, item.HashTag);
+                else
+                    sb.AppendFormat("<div id = 'in{0}' class='dolpic_fbtn off' onclick=\'fnFavoriteInsert('{0}', '{1}');\'></div>", item.Seq, item.HashTag);
+                sb.Append("</div>");
+            }
+
+            return Json(JsonConvert.SerializeObject(new { list = sb.ToString() }));
         }
         #endregion
 
