@@ -51,6 +51,7 @@ namespace DolPic.Service.Web.Controllers
         /// 돌픽 메인 화면
         /// </summary>
         /// <returns></returns>
+        [OutputCache(Duration = 600)]
         public ActionResult Main(string id, int? page)
         {
             ViewBag.User = DolPicCookie.CookieRead(this.Request, CommonVariable.COOKIE_NAME);
@@ -164,6 +165,7 @@ namespace DolPic.Service.Web.Controllers
         /// 초성 리스트
         /// </summary>
         /// <returns></returns>
+        [OutputCache(Duration = 600)]
         public ActionResult InitialList()
         {
             var UserId = DolPicCookie.CookieRead(this.Request, CommonVariable.COOKIE_NAME);
@@ -179,6 +181,7 @@ namespace DolPic.Service.Web.Controllers
         /// 핫돌픽 리스트
         /// </summary>
         /// <returns></returns>
+        [OutputCache(Duration = 600)]
         public ActionResult HotDolPicList()
         {
             // 핫돌픽 리스트 조회
@@ -194,6 +197,7 @@ namespace DolPic.Service.Web.Controllers
         /// <param name="HahTag">해쉬 태그</param>
         /// <param name="CurPage">현재 페이지</param>
         /// <returns></returns>
+        [OutputCache(Duration = 3600)]
         public ActionResult RecommPicList(int ImgNo, string HashTag, int CurPage)
         {
             // 추천 이미지 리스트 조회

@@ -1,12 +1,10 @@
 ﻿using DolPic.Biz.DolPicService;
 using DolPic.Common;
-using DolPic.Data.Daos;
 using DolPic.Data.Pos;
 using DolPic.Data.Vos;
 using DolPic.Service.Mobile.Common;
-using DolPic.Service.Mobile.Models;
 using Newtonsoft.Json;
-using System.Text;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace DolPic.Service.Mobile.Controllers
@@ -40,6 +38,7 @@ namespace DolPic.Service.Mobile.Controllers
         /// 돌픽 메인 화면
         /// </summary>
         /// <returns></returns>
+        [OutputCache(Duration = 600)]
         public ActionResult Main(string id, int? page)
         {
             ViewBag.User = DolPicCookie.CookieRead(this.Request, CommonVariable.COOKIE_NAME);
@@ -153,6 +152,7 @@ namespace DolPic.Service.Mobile.Controllers
         /// 초성 리스트
         /// </summary>
         /// <returns></returns>
+        [OutputCache(Duration = 600)]
         public ActionResult InitialList()
         {
             var UserId = DolPicCookie.CookieRead(this.Request, CommonVariable.COOKIE_NAME);
@@ -175,10 +175,8 @@ namespace DolPic.Service.Mobile.Controllers
 
             // 초성 리스트 조회
             var list = _service.GetInitialList(UserId, SearchDol);
-            var seq = 0;
-
-            foreach (var item in list)
-                seq = item.Seq;
+            // 시퀀스 조회
+            var seq = (from item in list select item.Seq).SingleOrDefault();
 
             return Json(JsonConvert.SerializeObject(new { seq = seq }));
         }
@@ -187,6 +185,7 @@ namespace DolPic.Service.Mobile.Controllers
         /// 핫돌픽 리스트
         /// </summary>
         /// <returns></returns>
+        [OutputCache(Duration = 600)]
         public ActionResult HotDolPicList()
         {
             // 핫돌픽 리스트 조회
@@ -216,6 +215,7 @@ namespace DolPic.Service.Mobile.Controllers
         /// <param name="HahTag">해쉬 태그</param>
         /// <param name="CurPage">현재 페이지</param>
         /// <returns></returns>
+        [OutputCache(Duration = 3600)]
         public ActionResult RecommPicList(int ImgNo, string HashTag, int CurPage)
         {
             // 추천 이미지 리스트 조회
