@@ -1,12 +1,10 @@
 ﻿using DolPic.Biz.DolPicService;
 using DolPic.Common;
-using DolPic.Data.Daos;
 using DolPic.Data.Pos;
 using DolPic.Data.Vos;
 using DolPic.Service.Mobile.Common;
 using DolPic.Service.Mobile.Models;
 using Newtonsoft.Json;
-using System.Text;
 using System.Web.Mvc;
 
 namespace DolPic.Service.Mobile.Controllers
@@ -422,6 +420,25 @@ namespace DolPic.Service.Mobile.Controllers
             }
 
             return Json(JsonConvert.SerializeObject(po));
+        }
+
+        /// <summary>
+        /// 검색 아이돌 리스트 Ajax
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult InitialSearchList(string SearchDol)
+        {
+            var UserId = DolPicCookie.CookieRead(this.Request, CommonVariable.COOKIE_NAME);
+
+            // 초성 리스트 조회
+            var list = _service.GetInitialList(UserId, SearchDol);
+            var seq = 0;
+
+            foreach (var item in list)
+                seq = item.Seq;
+
+            return Json(JsonConvert.SerializeObject(new { seq = seq }));
         }
 
         #endregion

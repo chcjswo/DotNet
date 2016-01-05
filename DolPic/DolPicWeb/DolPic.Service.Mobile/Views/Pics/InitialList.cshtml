@@ -7,10 +7,13 @@
 <div class="dolpic_warp">
 	<div class="go_top" onClick="location.href='#top'"></div>
 	<div class="wrapper">
+        <div class="search_box">
+            <input type="text" placeholder="검색" class="search">
+        </div>
         <!-- 리스트 박스 -->
         @foreach (var item in list)
         {
-            <div class="dolpic_lbox">
+            <div class="dolpic_lbox" seq="@item.Seq">
                 <div class="dolpic_ltag">
                     <!--
                 <img src="/images/sns_facebook.png" width="12" height="12" alt="Facebook">
@@ -23,64 +26,107 @@
                 <div id="@string.Format("in{0}", item.Seq)" class="dolpic_fbtn @((item.Seq == item.FavoriteSeq) ? Html.Raw("on") : Html.Raw("off"))" onclick="fnFavoriteInsert('@item.Seq', '@item.HashTag');"></div>
             </div>
         }
-		<div class="clear"></div>
-	</div>
+        <div class="clear"></div>
+        </div>
     <div class="sponsor">돌픽은 SNS 이미지를 모아주는 사이트입니다.</div>
     <div class="sponsor">Icons made by <a href="http://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>
 </div>
 
-<script>
-$(document).ready(function() {
-	var gboxDefault = ($('.gbox_gallery').width() - 24) / 3;
-	var gboxWide = ($('.gbox_gallery').width() - 40) / 5;
-	var lboxDefault = ($('.dolpic_warp .wrapper').width() - 12) / 2;
-	var lboxWide = ($('.dolpic_warp .wrapper').width() - 12) / 3;
-	if(window.innerHeight > window.innerWidth){
-		$('.gbox').css({
-			width: gboxDefault,
-			height: gboxDefault
-		});
-		$('.dolpic_lbox').css({
-			width: lboxDefault
-		});
-		$('.hot_box').removeClass('wide');
-		$('.ad_wrap').removeClass('wide');
-	} else {
-		$('.gbox').css({
-			width: gboxWide,
-			height: gboxWide
-		});
-		$('.dolpic_lbox').css({
-			width: lboxWide
-		});
-		$('.hot_box').addClass('wide');
-		$('.ad_wrap').addClass('wide');
-	}
-    if($('.fbar').height() < 75) {
-		$('.fbar_wrap').removeClass('more');
-		$('.btn_more').hide();
-	} else {
-		$('.fbar_wrap').addClass('more');
-		$('.btn_more').show();
-	}
-	$('.btn_more').live('click',function() {
-		$('.fbar_wrap').removeClass('more');
-		$('.btn_more').hide();
-	});
+<script type="text/javascript">
+    $(document).ready(function () {
+        var gboxDefault = ($('.gbox_gallery').width() - 24) / 3;
+        var gboxWide = ($('.gbox_gallery').width() - 40) / 5;
+        var lboxDefault = ($('.dolpic_warp .wrapper').width() - 12) / 2;
+        var lboxWide = ($('.dolpic_warp .wrapper').width() - 12) / 3;
 
-	// 화면 전환시 새로고침
-	var windowWidth = $(window).width();
-	$(window).resize(function() {
-		if(windowWidth != $(window).width()){
-		location.reload();
-		return;
-		}
-	});
-});
+        if (window.innerHeight > window.innerWidth) {
+            $('.gbox').css({
+                width: gboxDefault,
+                height: gboxDefault
+            });
+            $('.dolpic_lbox').css({
+                width: lboxDefault
+            });
+            $('.hot_box').removeClass('wide');
+            $('.ad_wrap').removeClass('wide');
+        } else {
+            $('.gbox').css({
+                width: gboxWide,
+                height: gboxWide
+            });
+            $('.dolpic_lbox').css({
+                width: lboxWide
+            });
+            $('.hot_box').addClass('wide');
+            $('.ad_wrap').addClass('wide');
+        }
+        if ($('.fbar').height() < 75) {
+            $('.fbar_wrap').removeClass('more');
+            $('.btn_more').hide();
+        } else {
+            $('.fbar_wrap').addClass('more');
+            $('.btn_more').show();
+        }
+        $('.btn_more').live('click', function () {
+            $('.fbar_wrap').removeClass('more');
+            $('.btn_more').hide();
+        });
+
+	    // 화면 전환시 새로고침
+	    var windowWidth = $(window).width();
+	    $(window).resize(function() {
+		    if(windowWidth != $(window).width()){
+		    location.reload();
+		    return;
+		    }
+	    });
+    });
 </script>
 
 <script type="text/javascript">
     var bExec = false;
+
+    $(function () {
+        $(".search").keydown(function (key) {
+            if (key.keyCode == 13) {
+                fnSearchDol();
+            }
+        });
+    });
+
+    function fnSearchDol() {
+        if ($(".search").val() == "") {
+            $('.dolpic_lbox').show();
+            return;
+        }
+
+        $('.dolpic_lbox').hide();
+
+        if (bExec) {
+            alert("요청을 처리중입니다.잠시만 기다려주세요.");
+            return;
+        }
+
+        bExec = true;
+
+        $.ajax({
+            url: "/Pics/InitialSearchList",
+            type: "POST",
+            dataType: "json",
+            data: {
+                "SearchDol": $(".search").val()
+            }
+        })
+        .done(function (data) {
+            var retData = $.parseJSON(data);
+            $(".dolpic_lbox[seq='" + retData.seq + "']").show();
+            bExec = false;
+        })
+        .fail(function () {
+            alert("실행중 에러가 발생했습니다.");
+            bExec = false;
+        });
+    }
 
     function fnFavoriteInsert(seq, tag) {
         if ("@ViewBag.User" == "") {
