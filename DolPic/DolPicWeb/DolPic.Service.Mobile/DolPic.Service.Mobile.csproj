@@ -135,6 +135,7 @@
     <Compile Include="Common\CustomWebViewPage.cs" />
     <Compile Include="Controllers\DolPicAdminController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\LunchController.cs" />
     <Compile Include="Controllers\PicsController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\AppController.cs" />
@@ -258,6 +259,10 @@
     <Content Include="Views\Pics\BookmarkPicView.cshtml" />
     <Content Include="Views\App\BookmarkList.cshtml" />
     <Content Include="Views\App\BookmarkPicView.cshtml" />
+    <Content Include="Views\Lunch\Index.cshtml" />
+    <Content Include="Views\Lunch\WhatEat.cshtml" />
+    <Content Include="Views\Lunch\Pay.cshtml" />
+    <Content Include="Views\Lunch\Share.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
