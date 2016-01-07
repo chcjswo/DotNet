@@ -108,10 +108,16 @@
                 $(".gbox").remove();
                 $(".goto_list").remove();
                 var div = "";
+                var tagType = "";
 
                 for (var i = 0; i < imgList.length; i++) {
+                    if (imgList[i].TagUrlType == 1)
+                        tagType = "g_t_twitter";
+                    else if (imgList[i].TagUrlType == 2)
+                        tagType = "g_t_instagram";
+
                     div = "<div seq='" + imgList[i].Seq + "' class='gbox' style='background:url(" + imgList[i].ImageSrc + ") center center no-repeat;background-size:cover'>";
-                    div += "<div class='gbox_thumb g_t_twitter'>";
+                    div += "<div class='gbox_thumb " + tagType + "'>";
                     div += "<div class='gbox_t_title'>#" + imgList[i].HashTag + "</div>";
                     div += "<div class='gbox_t_text'><img src='/images/icon_like.png' height='9'>" + imgList[i].LikeCnt + "</div>";
                     div += "</div>";

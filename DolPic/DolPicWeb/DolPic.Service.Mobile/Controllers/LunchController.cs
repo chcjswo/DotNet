@@ -31,5 +31,10 @@ namespace DolPic.Service.Mobile.Controllers
             return View();
         }
 
+        public ActionResult ViewMap()
+        {
+            return View();
+        }
+
     }
 }

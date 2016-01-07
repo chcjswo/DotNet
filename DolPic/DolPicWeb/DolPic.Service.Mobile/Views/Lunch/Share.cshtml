@@ -1,42 +1,41 @@
 ﻿@{
-    Layout = null;
+    Layout = "~/Views/Shared/_Lunch/_Layout.cshtml";
 }
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 
-<!DOCTYPE html>
+<script>
+        // 사용할 앱의 JavaScript 키를 설정해 주세요.
+        Kakao.init('69a61022cceace3950c0fedee9f9ea36');
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Share</title>
-    <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
-</head>
-<body>
-    <div>
-        Share
-    </div>
-    <div>
-        <a id="kakao-link-btn" href="javascript:;">
-            <img src="http://dn.api1.kage.kakao.co.kr/14/dn/btqa9B90G1b/GESkkYjKCwJdYOkLvIBKZ0/o.jpg" />
-        </a>
-        <script>
-            // 사용할 앱의 JavaScript 키를 설정해 주세요.
-            Kakao.init('69a61022cceace3950c0fedee9f9ea36');
+        // 카카오톡 링크 버튼을 생성합니다. 처음 한번만 호출하면 됩니다.
+        Kakao.Link.createTalkLinkButton({
+            container: '#kakao-link-btn',
+            label: '카카오링크 샘플에 오신 것을 환영합니다.',
+            image: {
+            src: 'http://dn.api1.kage.kakao.co.kr/14/dn/btqaWmFftyx/tBbQPH764Maw2R6IBhXd6K/o.jpg',
+            width: '300',
+            height: '200'
+            },
+            webButton: {
+            text: '카카오 디벨로퍼스',
+            url: 'http://m.dolpic.kr' // 앱 설정의 웹 플랫폼에 등록한 도메인의 URL이어야 합니다.
+            }
+        });
+</script>
+<div class="btn_go_caculator"><a href="/Lunch/WhatEat"><span>오늘뭐먹지?</span></a></div>
 
-            // 카카오톡 링크 버튼을 생성합니다. 처음 한번만 호출하면 됩니다.
-            Kakao.Link.createTalkLinkButton({
-              container: '#kakao-link-btn',
-              label: '카카오링크 샘플에 오신 것을 환영합니다.',
-              image: {
-                src: 'http://dn.api1.kage.kakao.co.kr/14/dn/btqaWmFftyx/tBbQPH764Maw2R6IBhXd6K/o.jpg',
-                width: '300',
-                height: '200'
-              },
-              webButton: {
-                text: '카카오 디벨로퍼스',
-                url: 'http://m.dolpic.kr' // 앱 설정의 웹 플랫폼에 등록한 도메인의 URL이어야 합니다.
-              }
-            });
-        </script>
-    </div>
-</body>
-</html>
+<div class="title t_main">더치페이계산</div>
+<div class="title t_sub">소숫점반올림</div>
+
+<div class="sq caculator">
+    <div class="sq_info">인당</div>
+    52,330원&nbsp;
+</div>
+
+<div class="btn_share"><a href="javascript:;" id="kakao-link-btn"><span>카카오톡 공유하기</span></a></div>
+
+<div class="foot_ad" onClick="alert('돌픽이동')">아이돌, 연예인 사진을 한눈에 보고싶으면?</div>
+
+<div class="landscape_support">
+    <div class="not_support">가로모드는 지원하지 않습니다.</div>
+</div>

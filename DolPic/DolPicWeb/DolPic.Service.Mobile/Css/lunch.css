@@ -1,0 +1,142 @@
+@charset "utf-8";
+
+/* Reset CSS - YUI 3.12.0 (build 8655935) */ body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0}table{border-collapse:collapse;border-spacing:0}fieldset,img{border:0}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal}ol,ul{list-style:none}caption,th{text-align:left}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal}q:before,q:after{content:''}abbr,acronym{border:0;font-variant:normal}sup{vertical-align:text-top}sub{vertical-align:text-bottom}input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit}input,textarea,select{*font-size:100%}legend{color:#000}#yui3-css-stamp.cssreset{display:none}
+/* HTML5 display-role reset for older browsers */ article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}
+
+/* Common Container */
+html{-webkit-touch-callout:none;-webkit-tap-highlight-color:rgba(0,0,0,0)}
+a img{border:0 none}
+label{display:block}
+input,select{outline-style:none}
+input[type=text]{-webkit-appearance:none}
+strong,b{font-weight:bold}
+.clear{clear:both}
+.hide{display:none}
+
+*{font-family:'BMDoHyeon', sans-serif;-webkit-font-smoothing:antialiased}
+body{background:url(../images/bg_lunch.png) repeat 0 0 #193441;background-size:340px 340px}
+
+.guide{position:absolute;left:50%;top:0;border:1px inset #00FFEE;z-index:-99}
+.g_common{margin-left:-320px;width:640px;height:960px}
+.g_iphone5{margin-left:-320px;width:640px;height:1136px}
+.g_iphone6{margin-left:-375px;width:750px;height:1334px}
+.landscape_support{display:none}
+
+/* 타이틀 */
+.title{position:absolute;left:0;width:100%;height:90px;line-height:90px;font-size:90px;text-align:center;word-spacing:-0.2em}
+.t_main{color:#FFD34E;top:144px}
+.t_sub{color:#E5901A;top:244px}
+
+/* 콘텐츠 */
+.sq{position:absolute;left:50%;top:380px;margin-left:-268px;padding:26px 22px;width:492px;height:83px;line-height:94px;font-size:60px;text-align:center;color:#FFFFFF;background:url(../images/squere.png) no-repeat 0 0;background-size:536px 135px}
+.sq .reload{position:absolute;right:22px;top:26px;width:83px;height:83px;cursor:pointer;background:url(../images/reload.png) no-repeat center center;background-size:46px 40px}
+.sq.caculator{text-align:right}
+.sq.caculator .sq_info{position:absolute;left:36px;top:26px}
+.btn_map{position:absolute;left:50%;top:560px;margin-left:-86px;width:171px;height:184px;background:url(../images/map.png) no-repeat 0 0;background-size:171px 184px}
+.btn_share{position:absolute;left:50%;top:590px;margin-left:-222px;width:444px;height:70px;background:url(../images/share.png) no-repeat 0 0;background-size:444px 70px}
+.btn_map a span,.btn_share a span{display:block;width:100%;height:100%;text-indent:-9999px;cursor:pointer}
+
+.btn_caculator{position:absolute;left:50%;top:526px;margin-left:-269px;width:544px;height:270px}
+.btn_num{float:left;width:130px;height:84px;line-height:92px;margin:0 6px 6px 0;font-size:48px;color:#FFFFFF;text-align:center;cursor:pointer;background-color:#E5901A}
+.btn_count{float:left;width:266px;height:84px;line-height:92px;;margin:0 6px 6px 0;font-size:48px;color:#FFFFFF;text-align:center;cursor:pointer;background-color:#E56B1A}
+
+/* 상단버튼 */
+.btn_go_caculator{position:absolute;right:20px;top:20px;height:40px;padding-right:44px;background:url(../images/calculator.png) no-repeat right 0;background-size:32px 40px}
+.btn_go_caculator a{text-decoration:none;color:#648C9E}
+.btn_go_caculator a span{display:block;width:100%;height:100%;font-size:40px;cursor:pointer}
+
+/* 돌픽광고 */
+.foot_ad{position:absolute;left:0;bottom:14px;padding-top:78px;width:100%;height:28px;line-height:28px;font-size:28px;text-align:center;color:#648C9E;cursor:pointer;background:url(../images/down.png) no-repeat center top;background-size:64px 60px}
+
+@media all and (min-width:480px) and (max-width:639px) {
+/* x0.75 */
+body{background-size:255px 255px}
+.g_common{margin-left:-240px;width:480px;height:720px}
+.g_iphone5{margin-left:-240px;width:480px;height:852px}
+.g_iphone6{margin-left:-281px;width:562px;height:1000px}
+
+/* 타이틀 */
+.title{height:67px;line-height:67px;font-size:67px}
+.t_main{top:108px}
+.t_sub{top:183px}
+
+/* 콘텐츠 */
+.sq{top:285px;margin-left:-201px;padding:19px 16px;width:369px;height:62px;line-height:70px;font-size:45px;background-size:402px 101px}
+.sq .reload{right:16px;top:19px;width:62px;height:62px;background-size:34px 30px}
+.sq.caculator .sq_info{left:27px;top:19px}
+.btn_map{top:420px;margin-left:-64px;width:128px;height:138px;background-size:128px 138px}
+.btn_share{top:442px;margin-left:-166px;width:333px;height:52px;background-size:333px 52px}
+.btn_caculator{top:394px;margin-left:-201px;width:408px;height:202px}
+.btn_num{width:97px;height:63px;line-height:69px;margin:0px 4px 4px 0px;font-size:36px}
+.btn_count{width:199px;height:63px;line-height:69px;;margin:0px 4px 4px 0px;font-size:36px}
+
+/* 상단버튼 */
+.btn_go_caculator{right:15px;top:15px;height:30px;padding-right:33px;background-size:24px 30px}
+.btn_go_caculator a span{font-size:30px}
+
+/* 돌픽광고 */
+.foot_ad{bottom:10px;padding-top:58px;height:21px;line-height:21px;font-size:21px;background-size:48px 45px}
+}
+@media all and (min-width:360px) and (max-width:479px) {
+/* x1.125 */
+body{background-size:191px 191px}
+.g_common{margin-left:-180px;width:360px;height:540px}
+.g_iphone5{margin-left:-180px;width:360px;height:639px}
+.g_iphone6{margin-left:-210px;width:421px;height:750px}
+
+/* 타이틀 */
+.title{height:50px;line-height:50px;font-size:50px}
+.t_main{top:81px}
+.t_sub{top:137px}
+
+/* 콘텐츠 */
+.sq{top:213px;margin-left:-150px;padding:14px 12px;width:276px;height:46px;line-height:52px;font-size:33px;background-size:301px 75px}
+.sq .reload{right:12px;top:14px;width:46px;height:46px;background-size:25px 22px}
+.sq.caculator .sq_info{left:20px;top:14px}
+.btn_map{top:315px;margin-left:-48px;width:95px;height:103px;background-size:95px 103px}
+.btn_share{top:331px;margin-left:-124px;width:249px;height:39px;background-size:249px 39px}
+.btn_caculator{top:295px;margin-left:-150px;width:306px;height:151px}
+.btn_num{width:73px;height:47px;line-height:51px;margin:0px 3px 3px 0px;font-size:27px}
+.btn_count{width:149px;height:47px;line-height:51px;;margin:0px 3px 3px 0px;font-size:27px}
+
+/* 상단버튼 */
+.btn_go_caculator{right:11px;top:11px;height:22px;padding-right:24px;background-size:18px 22px}
+.btn_go_caculator a span{font-size:22px}
+
+/* 돌픽광고 */
+.foot_ad{bottom:7px;padding-top:43px;height:15px;line-height:15px;font-size:15px;background-size:36px 33px}
+}
+@media all and (max-width:359px) {
+/* x0.5 */
+body{background-size:170px 170px}
+.g_common{margin-left:-160px;width:320px;height:480px}
+.g_iphone5{margin-left:-160px;width:320px;height:568px}
+.g_iphone6{margin-left:-187px;width:375px;height:667px}
+
+/* 타이틀 */
+.title{height:45px;line-height:45px;font-size:45px}
+.t_main{top:72px}
+.t_sub{top:122px}
+
+/* 콘텐츠 */
+.sq{top:190px;margin-left:-134px;padding:13px 11px;width:246px;height:41px;line-height:47px;font-size:30px;background-size:268px 67px}
+.sq .reload{right:11px;top:13px;width:41px;height:41px;background-size:23px 20px}
+.sq.caculator .sq_info{left:18px;top:13px}
+.btn_map{top:280px;margin-left:-43px;width:85px;height:92px;background-size:85px 92px}
+.btn_share{top:295px;margin-left:-111px;width:222px;height:35px;background-size:222px 35px}
+.btn_caculator{top:263px;margin-left:-134px;width:272px;height:135px}
+.btn_num{width:65px;height:42px;line-height:46px;margin:0px 3px 3px 0px;font-size:24px}
+.btn_count{width:133px;height:42px;line-height:46px;;margin:0px 3px 3px 0px;font-size:24px}
+
+/* 상단버튼 */
+.btn_go_caculator{right:10px;top:10px;height:20px;padding-right:22px;background-size:16px 20px}
+.btn_go_caculator a span{font-size:20px}
+
+/* 돌픽광고 */
+.foot_ad{bottom:7px;padding-top:39px;height:14px;line-height:14px;font-size:14px;background-size:32px 30px}
+}
+
+@media only screen and (orientation : landscape) {
+.landscape_support{display:block;position:fixed;left:0;top:0;width:100%;height:100%;background:url(../images/bg_lunch.png) repeat 0 0 #193441}
+.not_support{position:absolute;left:0;top:50%;margin-top:-14px;width:100%;height:28px;font-size:28px;text-align:center;color:#FFFFFF}
+}

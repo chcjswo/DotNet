@@ -154,6 +154,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="Css\common.m.css" />
+    <Content Include="Css\lunch.css" />
     <Content Include="Css\PagedList.css" />
     <Content Include="Css\Site.css" />
     <Content Include="Global.asax" />
@@ -161,29 +162,37 @@
     <Content Include="Images\banner_300_150923.jpg" />
     <Content Include="Images\banner_640_150923.jpg" />
     <Content Include="Images\bg.png" />
+    <Content Include="Images\bg_lunch.png" />
+    <Content Include="Images\calculator.png" />
+    <Content Include="Images\down.png" />
     <Content Include="Images\icon.png" />
     <Content Include="Images\icon_favorite.png" />
     <Content Include="Images\icon_like.png" />
     <Content Include="Images\icon_like_b.png" />
     <Content Include="Images\icon_like_w.png" />
+    <Content Include="Images\icon_lunch.png" />
     <Content Include="Images\icon_top.png" />
     <Content Include="Images\icon_user.png" />
     <Content Include="Images\icon_user_out.png" />
     <Content Include="Images\loader.gif" />
     <Content Include="Images\logo.png" />
     <Content Include="Images\logo_text.png" />
+    <Content Include="Images\map.png" />
     <Content Include="Images\num_1.png" />
     <Content Include="Images\num_2.png" />
     <Content Include="Images\num_3.png" />
     <Content Include="Images\num_4.png" />
     <Content Include="Images\num_5.png" />
+    <Content Include="Images\reload.png" />
     <Content Include="Images\sample_ad.jpg" />
     <Content Include="Images\sample_ad.png" />
     <Content Include="Images\sample_ad2.jpg" />
     <Content Include="Images\sample_disqus.png" />
+    <Content Include="Images\share.png" />
     <Content Include="Images\sns_facebook.png" />
     <Content Include="Images\sns_Instagram.png" />
     <Content Include="Images\sns_twitter.png" />
+    <Content Include="Images\squere.png" />
     <Content Include="Js\CommonAdmin.js" />
     <Content Include="Js\jquery.mobile-events.min.js" />
     <Content Include="Js\jquery.placeholder.min.js" />
@@ -198,7 +207,9 @@
     </Content>
     <Content Include="Views\Web.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="font\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
@@ -259,10 +270,11 @@
     <Content Include="Views\Pics\BookmarkPicView.cshtml" />
     <Content Include="Views\App\BookmarkList.cshtml" />
     <Content Include="Views\App\BookmarkPicView.cshtml" />
-    <Content Include="Views\Lunch\Index.cshtml" />
     <Content Include="Views\Lunch\WhatEat.cshtml" />
     <Content Include="Views\Lunch\Pay.cshtml" />
     <Content Include="Views\Lunch\Share.cshtml" />
+    <Content Include="Views\Shared\_Lunch\_Layout.cshtml" />
+    <Content Include="Views\Lunch\ViewMap.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

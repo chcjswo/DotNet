@@ -1,0 +1,12 @@
+@font-face {
+  font-family: 'BMDoHyeon';
+  src: url('BMDoHyeon.eot');
+  src: url('BMDoHyeon.eot?#iefix') format('embedded-opentype'),
+       url('BMDoHyeon.woff2') format('woff2'),
+       url('BMDoHyeon.woff') format('woff'),
+       url('BMDoHyeon.ttf') format('truetype'),
+       url('BMDoHyeon.svg#BMDoHyeon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+

@@ -1,17 +1,59 @@
 ﻿@{
-    Layout = null;
+    Layout = "~/Views/Shared/_Lunch/_Layout.cshtml";
 }
+<div class="btn_go_caculator"><a href="/Lunch/Pay"><span>더치페이계산기</span></a></div>
 
-<!DOCTYPE html>
+<div class="title t_main">오늘 뭐 먹지?</div>
+<div class="title t_sub">텔미어바웃댓</div>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>WhatEat</title>
-</head>
-<body>
-    <div>
-        WhatEat
-    </div>
-</body>
-</html>
+<div class="sq">
+    <span class="food">맛있는 라면</span>
+    <div class="reload" onClick="alert('다시돌리기');"></div>
+</div>
+<div class="btn_map"><a href="javascript:" class="viewMap"><span>지도보기</span></a></div>
+
+<div class="foot_ad" onClick="alert('돌픽이동')">아이돌, 연예인 사진을 한눈에 보고싶으면?</div>
+
+<div class="landscape_support">
+    <div class="not_support">가로모드는 지원하지 않습니다.</div>
+</div>
+    <div id="map"></div>
+<div>
+
+</div>
+<script>
+    // 타이핑 효과
+    var $el = $('.food'),
+        txt = $el.text(),
+        txtLen = txt.length,
+        timeOut,
+        char = 0;
+    $el.text('|');
+    (function typeIt() {
+        var humanize = Math.round(Math.random() * (200 - 30)) + 30;
+        timeOut = setTimeout(function() {
+            char++;
+            var type = txt.substring(0, char);
+            $el.text(type + '|');
+            typeIt();
+
+            if (char == txtLen) {
+                $el.text($el.text().slice(0, -1)); // remove the '|'
+                clearTimeout(timeOut);
+            }
+
+        }, humanize);
+    }());
+</script>
+
+@section scripts {
+<script type="text/javascript">
+    $(function () {
+        $('.viewMap').on('click', function () { fnViewMap(); });
+    });
+
+    function fnViewMap() {
+        location.href = "/Lunch/ViewMap";
+    }
+</script>
+}

@@ -1,17 +1,39 @@
 ﻿@{
-    Layout = null;
+    Layout = "~/Views/Shared/_Lunch/_Layout.cshtml";
 }
+<div class="btn_go_caculator"><a href="/Lunch/WhatEat"><span>오늘뭐먹지?</span></a></div>
 
-<!DOCTYPE html>
+<div class="title t_main">더치페이계산</div>
+<div class="title t_sub">소숫점반올림</div>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Pay</title>
-</head>
-<body>
-    <div>
-        Pay
-    </div>
-</body>
-</html>
+<div class="sq caculator">
+    <div class="sq_info">총액</div>
+    420,000원&nbsp;
+</div>
+<!--
+<div class="sq caculator">
+    <div class="sq_info">인원</div>
+    20명&nbsp;
+</div>
+-->
+
+<div class="btn_caculator">
+    <div class="btn_num">1</div>
+    <div class="btn_num">2</div>
+    <div class="btn_num">3</div>
+    <div class="btn_num">4</div>
+    <div class="btn_num">5</div>
+    <div class="btn_num">6</div>
+    <div class="btn_num">7</div>
+    <div class="btn_num">8</div>
+    <div class="btn_num">9</div>
+    <div class="btn_num">0</div>
+    <div class="btn_count" onClick="location.href='caculator_result.html'">나누기</div>
+    <!--<div class="btn_count">계산하기</div>-->
+</div>
+
+<div class="foot_ad" onClick="alert('돌픽이동')">아이돌, 연예인 사진을 한눈에 보고싶으면?</div>
+
+<div class="landscape_support">
+    <div class="not_support">가로모드는 지원하지 않습니다.</div>
+</div>
