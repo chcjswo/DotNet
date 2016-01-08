@@ -189,11 +189,8 @@ namespace DolPicCrawler
             // 그리드 그리기
             SetGridInfo(a_nTagUrlType);
 
-
-            Task task = Task.Run(
-                () => ImageService.getInstance.ImageSend(_dImage, a_nTagUrlType));
             // 해당 사이트로 부터 이미지정보를 가져오고 이미지 저장
-            //ImageService.getInstance.ImageSend(_dImage, a_nTagUrlType);
+            ImageService.getInstance.ImageSend(_dImage, a_nTagUrlType);
         }
 
         /// <summary>

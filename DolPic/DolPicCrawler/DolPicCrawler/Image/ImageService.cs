@@ -10,8 +10,8 @@ namespace DolPicCrawler.Image
     {
         private static readonly ImageService _imageService;
         //private const string CON_IMAGE_SEND_URL = "http://localhost:3281/api/DolPicImg/";
-        //private const string CON_IMAGE_DELETE_URL = "http://localhost:3281/Pics/DolPicNoImageDelete/";
         private const string CON_IMAGE_SEND_URL = "http://www.dolpic.kr/api/DolPicImg/";
+        //private const string CON_IMAGE_DELETE_URL = "http://localhost:3281/Pics/DolPicNoImageDelete/";
         private const string CON_IMAGE_DELETE_URL = "http://www.dolpic.kr/Pics/DolPicNoImageDelete/";
 
         /// <summary>

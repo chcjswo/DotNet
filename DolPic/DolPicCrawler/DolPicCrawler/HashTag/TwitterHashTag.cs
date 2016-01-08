@@ -17,7 +17,7 @@ namespace DolPicCrawler.HashTag
         /// </summary>
         private const string CON_XML_NODE = "/twitter/images";
 
-        private const string CON_IMAGE_URL = "http://twitter.com/hashtag/{0}";
+        private const string CON_IMAGE_URL = "https://twitter.com/hashtag/{0}";
 
         private const string CON_MATCH_TAG = "data-resolved-url-small=\"(?<ImageSrc>.*?)\".*?";
         //private const string CON_MATCH_TAG = "<img src=\"(?<ImageSrc>.*?)\".*?>";
