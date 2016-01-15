@@ -22,7 +22,17 @@
             <!-- 갤러리 리스트 -->
             @foreach (var item in list)
             {
-                <div seq="@item.Seq" class="gbox" style="background:url(@item.ImageSrc) center center no-repeat;background-size:cover">
+                var sImgSrc = "";
+
+                if (item.TagUrlType == (int)e_TagUrlType.twitter)
+                {
+                    sImgSrc = item.ImageSrc + ":thumb";
+                }
+                else if (item.TagUrlType == (int)e_TagUrlType.instagram)
+                {
+                    sImgSrc = item.ImageSrc;
+                }
+                <div seq="@item.Seq" class="gbox" style="background:url(@sImgSrc) center center no-repeat;background-size:cover">
                     @{
                         var sClassName = "";
 
@@ -55,7 +65,8 @@
         @Html.Action("HotDolPicList", "Pics")
         <!-- 구글 광고 -->
         @Html.Partial("_GoogleAd3")
-        <a href="https://play.google.com/store/apps/details?id=com.tony.mocadev.dolpicapp" target="_blank"><img src="/images/banner_300_150923.jpg" width="300" height="250"></a>
+        <!-- 구글 APP -->
+        @Html.Partial("_GoogleApp")
         <!-- 공지사항 -->
         @Html.Partial("_Notice")
     </div>

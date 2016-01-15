@@ -275,6 +275,7 @@
     <Content Include="Views\Lunch\Share.cshtml" />
     <Content Include="Views\Shared\_Lunch\_Layout.cshtml" />
     <Content Include="Views\Lunch\ViewMap.cshtml" />
+    <Content Include="Views\Shared\_GoogleApp.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

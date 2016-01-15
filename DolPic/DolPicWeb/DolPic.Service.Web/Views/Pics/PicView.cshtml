@@ -45,7 +45,8 @@
         @Html.Action("HotDolPicList", "Pics")
 		<!-- 구글 광고 -->
 		@Html.Partial("_GoogleAd2")
-        <a href="https://play.google.com/store/apps/details?id=com.tony.mocadev.dolpicapp" target="_blank"><img src="/images/banner_300_150923.jpg" width="300" height="250"></a>
+        <!-- 구글 APP -->
+        @Html.Partial("_GoogleApp")
 		<!-- 공지사항 -->
 		@Html.Partial("_Notice")
 	</div>

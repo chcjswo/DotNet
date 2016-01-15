@@ -309,6 +309,7 @@
     <Content Include="Views\Pics\BookmarkList.cshtml" />
     <Content Include="Views\Pics\BookmarkPicView.cshtml" />
     <Content Include="Views\DolPicAdmin\HashTagUpdateForm.cshtml" />
+    <Content Include="Views\Shared\_GoogleApp.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

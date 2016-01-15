@@ -41,7 +41,10 @@
         <!-- 소셜 댓글 -->
 		@Html.Partial("_FacebookComment")
 	</div>
-    <center><a href="https://play.google.com/store/apps/details?id=com.tony.mocadev.dolpicapp" target="_blank"><img src="/images/banner_640_150923.jpg" width="300"></a></center>
+    <center>
+        <!-- 구글 APP -->
+        @Html.Partial("_GoogleApp")
+    </center>
 	<div class="gbox_side">
         @Html.Action("HotDolPicList", "Pics")
 		<!-- 구글 광고 -->
