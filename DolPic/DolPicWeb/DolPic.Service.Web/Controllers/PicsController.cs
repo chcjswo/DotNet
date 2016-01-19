@@ -466,7 +466,7 @@ namespace DolPic.Service.Web.Controllers
                 sb.Append("<img src = '/images/sns_instagram.png' width='12' height='12' alt='Instagram'>");
                 sb.Append("<img src = '/images/sns_twitter.png' width='12' height='12' alt='Twitter'>");
                 sb.Append("</div>");
-                sb.AppendFormat("<div class='dolpic_limg' style='background:url({0}) center center no-repeat;background-size:cover' onclick=\"location.href='/Pics/Main/{1}';\"></div>",
+                sb.AppendFormat("<div class='dolpic_limg' style='background:url({0:thumb}) center center no-repeat;background-size:cover' onclick=\"location.href='/Pics/Main/{1}';\"></div>",
                     item.ImageSrc, item.HashTag);
                 sb.AppendFormat("<div class='dolpic_lname' onclick=\"location.href='/Pics/Main/{0}';\" style='cursor:pointer'>{0}</div>", item.HashTag);
                 if (item.Seq == item.FavoriteSeq)

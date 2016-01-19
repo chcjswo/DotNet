@@ -120,14 +120,18 @@
                 $(".goto_list").remove();
                 var div = "";
                 var tagType = "";
+                var sImgSrc = "";
 
                 for (var i = 0; i < imgList.length; i++) {
-                    if (imgList[i].TagUrlType == 1)
+                    if (imgList[i].TagUrlType == 1) {
                         tagType = "g_t_twitter";
-                    else if (imgList[i].TagUrlType == 2)
+                        sImgSrc = imgList[i].ImageSrc + ":thumb";
+                    } else if (imgList[i].TagUrlType == 2) {
                         tagType = "g_t_instagram";
+                        sImgSrc = imgList[i].ImageSrc;
+                    }
 
-                    div = "<div seq='" + imgList[i].Seq + "' class='gbox' style='background:url(" + imgList[i].ImageSrc + ") center center no-repeat;background-size:cover'>";
+                    div = "<div seq='" + imgList[i].Seq + "' class='gbox' style='background:url(" + sImgSrc + ") center center no-repeat;background-size:cover'>";
                     div += "<div class='gbox_thumb " + tagType + "'>";
                     div += "<div class='gbox_t_title'>#" + imgList[i].HashTag + "</div>";
                     div += "<div class='gbox_t_text'><img src='/images/icon_like.png' height='9'>" + imgList[i].LikeCnt + "</div>";
