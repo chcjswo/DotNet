@@ -25,7 +25,7 @@
                 </div>
                 <div class="dolpic_limg" style="background:url(@sImgSrc) center center no-repeat;background-size:cover" onclick="location.href='/Pics/Main/@item.HashTag';"></div>
                 <div class="dolpic_lname" onclick="location.href='/Pics/Main/@item.HashTag';" style="cursor:pointer">@item.HashTag</div>
-                <div id="@string.Format("in{0}", item.Seq)" class="dolpic_fbtn @((item.Seq == item.FavoriteSeq) ? Html.Raw("on") : Html.Raw("off"))" onclick="fnFavoriteInsert('@item.Seq', '@item.HashTag');"></div>
+                <div id="@string.Format("in{0}", item.Seq)" seq="@item.FavoriteSeq" class="dolpic_fbtn @((item.Seq == item.FavoriteSeq) ? Html.Raw("on") : Html.Raw("off"))" onclick="fnFavoriteInsert('@item.Seq', '@item.HashTag');"></div>
             </div>
         }
         <div class="clear"></div>

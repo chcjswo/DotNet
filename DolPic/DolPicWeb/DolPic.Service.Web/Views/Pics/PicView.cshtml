@@ -37,16 +37,16 @@
         <!-- 추천 이미지 리스트 -->
         @Html.Action("RecommPicList", "Pics", new { ImgNo = Model.CurSeq, HashTag = Model.HashTag, CurPage = ViewBag.CurPage })
 		<!-- 구글 광고 -->
-		@Html.Partial("_GoogleAd1")
+		@*@Html.Partial("_GoogleAd1")*@
         <!-- 소셜 댓글 -->
 		@Html.Partial("_FacebookComment", ViewData)
 	</div>
 	<div class="gbox_side">
         @Html.Action("HotDolPicList", "Pics")
 		<!-- 구글 광고 -->
-		@Html.Partial("_GoogleAd2")
+		@*@Html.Partial("_GoogleAd2")*@
         <!-- 구글 APP -->
-        @Html.Partial("_GoogleApp")
+        @*@Html.Partial("_GoogleApp")*@
 		<!-- 공지사항 -->
 		@Html.Partial("_Notice")
 	</div>
