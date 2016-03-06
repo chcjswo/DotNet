@@ -530,8 +530,9 @@ namespace DolPic.Service.Web.Controllers
                         entity.Seq = seq;
                         adminDao.DolPicNoImageDelete(entity);
 
-                        log.DebugFormat("no ImageSrc == {0}", ImageSrc);
-                        log.DebugFormat("no seq == {0}", seq);
+                        log.ErrorFormat("no ImageSrc == {0}", ImageSrc);
+                        log.ErrorFormat("no seq == {0}", seq);
+                        log.ErrorFormat("error == {0}", ex.ToString());
                     }
                 }
             }

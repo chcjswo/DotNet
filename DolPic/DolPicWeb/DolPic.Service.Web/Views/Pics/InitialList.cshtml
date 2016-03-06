@@ -1,7 +1,9 @@
-﻿@{
+﻿@using System.Text
+@{
     Layout = null;
 
     var list = ViewBag.DataList;
+    StringBuilder sb = new StringBuilder();
 }
 <!-- 하단 리스트 -->
 <div class="dolpic_warp">
@@ -16,6 +18,11 @@
         {
             var sImgSrc = item.ImageSrc + ":thumb";
 
+            sb.Append("{label:\"").Append(item.HashTag);
+            sb.Append("\",");
+            sb.Append("category:\"").Append(item.Initial);
+            sb.Append("\"},");
+            
             <div class="dolpic_lbox">
                 <div class="dolpic_ltag">
                     <!--
@@ -36,6 +43,56 @@
     <div class="sponsor">Icons made by <a href="http://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>
 </div>
 
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+<style>
+  .ui-autocomplete-category {
+    font-weight: bold;
+    padding: .2em .4em;
+    margin: .8em 0 .2em;
+    line-height: 1.5;
+  }
+  body {
+	font-family: "Trebuchet MS", "Helvetica", "Arial",  "Verdana", "sans-serif";
+	font-size: 70%;
+}
+</style>
+<script>
+    $.widget("custom.catcomplete", $.ui.autocomplete, {
+        _create: function () {
+            this._super();
+            this.widget().menu("option", "items", "> :not(.ui-autocomplete-category)");
+        },
+        _renderMenu: function (ul, items) {
+            var that = this,
+            currentCategory = "";
+            $.each(items, function (index, item) {
+                var li;
+                if (item.category != currentCategory) {
+                    ul.append("<li class='ui-autocomplete-category'>" + item.category + "</li>");
+                    currentCategory = item.category;
+                }
+                li = that._renderItemData(ul, item);
+                if (item.category) {
+                    li.attr("aria-label", item.category + " : " + item.label);
+                }
+            });
+        }
+    });
+</script>
+<script>
+    $(function () {
+        var data = [
+        @Html.Raw(sb.ToString().Substring(0, sb.Length - 1))
+        ];
+
+        $(".search").catcomplete({
+            delay: 0,
+            source: data
+        });
+    });
+</script>
 <script type="text/javascript">
     var bExec = false;
 
