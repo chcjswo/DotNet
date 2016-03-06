@@ -32,7 +32,7 @@ namespace DolPic.Common
 
             cookie.Values[key] = (value);
             cookie.Path = "/";
-            cookie.Expires = DateTime.Now.AddDays(1);
+            cookie.Expires = DateTime.Now.AddDays(10);
             a_context.SetCookie(cookie);
             a_context.Cookies.Add(cookie);
         }

@@ -255,7 +255,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Properties\PublishProfiles\모바일.pubxml" />
     <Content Include="Views\App\InitialList.cshtml" />
     <Content Include="Views\App\Main.cshtml" />
     <Content Include="Views\App\FavoriteBar.cshtml" />
@@ -276,6 +275,9 @@
     <Content Include="Views\Shared\_Lunch\_Layout.cshtml" />
     <Content Include="Views\Lunch\ViewMap.cshtml" />
     <Content Include="Views\Shared\_GoogleApp.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\PublishProfiles\모바일.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
