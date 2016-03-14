@@ -19,38 +19,38 @@
 <div class="wrapper">
     <div class="gbox_gallery">
         <div class="img_list">
-            <!-- 갤러리 리스트 -->
-            @foreach (var item in list)
+        <!-- 갤러리 리스트 -->
+        @foreach (var item in list)
+        {
+            var sImgSrc = "";
+
+            if (item.TagUrlType == (int)e_TagUrlType.twitter)
             {
-                var sImgSrc = "";
+                sImgSrc = item.ImageSrc + ":thumb";
+            }
+            else if (item.TagUrlType == (int)e_TagUrlType.instagram)
+            {
+                sImgSrc = item.ImageSrc;
+            }
+            <div seq="@item.Seq" class="gbox" style="background:url(@sImgSrc) center center no-repeat;background-size:cover">
+                @{
+                    var sClassName = "";
 
-                if (item.TagUrlType == (int)e_TagUrlType.twitter)
-                {
-                    sImgSrc = item.ImageSrc + ":thumb";
-                }
-                else if (item.TagUrlType == (int)e_TagUrlType.instagram)
-                {
-                    sImgSrc = item.ImageSrc;
-                }
-                <div seq="@item.Seq" class="gbox" style="background:url(@sImgSrc) center center no-repeat;background-size:cover">
-                    @{
-                        var sClassName = "";
-
-                        if (item.TagUrlType == (int)e_TagUrlType.twitter)
-                        {
-                            sClassName = "g_t_twitter";
-                        }
-                        else if (item.TagUrlType == (int)e_TagUrlType.instagram)
-                        {
-                            sClassName = "g_t_instagram";
-                        }
+                    if (item.TagUrlType == (int)e_TagUrlType.twitter)
+                    {
+                        sClassName = "g_t_twitter";
                     }
-                    <div class="gbox_thumb @sClassName">
-                        <div class="gbox_t_title">#@item.HashTag</div>
-                        <div class="gbox_t_text"><img src="/images/icon_like.png" height="9">@string.Format("{0:N0}", item.LikeCnt)</div>
-                    </div>
+                    else if (item.TagUrlType == (int)e_TagUrlType.instagram)
+                    {
+                        sClassName = "g_t_instagram";
+                    }
+                }
+                <div class="gbox_thumb @sClassName">
+                    <div class="gbox_t_title">#@item.HashTag</div>
+                    <div class="gbox_t_text"><img src="/images/icon_like.png" height="9">@string.Format("{0:N0}", item.LikeCnt)</div>
                 </div>
-                        }
+            </div>
+        }
         </div>
         <div class="clear"></div>
         <ul class="gbox_list">
@@ -122,18 +122,19 @@
                 var tagType = "";
                 var sImgSrc = "";
 
-                if (imgList[i].TagUrlType == 1) {
-                    tagType = "g_t_twitter";
-                    sImgSrc = imgList[i].ImageSrc + ":thumb";
-                } else if (imgList[i].TagUrlType == 2) {
-                    tagType = "g_t_instagram";
-                    sImgSrc = imgList[i].ImageSrc;
-                }
 
                 for (var i = 0; i < imgList.length; i++) {
+                    if (imgList[i].TagUrlType == 1) {
+                        tagType = "g_t_twitter";
+                        sImgSrc = imgList[i].ImageSrc + ":thumb";
+                    } else if (imgList[i].TagUrlType == 2) {
+                        tagType = "g_t_instagram";
+                        sImgSrc = imgList[i].ImageSrc;
+                    }
+
                     div = "<div seq='" + imgList[i].Seq + "' class='gbox' style='background:url(" + sImgSrc + ") center center no-repeat;background-size:cover'>";
-                    div += "<div class='gbox_thumb g_t_twitter'>";
-                    div += "<div class='gbox_t_title'>#" + tagType + "</div>";
+                    div += "<div class='gbox_thumb " + tagType + "'>";
+                    div += "<div class='gbox_t_title'>#" + imgList[i].HashTag + "</div>";
                     div += "<div class='gbox_t_text'><img src='/images/icon_like.png' height='9'>" + imgList[i].LikeCnt + "</div>";
                     div += "</div>";
                     div += "</div>";

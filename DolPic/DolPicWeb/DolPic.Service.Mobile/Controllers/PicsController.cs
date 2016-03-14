@@ -41,7 +41,6 @@ namespace DolPic.Service.Mobile.Controllers
         /// 돌픽 메인 화면
         /// </summary>
         /// <returns></returns>
-        [OutputCache(Duration = 600)]
         public ActionResult Main(string id, int? page)
         {
             ViewBag.User = DolPicCookie.CookieRead(this.Request, CommonVariable.COOKIE_NAME);
@@ -155,7 +154,6 @@ namespace DolPic.Service.Mobile.Controllers
         /// 초성 리스트
         /// </summary>
         /// <returns></returns>
-        [OutputCache(Duration = 600)]
         public ActionResult InitialList()
         {
             var UserId = DolPicCookie.CookieRead(this.Request, CommonVariable.COOKIE_NAME);
